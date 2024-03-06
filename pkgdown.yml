@@ -1,0 +1,14 @@
+pandoc: 3.1.11
+pkgdown: 2.0.7
+pkgdown_sha: ~
+articles:
+  Framingham_heart_study: Framingham_heart_study.html
+  Visualize_model_structure: Visualize_model_structure.html
+  multiple_error_variables: multiple_error_variables.html
+  nhanes_survival: nhanes_survival.html
+  simulated_examples: simulated_examples.html
+last_built: 2024-03-06T15:22Z
+urls:
+  reference: https://emmaskarstein.github.io/inlamemi/reference
+  article: https://emmaskarstein.github.io/inlamemi/articles
+
