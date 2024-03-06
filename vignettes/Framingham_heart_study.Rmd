@@ -1,0 +1,241 @@
+---
+title: "Influence of systolic blood pressure on coronary heart disease"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Influence of systolic blood pressure on coronary heart disease}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+In this tutorial, we re-do the analysis from two previous publications that use the same data set. The data set contains the heart disease status for a number of patients, along with repeated measurements of their systolic blood pressure and their smoking status. The data is also included in the package, simply type `?framingham` for more details.
+
+```{r, message = FALSE}
+library(inlamemi)
+library(INLA)
+library(ggplot2)
+```
+
+```{r}
+head(framingham)
+```
+
+The two publications are [Bayesian analysis of measurement error models using INLA, Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Reverse attenuation in interaction terms due to covariate measurement error, Muff & Keller (2015)](https://onlinelibrary.wiley.com/doi/10.1002/bimj.201400157). 
+
+## First example: A logistic regression model with repeated measurements
+
+|Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
+|:-----------|:----------|:--------|:----------|:------------|
+|Classical | Binomial | `disease` | `sbp1`, `sbp2` | `smoking` |
+
+
+The data and model in this example was also used in [Muff et al (2015)](https://arxiv.org/abs/1302.3065), so more information on the measurement error model can be found there. The model is identical, this example just shows how it can be implemented in `inlamemi`. 
+
+In this example, we fit a logistic regression model for whether or not a patient has heart disease, using systolic blood pressure (SBP) and smoking status as covariates. SBP is measured with error, but we have repeated measurements, and so we would like to feed both measurements of SBP into the model. This can be done easily in the `inlamemi` package. 
+
+The formula for the main model of interest will be
+$$
+\text{logit}\{\texttt{disease}_i\} = \beta_0 + \beta_{\texttt{sbp}} \texttt{sbp}_i + \beta_{\texttt{smoking}} \texttt{smoking}_i,
+$$
+and the formula for the imputation model will be
+
+$$
+\texttt{sbp}_i = \alpha_0 + \alpha_{\texttt{smoking}} \texttt{smoking}_i + \varepsilon_i^{\texttt{sbp}}.
+$$
+In addition, we of course also have the classical measurement error model that describes the actual error in the SBP measurements, and since we have repeated measurements we actually have two:
+$$
+\begin{align}
+\texttt{sbp}^1_i = \texttt{sbp}_i + u_i^{1}, \\
+\texttt{sbp}^2_i = \texttt{sbp}_i + u_i^{2}, 
+\end{align}
+$$
+where $u_i^{1}, u_i^{2} \sim N(0, \tau_u)$ are the measurement error terms. 
+
+We can then call the `fit_inlamemi` function directly with the above formulas for the model of interest and imputation model. Also note the repeated measurements argument, which must be set to `TRUE` to ensure that the model is specified correctly. We give the precision for the error term of the measurement error model a \texttt{Gamma(100, 1)} prior, and the error term for the imputation model a \texttt{Gamma(10, 1)} prior. By default in R-INLA, the fixed effects are given Gaussian priors with mean $0$ and precision $0.001$. We re-assign the precisions to be $0.01$, but keep the means at 0 (therefore they are not specified in the `control.fixed` argument).
+
+```{r}
+framingham_model <- fit_inlamemi(formula_moi = disease ~ sbp + smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+```
+
+Once the model is fit we can look at the summary.
+
+```{r}
+summary(framingham_model)
+```
+
+```{r}
+plot(framingham_model)
+```
+
+For a comparison, we can also fit a "naive" model, that is, a model that ignores the measurement error in SBP. For this model, we will take an average of the two SBP measurements and use that as the SBP variable.
+
+```{r}
+framingham$sbp <- (framingham$sbp1 + framingham$sbp2)/2
+naive_model <- inla(formula = disease ~ sbp + smoking,
+                    family = "binomial", 
+                    data = framingham)
+naive_model$summary.fixed
+```
+Then we can compare the estimated coefficients from both models.
+
+```{r}
+naive_result <- naive_model$summary.fixed
+rownames(naive_result) <- c("beta.0", "beta.sbp", "beta.smoking")
+naive_result$variable <- rownames(naive_result)
+me_result <- rbind(summary(framingham_model)$moi_coef[1:6], 
+                   summary(framingham_model)$error_coef[1:6])
+me_result$variable <- rownames(me_result)
+results <- dplyr::bind_rows(naive = naive_result, me_adjusted = me_result, .id = "model")
+
+ggplot(results, aes(x = mean, y = model, color = variable)) +
+  geom_point() +
+  geom_linerange(aes(xmin = `0.025quant`, xmax = `0.975quant`)) +
+  facet_grid(~ variable, scales = "free_x") +
+  theme_bw()
+```
+
+## Second example: Heteroscedastic measurement error and interaction between error variable and error free variable
+
+|Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
+|:-----------|:----------|:--------|:----------|:------------|
+|Classical (with interaction effects) | Binomial | `disease` | `sbp1`, `sbp2` | `smoking` |
+
+
+In this example, we artificially increase the measurement error for the smoking group in order to study a model with homoscedastic measurement error. The model in this example is identical to that in [Muff & Keller (2015)](https://onlinelibrary.wiley.com/doi/10.1002/bimj.201400157)
+
+```{r}
+framingham2 <- framingham
+n <- nrow(framingham2)
+
+set.seed(1)
+framingham2$sbp1 <- framingham$sbp1 + 
+  ifelse(framingham2$smoking == 1, rnorm(n, 0, 0.117), 0)
+framingham2$sbp2 <- framingham$sbp2 + 
+  ifelse(framingham2$smoking == 1, rnorm(n, 0, 0.117), 0)
+
+# Or: 
+#framingham2 <- read.table("../data-raw/fram_data_case2.txt", header=T)
+#names(framingham2) <- c("disease", "sbp1", "sbp2", "smoking")
+
+#framingham2$sbp <- (framingham2$sbp1 + framingham2$sbp2)/2
+```
+
+```{r}
+error_scaling <- c(1/(1+9*framingham2$smoking), 1/(1+9*framingham2$smoking))
+```
+
+```{r}
+# Homoscedastic ME modeled as homoscedastic ME (correct)
+framingham_model2.1 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+
+# Heteroscedastic ME modeled as heteroscedastic ME (correct)
+framingham_model2.2 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham2,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               classical_error_scaling = error_scaling,
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+
+# Heteroscedastic ME modeled as homoscedastic ME (incorrect)
+framingham_model2.3 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham2,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+
+framingham_model2.5 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham2,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               classical_error_scaling = c(rep(10^(-12), 2*n)),
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+
+plot(framingham_model2.1)
+plot(framingham_model2.2)
+plot(framingham_model2.3)
+plot(framingham_model2.5)
+
+
+framingham_model2.1$summary.hyperpar
+framingham_model2.2$summary.hyperpar
+framingham_model2.3$summary.hyperpar
+framingham_model2.5$summary.hyperpar
+```
+
+
+
+
+
+
+
+
+

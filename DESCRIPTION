@@ -1,0 +1,36 @@
+Package: inlamemi
+Type: Package
+Title: Missing Data and Measurement Error Modelling in INLA 
+Version: 0.1.0
+Authors@R: c(
+  person("Emma", "Skarstein", email = "emma@skarstein.no",
+         role = c("cre", "aut"), 
+         comment = c(ORCID = "0000-0002-6347-855X")),
+  person("Stefanie", "Muff",
+         role = c("aut"),
+         comment = c(ORCID = "0000-0002-8425-0757"))
+  )
+Description: Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+VignetteBuilder: knitr
+RoxygenNote: 7.3.1
+Suggests: 
+    INLA,
+    knitr,
+    methods,
+    testthat (>= 3.0.0),
+    tibble,
+    rmarkdown
+Additional_repositories: 
+    https://inla.r-inla-download.org/R/testing
+Config/testthat/edition: 3
+Imports: 
+    dplyr,
+    ggplot2,
+    rlang,
+    stats
+Depends: 
+    R (>= 2.10)
+URL: https://emmaskarstein.github.io/inlamemi/

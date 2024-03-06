@@ -1,0 +1,107 @@
+---
+title: "Multiple variables with measurement error and missingness"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{multiple_error_variables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(inlamemi)
+```
+
+
+In certain cases, it may be necessary to account for measurement error or missingness in more than one covariate. `inlamemi` is structured in a way that accommodates this, and in this example we illustrate how to specify the input arguments in such a case.
+
+Many of the arguments to `fit_inlamemi` are specific to one of the error variables, such as `formula_imp` (specifying the formula for the imputation model), `error_type` (specifying the type(s) of error for a given variable), `repeated_observations`, `classical_error_scaling` and `prior.beta.error` (specifies the prior for the coefficient of the variable with error). In order for these to be specified correctly in the case where we have multiple error variables, the input is structured in lists, where the first list element corresponds to the argument for the first error variable, the second list element corresponds to the argument for the second error variable, etc. That means that the list elements may themselves be vectors of multiple elements, for instance if the first error variable has Berkson error and missingness and the second error variable has classical error, the `error_type` variable would be `error_type = list(c("berkson", "missing"), "classical")`.
+
+|Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
+|:-----------|:----------|:--------|:----------|:------------|
+| Classical (present in two covariates)| Gaussian | `y` |`x1`, `x2` | `z` |
+
+In this example, we have a simple case with three covariates (`x1`, `x2` and `z`), where two of these have classical measurement error (`x1` and `x2`). We believe that `x1` is correlated with the error free covariate `z`, but that `x2` is independent of the other covariates. Here is our data:
+
+```{r}
+head(two_error_data)
+```
+
+
+In this case, we will need to specify the entire `control.family` argument manually. This is done like this:
+
+```{r}
+# Multiple error variables
+control.family <- list(
+  # Model of interest
+  list(hyper = list(prec = list(initial = log(1),
+                                param = c(10, 9),
+                                fixed = FALSE))),
+  # Classical error model for x1
+  list(hyper = list(prec = list(initial = log(1),
+                                param = c(10, 9),
+                                fixed = FALSE))),
+  # Imputation model for x1
+  list(hyper = list(prec = list(initial = log(1),
+                                param = c(10, 9),
+                                fixed = FALSE))),
+  # Classical error model for x2
+  list(hyper = list(prec = list(initial = log(1),
+                                param = c(10, 9),
+                                fixed = FALSE))),
+  # Imputation model for x2
+  list(hyper = list(prec = list(initial = log(1),
+                                param = c(10, 9),
+                                fixed = FALSE)))
+)
+```
+
+If you are uncertain about the order of the model levels, look at the order in the data stack. `fit_inlamemi` calls the function `make_inlamemi_stacks` to create the data stack, so we can view it like this:
+
+```{r}
+stack_two_error <- make_inlamemi_stacks(
+  formula_moi = y ~ x1 + x2 + z,
+  formula_imp = list(x1 ~ z, x2 ~ 1),
+  family_moi = "gaussian",
+  data = two_error_data,
+  error_type = list("classical", "classical"))
+```
+
+And then we can see the order of the models by looking at 
+
+```{r}
+stack_two_error$data$names
+```
+Then we go on to fit the model:
+
+```{r}
+two_error_model <- fit_inlamemi(formula_moi = y ~ x1 + x2 + z,
+                             formula_imp = list(x1 ~ z, x2 ~ 1),
+                             family_moi = "gaussian",
+                             data = two_error_data,
+                             error_type = list("classical", "classical"),
+                             prior.beta.error = list(c(0, 1/1000), c(0, 1/1000)),
+                             control.family = control.family,
+                             control.predictor = list(compute = TRUE)
+)
+```
+
+The summary and plot can be viewed as normal:
+
+```{r}
+summary(two_error_model)
+```
+
+```{r}
+plot(two_error_model)
+```
+
+
+
+

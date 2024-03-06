@@ -1,0 +1,370 @@
+---
+title: "inlamemi testing"
+author: "Steffi Muff"
+date: "2023-11-24"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(tidy.opts=list(width.cutoff=68),tidy=TRUE)
+knitr::opts_chunk$set(echo = TRUE,tidy=TRUE,message=FALSE,warning=FALSE,strip.white=TRUE,prompt=FALSE,
+                      size="scriptsize")
+```
+
+## Installing and loading
+
+Installation and loading works without any problems.
+
+```{r}
+# devtools::install_github("emmaSkarstein/inlamemi")
+library(inlamemi)
+```
+
+## Warm-up: Simulation 1 with classical measurement error
+
+I start by generating data for a simulation. Regression model 
+
+$$y = \beta_0 + \beta_x x + \beta_z z + \varepsilon \ ,$$
+with $x\sim \mathcal{N}(0,1)$, $z \sim \text{Bern}(0.5)$, $w = x+u$ and $u\sim \mathcal{N}(0,0.5)$, thus $\sigma_u^2=0.5$ and $\tau_u=2$ (precision, which is how the parametrization seems to work).
+
+```{r}
+set.seed(34312)
+nn <- 1000
+x <- rnorm(nn)
+# Error-prone variable
+w <- x + rnorm(nn,0,sd=sqrt(0.5))
+z <- rbinom(nn,1,0.5)
+
+y <- 1 + x + z + rnorm(nn,0,1)
+
+data1 <- data.frame(cbind(x=x,z=z,y=y,w=w))
+```
+
+```{r}
+summary(lm(y~x + z))$coef
+
+summary(lm(y~w + z))$coef
+```
+
+Note that, below, I'm using the imputation model `w~z`, even though $x$ does not depend on $z$ here, but in a practical case we wouldn't know this in advance.
+
+```{r}
+main_formula <- y ~ w + z
+imputation_formula <- w ~ z
+
+model1 <- fit_inlamemi(data = data1,
+                         formula_moi = main_formula,
+                         formula_imp = imputation_formula,
+                         family_moi = "gaussian",
+                         error_type = c("classical"),
+                         #prior.prec.moi = c(10, 9),
+                         # prior.prec.berkson = c(10, 9),
+                         prior.prec.classical = c(19, 9),
+                         prior.prec.imp = c(10, 9),
+                         prior.beta.error = c(0, 1/1000),
+                         #initial.prec.moi = 1,
+                         #initial.prec.berkson = 1,
+                         initial.prec.classical = 2,
+                         initial.prec.imp = 1)
+
+summary(model1)
+```
+
+This seems to work very well. 
+
+**Some thoughts**
+
+* if `family_moi` is not Gaussian, do we then still need `prior.prec.moi`? Or is it then forbidden to use it, since the family then does not have a residual term?
+* I would like to have the option to use fixed priors, for example for the error variance $\sigma_u^2$. Is this possible?
+* One thing I confused myself with was that I used `x` as the variable in the models, but of course we usually don't know `x`, but only the observed version `w`. After I fixed that, the modeling worked out well.
+* In the output, we have all these lines for `Precision for the Gaussian observations`. I know this is how INLA does it, but maybe it is possible to rename to somewhat more informative naming?
+
+
+
+## Simulation 2: Classical measurement error with random effects main model
+
+```{r}
+set.seed(34312)
+nn <- 1000
+
+z <- rbinom(nn,1,0.5)
+
+x <- rnorm(nn,1+0.5*z,1)
+# Error-prone variable
+w <- x + rnorm(nn,0,sd=sqrt(0.5))
+
+# Random effect to include in the regression model:
+re <- rep(rnorm(nn/50),each=20)
+
+y <- 1 + x + z + re + rnorm(nn,0,1)
+
+data2 <- data.frame(cbind(x=x,z=z,y=y,w=w,id=rep(seq(1:50),each=20)))
+```
+
+Regression models with correct and error-prone variables. The attenuation in $\beta_w$ is similar to before. Note that we now need random effects models (I use the `lme4` package for this):
+
+```{r}
+library(lme4)
+summary(lmer(y ~ x + z + (1|id),data=data2)) 
+
+summary(lmer(y ~ w + z + (1|id),data=data2)) 
+```
+Error modeling with INLA:
+
+```{r}
+main_formula <- y ~ w + z + f(id, model="iid")
+imputation_formula <- w ~ z
+
+model2 <- fit_inlamemi(data = data2,
+                         formula_moi = main_formula,
+                         formula_imp = imputation_formula,
+                         family_moi = "gaussian",
+                         error_type = c("classical"),
+                         #prior.prec.moi = c(10, 9),
+                         # prior.prec.berkson = c(10, 9),
+                         prior.prec.classical = c(19, 9),
+                         prior.prec.imp = c(10, 9),
+                         prior.beta.error = c(0, 1/1000),
+                         #initial.prec.moi = 1,
+                         #initial.prec.berkson = 1,
+                         initial.prec.classical = 2,
+                         initial.prec.imp = 1)
+
+summary(model2)
+```
+
+**Some thoughts**
+
+* This works like a breeze.
+* However, (new) INLA users must be aware that priors for any random effects components added with `f()` must be specified within the `f()` function. This is obvious to us, but maybe not to anybody?
+
+
+
+## Simulation 3: Classical measurement error and missing data with random effects main model
+
+This is a relatively simple extension of simulation 2.
+
+```{r}
+set.seed(34312)
+nn <- 1000
+
+z <- rbinom(nn,1,0.5)
+
+x <- rnorm(nn,1+0.5*z,1)
+# Error-prone variable
+w <- x + rnorm(nn,0,sd=sqrt(0.5))
+
+# Generating missing data, depending on z
+eta <- -2 + z
+prob_missing <- exp(eta)/(1+exp(eta))
+missing_index <- rbinom(nn,1,prob_missing)
+# Proportion missing:
+sum(missing_index)/nn
+
+# Replace the values in w by missing in case the index for missingness is =1:
+w <- ifelse(missing_index==1,NA,w)
+
+# Random effect to include in the regression model:
+re <- rep(rnorm(nn/50),each=20)
+
+y <- 1 + x + z + re + rnorm(nn,0,1)
+
+data3 <- data.frame(cbind(x=x,z=z,y=y,w=w,id=rep(seq(1:50),each=20)))
+```
+
+
+```{r}
+library(lme4)
+summary(lmer(y ~ x + z + (1|id),data=data3))$coef
+
+summary(lmer(y ~ w + z + (1|id),data=data3))$coef
+```
+Modeling error and missing data with INLA:
+
+```{r}
+main_formula <- y ~ w + z + f(id,model="iid")
+imputation_formula <- w ~ z
+
+model3 <- fit_inlamemi(data = data3,
+                         formula_moi = main_formula,
+                         formula_imp = imputation_formula,
+                         family_moi = "gaussian",
+                         error_type = c("classical","missing"),
+                         #prior.prec.moi = c(10, 9),
+                         # prior.prec.berkson = c(10, 9),
+                         prior.prec.classical = c(19, 9),
+                         prior.prec.imp = c(10, 9),
+                         prior.beta.error = c(0, 1/1000),
+                         #initial.prec.moi = 1,
+                         #initial.prec.berkson = 1,
+                         initial.prec.classical = 2,
+                         initial.prec.imp = 1)
+
+summary(model3)
+```
+
+
+**Some thoughts**
+
+* When there is missingess in $w$, do I then have to explicitly specify `error_type = c("classical","missing")`? What happens if I only specify `error_type = c("classical")`? I think it would be nice if in such a case, I would get a warning, saying that the error-prone variable also contains missing data, and then the user can decide to model this as well. But actually, I think it does happen automatically in INLA... So maybe the specification of `missing` is not really needed? It is anyway nice to have it - because if there is only missingness, then one otherwise has an empty argument. 
+
+
+
+## Simulation 4: Logistic regression with classical error and missing data
+
+```{r}
+set.seed(34312)
+nn <- 1000
+
+z <- rbinom(nn,1,0.5)
+
+x <- rnorm(nn,1-0.5*z,1)
+# Error
+w <- x + rnorm(nn,0,1)
+
+# Generating missing data, depending on z
+eta <- -1 + z
+prob_missing <- exp(eta)/(1+exp(eta))
+missing_index <- rbinom(nn,1,prob_missing)
+
+# Proportion missing (same as in Simulation 3):
+sum(missing_index)/nn
+
+# Replace the values in w by missing in case the index for missingness is =1:
+w <- ifelse(missing_index==1,NA,w)
+
+# Random effect to include in the regression model:
+re <- rep(rnorm(nn/50),each=20)
+
+# Linear predictor
+eta <-  x + z + re  
+
+# Generate Poisson response
+y <- rpois(nn,exp(eta))
+
+data4 <- data.frame(cbind(x=x,z=z,y=y,w=w,id=rep(seq(1:50),each=20)))
+```
+
+Simple regression models with correct and error-prone variables to check the effect:
+
+```{r}
+library(lme4)
+summary(glmer(y ~ x + z + (1|id),data=data4,family="poisson"))$coef
+
+summary(glmer(y ~ w + z + (1|id),data=data4,family="poisson"))$coef
+```
+
+
+Modeling error and missing data with INLA:
+
+```{r,eval=FALSE}
+main_formula <- y ~ w + z + f(id,model="iid")
+imputation_formula <- w ~ z
+
+model4 <- fit_inlamemi(data = data4,
+                         formula_moi = main_formula,
+                         formula_imp = imputation_formula,
+                         family_moi = "poisson",
+                         error_type = c("classical","missing"),
+                         # prior.prec.moi = c(10, 9),
+                         # prior.prec.berkson = c(10, 9),
+                         prior.prec.classical = c(19, 9),
+                         prior.prec.imp = c(10, 9),
+                         prior.beta.error = c(0, 1/1000),
+                         #initial.prec.moi = 1,
+                         #initial.prec.berkson = 1,
+                         initial.prec.classical = 2,
+                         initial.prec.imp = 1)
+
+summary(model4)
+```
+
+
+What sort of family argument(s) would Poisson models have? Here I think one would probably need to do something similar to the Weibull regression case and spell out the `control.family` list (right?), but it was not immediately clear to me how to do this (namely because I don't know what the family argument for Poisson should be).
+
+## Framinham with repeated observations
+
+Model with repeated measurements for the error, using the Framingham data. 
+
+
+
+
+```{r}
+framingham_model <- fit_inlamemi(formula_moi = disease ~ sbp + smoking,
+                               formula_imp = sbp ~ smoking,
+                               family_moi = "binomial", 
+                               data = framingham,
+                               error_type = "classical", 
+                               repeated_observations = TRUE,
+                               prior.prec.classical = c(100, 1),
+                               prior.prec.imp = c(10, 1),
+                               prior.beta.error = c(0, 0.01),
+                               initial.prec.classical = 100,
+                               initial.prec.imp = 10,
+                               control.fixed = list(
+                                 prec = list(beta.0 = 0.01, 
+                                             beta.smoking = 0.01, 
+                                             alpha.0 = 0.01, 
+                                             alpha.smoking = 0.01)))
+summary(framingham_model)
+```
+**Some thoughts**
+
+* I can formulate and fit the model as below. However, I do not understand how the model knows that `sbp` corresponds to `sbp1` and `sbp2`. Is it automatically stacking it in the correct way? What happens if the number of repeats is different for different individuals?
+* I actually think that what we really have is an error model that allows for a random, individual-specific effect
+$$w_{ij} = x_i + u_{ij}\ , $$
+where $x_i\sim \mathcal{N}(0,\sigma_x^2)$. The user would need to specify the individual $i$ that belongs to the observation in the respective $w_{ij}$. So, in principle the user would need an argument where he/she can specify this information (it would corresponds to information that used to be stored in id.x internally for the error model part).
+
+
+## Simulation 5: Model where exposure model contains random effects.
+
+I'm just trying a case where the exposure model contains a random effect. I build on Simulation 1 and 2, in order to not add unneccesary complications. But note that the random effect is no longer present in the model of interest.
+
+```{r}
+set.seed(34312)
+nn <- 1000
+
+z <- rbinom(nn,1,0.5)
+
+# Random effect to include in the regression model:
+re <- rep(rnorm(nn/50),each=20)
+
+x <- rnorm(nn, 1+0.5*z + re, 1)
+# Error-prone variable
+w <- x + rnorm(nn,0,sd=sqrt(0.5))
+
+y <- 1 + x + z + rnorm(nn,0,1)
+
+data5 <- data.frame(cbind(x=x,z=z,y=y,w=w,id=rep(seq(1:50),each=20)))
+```
+
+
+```{r}
+summary(lm(y ~ x + z ,data=data5))$coef
+
+summary(lm(y ~ w + z ,data=data5))$coef
+```
+So now I add the random effect to the exposure model, and it works. **This is really cool! Definitely a point to sell in the package paper!**
+
+
+```{r}
+main_formula <- y ~ w + z 
+imputation_formula <- w ~ z + f(id,model="iid")
+
+model5 <- fit_inlamemi(data = data5,
+                         formula_moi = main_formula,
+                         formula_imp = imputation_formula,
+                         family_moi = "gaussian",
+                         error_type = c("classical"),
+                         #prior.prec.moi = c(10, 9),
+                         # prior.prec.berkson = c(10, 9),
+                         prior.prec.classical = c(19, 9),
+                         prior.prec.imp = c(10, 9),
+                         prior.beta.error = c(0, 1/1000),
+                         #initial.prec.moi = 1,
+                         #initial.prec.berkson = 1,
+                         initial.prec.classical = 2,
+                         initial.prec.imp = 1)
+
+summary(model5)

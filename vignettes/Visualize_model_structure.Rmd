@@ -1,0 +1,168 @@
+---
+title: "How are the models structured?"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{How are the models structured?}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The measurement error models in `inlamemi` are hierarchical models with three or more sub-models. To construct these kinds of models in R-INLA, the structure of the data plays an important role (see for instance [chapter 6.4 in "Bayesian Inference with INLA by Virgilio Gómez-Rubio](https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLAfeatures.html#sec:sevlik)). 
+
+The data for each of the models is organized and stacked together in a specific way, which together with the formula tells R-INLA how to construct the model. For you as a user, it is not necessary to understand these structures, but I have included this vignette nonetheless to give some more insight for those that are interested. 
+
+```{r}
+library(inlamemi)
+```
+
+## Defining the model: formula + structured data stacks
+
+```{r}
+f_moi <- y ~ x + z
+f_imp <- x ~ z
+```
+
+When using the `inlamemi` package, the user specifies two formulas, one for the main model of interest, and one for the imputation model. But these are just two of the sub-models, there is also at least one measurement error model under the hood. All of these models need to be communicated to the `inla()` function, but this takes only one formula-argument. So all the formula terms are simply added together in one big formula, and in order to communicate to the `inla` function which terms should apply to which sub-model, we supply the data in structured matrices where each layer of the matrix shows which terms should be "activated" in that layer. 
+
+In practice, this can be done either through manually constructed matrices (see for instance https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html for a detailed explanation of that), or one can use the `inla.stack` function to specify the modules for each sub-model separately, and then stack them together. For the `inlamemi` package, I structure the data using `inla.stacks`. The outcome is the same, but it just makes the construction a bit more generalizable. The stack construction is done in the function `make_inlamemi_stacks`, which is then called by `fit_inlamemi`, so this is not a function the user would typically need to interact with. 
+
+
+The function `show_data_structure` converts the stack object to LaTeX matrices, and only shows the first and last row for each sub-model, making it easier to get a clear overview over the structure of the model. Now, we will take a look at these matrices for two different models: one with Berkson measurement error, and one without.
+
+
+## Structure for a classical measurement error model
+
+All models fit with `inlamemi` will contain a classical measurement error layer, as even if there is no measurement error, the classical ME model is needed for technical reasons in order to do the covariate imputation. In the cases where there is no classical ME, we scale the classical error precision to be very large, thus effectively "turning off" the error adjustment while keeping the imputation model.
+
+In this example, our hierarchical model consists of the main model of interest:
+$$
+\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ ,
+$$
+the classical error model:
+$$
+  \boldsymbol{w} = \boldsymbol{x} + \boldsymbol{u}_c \ , \quad \boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
+$$
+and the imputation model:
+$$
+\boldsymbol{x} = \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_x \ , \quad \boldsymbol{\varepsilon}_x \sim N(\boldsymbol{0}, \tau_x\boldsymbol{I}) \ .
+$$
+
+These need to be rewritten for R-INLA such that there are no latent effects on the left hand side: 
+$$
+\begin{align}
+  \boldsymbol{y} &= \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad &\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ , \\
+  \boldsymbol{w} &= \boldsymbol{x} + \boldsymbol{u}_c \ , \quad &\boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &= -\boldsymbol{x} + \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_x \ , \quad &\boldsymbol{\varepsilon}_x \sim N(\boldsymbol{0}, \tau_x\boldsymbol{I}) \ .
+\end{align}
+$$
+We can construct the necessary stacks for this model using the `make_inlamemi_stacks` function:
+
+```{r}
+classical_stack <- make_inlamemi_stacks(data = simple_data,
+                                      formula_moi = f_moi,
+                                      formula_imp = f_imp,
+                                      error_type = "classical")
+```
+
+and then we can visualize the data in these stacks with the `show_data_structure` function:
+
+```{r, message = FALSE}
+classical_summary <- show_data_structure(classical_stack)
+```
+
+The LaTeX code is stored in `classical_summary$matrix_string`. If you want to display the matrices in an rmarkdown document, you can use the `cat` function, and just remember to set `results = 'asis'` as the chunk option:
+
+````{verbatim}
+```{r, results='asis'}
+cat(classical_summary$matrix_string)
+```
+````
+
+```{r, echo = FALSE, results='asis'}
+cat(classical_summary$matrix_string)
+```
+
+
+## Structure for Berkson and classical measurement error model
+Next, we consider a case where we have Berkson measurement error, along with either classical ME, missingness or both in the same covariate (whether it is classical ME, missingness or both makes no difference for this example, as that only affects the scaling of the measurement error precision).
+
+In this example, our hierarchical model consists of four levels; the main model of interest:
+$$
+\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ ,
+$$
+the Berkson error model:
+$$
+  \boldsymbol{x} = \boldsymbol{r} + \boldsymbol{u}_b \ , \quad \boldsymbol{u}_b \sim N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ ,
+$$
+the classical error model:
+$$
+  \boldsymbol{w} = \boldsymbol{r} + \boldsymbol{u}_c \ , \quad \boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
+$$
+and the imputation model:
+$$
+\boldsymbol{r} = \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_r \ , \quad \boldsymbol{\varepsilon}_r \sim N(\boldsymbol{0}, \tau_r\boldsymbol{I}) \ .
+$$
+
+Notice that we now have a new latent variable $\boldsymbol{r}$, which serves as a link between the sub-models and corresponds to the variable that is subject to Berkson error but that does not yet have the classical error added. 
+
+Rewritten for R-INLA: 
+
+$$
+\begin{align}
+  \boldsymbol{y} &= \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad &\boldsymbol{\varepsilon} &\sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &= -\boldsymbol{x} + \boldsymbol{r} + \boldsymbol{u}_b \ , \quad & \boldsymbol{u}_b &\sim N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
+  \boldsymbol{w} &= \boldsymbol{r} + \boldsymbol{u}_c \ , \quad &\boldsymbol{u}_c &\sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &= -\boldsymbol{r} + \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_r \ , \quad &\boldsymbol{\varepsilon}_r &\sim N(\boldsymbol{0}, \tau_r\boldsymbol{I}) \ .
+\end{align}
+$$
+Just like above, we construct the stacks:
+```{r}
+berkson_stack <- make_inlamemi_stacks(data = simple_data,
+              formula_moi = f_moi,
+              formula_imp = f_imp,
+              error_type = c("classical", "berkson", "missing"))
+```
+
+and then visualize the resulting matrices:
+```{r, message = FALSE}
+berkson_summary <- show_data_structure(berkson_stack)
+```
+
+
+```{r, echo = FALSE, results='asis'}
+cat(berkson_summary$matrix_string)
+```
+
+
+As you see, the only things that change is that there is added another model level, which leads to another column in the response matrix, and we additionally have a new column for the latent effect $\boldsymbol{r}$.
+
+## Accessing the stacks from the model object
+
+The data stacks that are generated by `make_inlamemi_stacks` inside `fit_inlamemi` is also returned with the `inlamemi` model object, so you don't need to run `make_inlamemi_stacks` yourself. This is how to access the stacks from the model object:
+
+```{r, results='asis'}
+inlamemi_model <- fit_inlamemi(data = simple_data,
+                           formula_moi = f_moi,
+                           formula_imp = f_imp,
+                           family_moi = "gaussian",
+                           error_type = c("berkson", "classical"),
+                           prior.prec.moi = c(0.5, 0.5),
+                           prior.prec.berkson = c(10, 9),
+                           prior.prec.classical = c(10, 9),
+                           prior.prec.imp = c(0.5, 0.5),
+                           initial.prec.moi = 1,
+                           initial.prec.berkson = 1,
+                           initial.prec.classical = 1,
+                           initial.prec.imp = 1)
+
+cat(show_data_structure(inlamemi_model$stack_data)$matrix_string)
+```
+

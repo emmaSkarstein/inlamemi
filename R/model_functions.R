@@ -1,0 +1,1174 @@
+#' Extract and group variables from formulas
+#'
+#' Helper function that takes in the formulas for the model of interest and the
+#' imputation model, and groups them into responses, covariates, covariate with
+#' error and covariate(s) without error, for both sub-models.
+#'
+#' @param formula_moi an object of class "formula", describing the main model to be fitted.
+#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
+#' @param error_variable the name of the variable with error
+#'
+#' @return A list containing the names of the different variables of the model. The names of the elements in the list are "response_moi" (the response for the moi), "covariates_moi" (all covariates in the moi), "error_variable" (the name of the variable with error or missing data), "covariates_error_free" (the moi covariates without error), "response_imp" (imputation model response), "covariates_imp" (imputation model covariates).
+#' @export
+#'
+#' @importFrom stats terms
+#'
+#' @examples
+#' extract_variables_from_formula(formula_moi = y ~ x + z, formula_imp = x ~ z)
+extract_variables_from_formula <- function(formula_moi,
+                                           formula_imp,
+                                           error_variable = NULL){
+
+  # Model of interest ----------------------------------------------------------
+
+  # Model of interest variables --
+  moi_components <- as.list(formula_moi)
+
+  ## Extract name of response:
+  response_moi <- all.vars(moi_components[[2]])
+
+  ## Right hand side terms (string)
+  rhs_terms_moi <- labels(terms(formula_moi))
+
+  # MOI random effects ---------------------------------------------------------
+  # Note: moi_components has a different structure if there is ONLY a random effect, no other covariates.
+  # So we need to check if there are multiple terms or only random effect.
+  if(length(rhs_terms_moi) > 1){ # Check if there are more than two rhs terms
+    rhs_moi_components <- moi_components[[3]]
+  }else{
+    rhs_moi_components <- moi_components[3]
+  }
+  reff_moi_index <- which(grepl("f\\((.*)\\)", rhs_moi_components))
+  reff_vars_moi <- ""
+  reff_moi <- ""
+  if(length(reff_moi_index) > 0){
+    reff_vars_moi <- setdiff(all.names(rhs_moi_components[reff_moi_index]),
+                             c("f", "list", "-", "c"))
+    reff_moi <- as.character(rhs_moi_components[reff_moi_index])
+  }
+
+  # MOI covariates -------------------------------------------------------------
+  ## select variables that are NOT random effects
+  covariates_moi <- setdiff(all.vars(moi_components[[3]]), reff_vars_moi)
+
+  # Error variable -------------------------------------------------------------
+  ## Identify error prone variable:
+  if(is.list(formula_imp)){
+    n_error_var <- length(formula_imp)
+    formula_imp_list <- formula_imp
+  }else{
+    n_error_var <- 1
+    formula_imp_list <- list(formula_imp)
+  }
+
+  error_variables <- c()
+  for(i in 1:n_error_var){ # for each error variable
+    error_variable_imp <- rlang::as_string(as.list(formula_imp_list[[i]])[[2]])
+    error_variables[i] <- error_variable_imp
+  }
+
+  if(is.null(error_variable)) error_variable <- error_variables
+
+  # Check if error variable and specified error variable are the same
+  if(any(error_variable != error_variables)){
+    stop("The specified error variable and the response of the imputation model are not the same.")
+  }
+
+  ## Extract index of error variable in formula:
+  error_var_index <- which(covariates_moi %in% error_variables)
+
+  ## Error-free covariates:
+  covariates_error_free <- covariates_moi[-error_var_index]
+
+  # MOI interaction effects ----------------------------------------------------
+  error_interaction_list <- ""
+  error_interaction_variables <- ""
+  ## Check for interaction effects involving error variable:
+  interaction_locs <- grepl(":|\\*", rhs_terms_moi)
+  if(any(interaction_locs)){
+    # If there are ANY interactions in the formula, we need to check if any of
+    #  them involve the error variable.
+    # Interactions:
+    interactions <- rhs_terms_moi[interaction_locs]
+    interaction_matrix <- sapply(error_variables, FUN = grepl, interactions)
+    # If there are multiple error variables and only one interaction effect,
+    # then the above doesn't become a matrix, so we force it.
+    if(length(error_variables) > 1 && is.null(dim(interaction_matrix))){
+      dim(interaction_matrix) <- c(1, length(error_variables))
+    }
+    # Error variables that have an interaction effect:
+    if(!is.null(ncol(interaction_matrix))){ # Check if there are multiple error variables?
+      error_vars_with_interaction <- error_variables[as.logical(colSums(interaction_matrix))]
+    }else{
+      error_vars_with_interaction <- error_variables[interaction_matrix]
+    }
+    # Index of error interactions in list of all interactions
+    if(!is.null(nrow(interaction_matrix))){ # Check if there are multiple interactions?
+      error_interaction_id <- as.logical(rowSums(interaction_matrix))
+    }else{
+      error_interaction_id <- interaction_matrix
+    }
+    if(any(error_interaction_id)){
+      error_interactions <- interactions[error_interaction_id]
+      error_interaction_list <- strsplit(error_interactions, ":")
+      error_interaction_variables <- sapply(error_interaction_list, setdiff, error_variable)
+    }
+  }
+
+  # Imputation model -----------------------------------------------------------
+  # Number of imputation models = no. error variables
+  response_imp_list <- c()
+  covariates_imp_list <- c()
+  random_effects_imp_list <- c()
+  random_effect_variables_imp_list <- c()
+
+  # Imp. random effects --------------------------------------------------------
+  for(i in 1:n_error_var){
+    imp_components <- as.list(formula_imp_list[[i]])
+    response_imp <- error_variable[i]
+    rhs_terms_imp <- labels(terms(formula_imp_list[[i]]))
+
+    ## Check for random effects in imp:
+    # Note: moi_components has a different structure if there is ONLY a random effect, no other covariates.
+    # So we need to check if there are multiple terms or only random effect.
+    if(length(rhs_terms_imp) > 1){ # Check if there are more than two rhs terms
+      rhs_imp_components <- imp_components[[3]]
+    }else{
+      rhs_imp_components <- imp_components[3]
+    }
+    reff_imp_index <- which(grepl("f\\((.*)\\)", rhs_imp_components))
+    reff_imp <- ""
+    reff_vars_imp <- ""
+    if(length(reff_imp_index) > 0){
+      reff_vars_imp <- setdiff(all.names(rhs_imp_components[reff_imp_index][[1]]),
+                               c("f", "list", "-", "c"))
+      reff_imp <- as.character(rhs_imp_components[reff_imp_index])
+    }
+
+    # Imp. covariates ----------------------------------------------------------
+    ## Imputation model covariates:
+    covariates_imp <- setdiff(all.vars(imp_components[[3]]), reff_vars_imp)
+
+    # Save to lists
+    response_imp_list[[i]] <- response_imp
+    covariates_imp_list[[i]] <- covariates_imp
+    random_effects_imp_list[[i]] <- reff_imp
+    random_effect_variables_imp_list[[i]] <- reff_vars_imp
+  }
+
+
+  return(list(
+    # Response for the model of interest. Single character or in some cases (such as survival models) a character vector.
+    response_moi = response_moi,
+    # Covariates for the model of interest. Character vector.
+    covariates_moi = covariates_moi,
+    # The actual random effect term(s) in the model of interest. Character vector.
+    random_effects_moi = reff_moi,
+    # The variable(s) involved in the random effect(s). Character vector.
+    random_effect_variables_moi = reff_vars_moi,
+    # Error variable(s). List.
+    error_variable = error_variable,
+    # Interaction effects involving the error variable(s). Length of the list is equal to the number of error variable interaction effects.
+    error_interaction_list = error_interaction_list,
+    # The non-error variables interacted with the respective error variables. List elements are otherwise the same as in "error_interaction_list".
+    error_interaction_variables = error_interaction_variables,
+    # Covariates in moi without error
+    covariates_error_free = covariates_error_free,
+    # Response variable(s) for imputation model(s). List.
+    response_imp = response_imp_list,
+    # Covariates for each imputation model. List elements are in same order as the responses in response_imp.
+    covariates_imp = covariates_imp_list,
+    # Random effect(s) in imputation model(s). List elements are in same order as above.
+    random_effects_imp = random_effects_imp_list,
+    # Variables involved in the random effect(s) in the imputation model(s). Same order as random_effects_imp.
+    random_effect_variables_imp = random_effect_variables_imp_list))
+}
+
+
+#' Make formula for measurement error and missing data model
+#'
+#' @param formula_moi an object of class "formula", describing the main model to be fitted.
+#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
+#' @param family_moi a string indicating the likelihood family for the model of interest (the main model).
+#' @param error_type type of error (one of "classical", "berkson", "missing")
+#' @param error_variable the name of the variable with error
+#' @param prior.beta.error parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?
+#' @param vars Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.
+#'
+#' @return An object of class "formula".
+#' @export
+#'
+#' @examples
+#' f_moi <- y ~ x + z
+#' f_imp <- x ~ z
+#' make_inlamemi_formula(formula_moi = f_moi,
+#'                     formula_imp = f_imp,
+#'                     error_type = "classical",
+#'                     prior.beta.error = c(0, 1/1000)
+#'                     )
+make_inlamemi_formula <- function(formula_moi,
+                                formula_imp,
+                                family_moi = "gaussian",
+                                error_type = "classical",
+                                error_variable = NULL,
+                                prior.beta.error,
+                                vars = NULL){
+
+  # Weaknesses:
+  # Fixed size of id.x and id.r values (1:n)
+
+  # Extract and group all variables from formulas:
+  if(is.null(vars)){
+    vars <- extract_variables_from_formula(formula_moi = formula_moi,
+                                           formula_imp = formula_imp,
+                                           error_variable = error_variable)
+  }
+
+  # If there are multiple error variables but just one specified error type,
+  # then make list with that error type in each element.
+  if(length(error_variable) > 1 & !is.list(error_type)){
+    nr_error <- length(error_variable)
+    error_type <- rep(list(error_type), nr_error)
+  }
+
+  # Define covariates in output formula as all variables in moi formula
+  #  except the response and error prone covariate:
+  covariates_error_free_string <- paste0("beta.", vars$covariates_error_free)
+
+  # Check the prior for beta.x
+  # If only one prior is given, put it in a list so the indexation turns out correctly
+  if(!is.list(prior.beta.error)){
+    prior.beta.error <- list(prior.beta.error)
+  }
+  if(length(prior.beta.error) < length(vars$error_variable)){
+    prior.beta.error <- lapply(1:length(vars$error_variable),
+                               function(x) prior.beta.error[[1]])
+    # Maybe add warning here?
+  }
+
+  # String for potential interaction effects
+  interaction_effects <- ""
+  if(vars$error_interaction_list != ""){
+    for(i in length(vars$error_interaction_list)){
+      non_error_var <- vars$error_interaction_variables[[i]]
+      error_var <- setdiff(vars$error_interaction_list[[i]], non_error_var)
+
+      coef_name <- paste0("beta.", non_error_var, error_var)
+      weight_name <- paste0("weight.", non_error_var, error_var)
+      f_string <- paste0("f(", coef_name, ", ", weight_name,
+                         ", copy = 'id.", error_var,
+                         "', hyper = list(beta = list(param = ",
+                         deparse(prior.beta.error[[1]]), ", fixed = FALSE)))")
+      interaction_effects <- c(interaction_effects, f_string)
+    }
+  }
+
+  # Covariates for imputation model(s):
+  covariates_imp_string <- c()
+  for(i in 1:length(vars$error_variable)){ # For each error variable
+    if(length(vars$covariates_imp[[i]]) > 0){
+      covariates_imp <- paste0("alpha.", vars$error_variable[i], ".", vars$covariates_imp[[i]])
+    }else{
+      covariates_imp <- ""
+    }
+    intercept_imp <- paste0("alpha.", vars$error_variable[i], ".0")
+    covariates_imp_string <- c(covariates_imp_string, intercept_imp, covariates_imp)
+  }
+
+  # The copy term to ensure the mismeasured variable(s) is copied correctly through the models
+  copy_terms <- c()
+  for(i in 1:length(vars$error_variable)){ # For each error variable, we need these terms
+    copy_term1 <- paste0("f(", paste0("beta.", vars$error_variable[[i]]),
+                         ", copy = 'id.", vars$error_variable[[i]], "', hyper = list(beta = list(param = ",
+                           deparse(prior.beta.error[[i]]), ", fixed = FALSE)))")
+    copy_term2 <- paste0("f(id.", vars$error_variable[[i]], ", weight.", vars$error_variable[[i]],
+                         ", model='iid', values = 1:n, hyper = list(prec = list(initial = -15, fixed=TRUE)))")
+    copy_terms <- c(copy_terms, copy_term1, copy_term2)
+  }
+
+  # Setting up the response formula
+  if(!family_moi %in% inla_survival_families()){
+    y_moi <- "y_moi, "
+  }else{
+    y_moi <- "inla.surv(time = y_time, event = y_event), "
+  }
+
+  response_list <- c()
+  # Loop over error variables. For each make a classical and imputation response,
+  # and optionally Berkson as well
+  for(i in 1:length(vars$error_variable)){
+    if("berkson" %in% error_type[[i]]){
+      berkson_response <- paste0(vars$error_variable[[i]], "_berkson")
+      response_list <- c(response_list, berkson_response)
+    }
+
+    classical_response <- paste0(vars$error_variable[[i]], "_classical")
+    imputation_response <- paste0(vars$error_variable[[i]], "_imp")
+    response_list <- c(response_list, classical_response, imputation_response)
+  }
+
+  error_response_string <- paste(response_list, collapse = ", ")
+  response_string <- paste0("list(", y_moi, error_response_string, ")")
+
+  formula_RHS <- paste(
+    # Remove default intercept
+    "-1",
+    # MOI covariates
+    "beta.0",
+    paste(covariates_error_free_string, collapse = " + "),
+    # MOI random effects
+    paste(vars$random_effects_moi, collapse = " + "),
+    # MOI interaction terms with error variable
+    paste(interaction_effects, collapse = " + "),
+    # Imputation model covariates
+    paste(covariates_imp_string, collapse = " + "),
+    # Imputation model random effects
+    paste(vars$random_effects_imp, collapse = " + "),
+    # Copy terms
+    paste(copy_terms, collapse = " + "),
+    # Between each term add a "+"
+    sep = " + ")
+
+  # Remove duplicate "+"'s
+  formula_RHS <- gsub(pattern = "((\\+)( *)){2,}", replacement = "+ ",
+                      formula_RHS)
+
+  # Optionally add Berkson layer
+  if("berkson" %in% error_type){
+    r_term <- "f(id.r, weight.r, model='iid', values = 1:n, hyper = list(prec = list(initial = -15, fixed = TRUE)))"
+    formula_RHS <- paste(formula_RHS, "+", r_term)
+  }
+
+
+  formula <- paste(response_string, "~", formula_RHS)
+
+  return(stats::as.formula(formula))
+}
+
+
+#' Make matrices for joint model specification in INLA
+#'
+#' @param data A data frame with response and covariate variables for the main model and the imputation model.
+#' @param formula_moi an object of class "formula", describing the main model to be fitted.
+#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
+#' @param error_type Type of error (one or more of "classical", "berkson", "missing")
+#'
+#' @return A data frame with all the data needed for the model, structured in the right way for INLA.
+make_inlamemi_matrices <- function(data,
+                          formula_moi,
+                          formula_imp,
+                          error_type = "classical"){
+  # Weaknesses:
+  #  limited to the one classical, one berkson, one missing (same var) case, so model size must be 2+2
+
+  # Set up sizes
+  n <- nrow(data)
+  n_models <- 2 + 2 # Num of error mods plus MOI and imp. mod.
+  Y_ncol <- n_models
+  Y_nrow <- n_models*n
+  #cov_nrows <- n_models*n
+
+  # Extract and group all variables from formulas:
+  vars <- extract_variables_from_formula(formula_moi = formula_moi,
+                                         formula_imp = formula_imp)
+
+  if(vars$error_variable == "error_variable"){
+    stop("Please name the variable with error something other than 'error_variable', as this name is used internally in the code and will lead to errors.")
+  }
+
+  # For all non-error covariates, the procedure is the same. So only the error-prone covariate needs to be treated separately.
+  # Similar for the imputation model.
+
+  # Set up the response matrix:
+  Y <- matrix(NA, Y_nrow, Y_ncol)
+
+  Y[1:n, 1] <- as.matrix(data[vars$response_moi])         # Regression model of interest response
+  Y[n+(1:n), 2] <- rep(0, n)                              # Berkson error model response
+  Y[2*n+(1:n), 3] <- as.matrix(data[vars$error_variable]) # Classical error model response
+  Y[3*n+(1:n), 4] <- rep(0, n)                            # Imputation model response
+
+  # Set up intercept vector for MOI:
+  beta.0 <- c(rep(1, n), rep(NA, 3*n))
+
+  # Set up vector for the variable with error/missingness, and corresponding
+  # vectors to enable imputation:
+  beta.error_variable <- paste0("beta.", vars$error_variable)
+  assign(beta.error_variable, c(1:n, rep(NA, 3*n)))
+
+  id.x <- c(rep(NA, n), 1:n, rep(NA, n), rep(NA, n))
+  weight.x <- c(rep(NA, n), rep(-1, n), rep(NA, n), rep(NA, n))
+
+  id.r <- c(rep(NA, n), 1:n, 1:n, 1:n)
+  weight.r <- c(rep(NA, n), rep(1, n), rep(1, n), rep(-1, n))
+
+  # Set up vectors for all error-free covariates with the correct names:
+  cov_moi_names <- c()
+
+  for(variable in vars$covariates_error_free){
+    var_name <- paste0("beta.", variable)
+    cov_moi_names <- c(cov_moi_names, var_name)
+    assign(var_name, c(as.matrix(data[variable]), rep(NA, 3*n)))
+  }
+
+  # Intercept for imputation model:
+  alpha.0 <- c(rep(NA, 3*n), rep(1, n))
+
+  # Set up vectors for covariates in the imputation model
+  cov_imp_names <- c()
+
+  for(variable in vars$covariates_imp){
+    var_name <- paste0("alpha.", variable)
+    cov_imp_names <- c(cov_imp_names, var_name)
+    assign(var_name, c(rep(NA, 3*n), as.matrix(data[variable])))
+  }
+
+  # How do I save the objects that have names based on user input into a list?
+  # I generate a string that contains the code I want to run, and then I use
+  # eval(parse(.)) to actually run that code. Since I do have the names of the
+  # variables as strings, such a string will be easy to generate.
+
+  # The names of the objects I defined explicitly above:
+  fixed_objects <- "Y = Y, beta.0 = beta.0, id.x = id.x, weight.x = weight.x, id.r = id.r, weight.r = weight.r, alpha.0 = alpha.0, "
+
+  # The names of the variables that change based on the covariate names:
+  variable_objects <- paste0(c(beta.error_variable, cov_moi_names, cov_imp_names), " = ",
+                             c(beta.error_variable, cov_moi_names, cov_imp_names), collapse = ", ")
+
+  dd <- NULL # Assign NULL to dd, just to avoid notes when running checks.
+
+  # A string containing the code needed to define a list of all the objects:
+  define_dataframe <- paste0("dd <- list(", fixed_objects, variable_objects, ")")
+
+  # Evaluate the string of code from above:
+  eval(parse(text = define_dataframe))
+
+  return(dd)
+}
+
+#' Make data stacks for joint model specification in INLA
+#'
+#' @param formula_moi an object of class "formula", describing the main model to be fitted.
+#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
+#' @param family_moi a string indicating the likelihood family for the model of interest (the main model).
+#' @param data A data frame with response and covariate variables for the main model and the imputation model.
+#' @param error_type Type of error (one or more of "classical", "berkson", "missing")
+#' @param repeated_observations Does the variable with measurement error and/or missingness have repeated observations? If so, set this to "TRUE". In that case, when specifying the formula, use the name of the variable without any numbers, but when specifying the data, make sure that the repeated measurements end in a number, i.e "sbp1" and "sbp2".
+#' @param vars Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.
+#'
+#' @return An object of class inla.stack with data structured according to specified formulas and error models.
+#' @export
+#'
+#' @examples
+#' make_inlamemi_stacks(formula_moi = y ~ x + z,
+#'                    formula_imp = x ~ z,
+#'                    data = simple_data,
+#'                    error_type = "classical")
+make_inlamemi_stacks <- function(formula_moi,
+                               formula_imp,
+                               family_moi = "gaussian",
+                               data,
+                               error_type = "classical",
+                               repeated_observations = FALSE,
+                               vars = NULL){
+
+  # Extract and group all variables from formulas:
+  if(is.null(vars)){
+    vars <- extract_variables_from_formula(formula_moi = formula_moi,
+                                           formula_imp = formula_imp)
+  }
+
+  # Some checks ----
+  if("error_variable" %in% vars$error_variable){
+    stop("Please name the variable with error something other than 'error_variable', as this name is used internally in the code and will lead to errors.")
+  }
+
+  # Check that variables are named correctly in case of repeated measurements
+  if(repeated_observations){
+    expected_data_variable_names <- paste0(vars$error_variable, c(1,2))
+    if(!all(expected_data_variable_names %in% names(data))){
+      stop("It looks like you have repeated measurements, and that the formula or data may not be specified correctly. When fitting the model with repeated observations for the variable with missingness or measurement error, make sure that you specify the variable with its general name in the formula, but provide numbered versions in the data, such that each repeat is labelled with a number after the variable name. For instance, assume we have repeated measurements of systolic blood pressure (sbp). Then we would write 'sbp' in the formula, but in the data they would be labelled 'sbp1' and 'sbp2'.")
+    }
+  }
+
+  # Check if it looks like there may be repeated measurements
+  repeated_obs_warning <- FALSE
+  for(error_var in vars$error_variable){
+    if(sum(grepl(paste0("\\b", error_var, "(\\d)\\b"),
+                 names(data)))>1 &&
+       !repeated_observations){
+      repeated_obs_warning <- TRUE
+      warning("It looks like you may have repeated measurements of the variable with measurement error or missingness. If this is the case, specify the argument 'repeated_observations = TRUE' to ensure correct analysis.")
+    }
+  }
+
+
+  # Check that all variables in formula exist in data
+  formula_vars <- union(all.vars(formula_moi), all.vars(formula_imp))
+  data_vars <- names(data)
+  if(repeated_observations | repeated_obs_warning){
+    # If reason to believe repeated measurements, ignore the error variable in the comparison
+    formula_vars <- setdiff(formula_vars, vars$error_variable)
+  }
+  diff_vars <- setdiff(formula_vars, data_vars) # vars in formula but not in data
+  if(length(diff_vars)>0){
+    stop(paste0("It looks like the following variable(s) are in the formula but not the data: ", toString(diff_vars)))
+  }
+  # Check if error variable is not in data
+  for(error_var in vars$error_variable){
+    if(!repeated_observations && !error_var %in% data_vars){
+      stop("The error variable, ", vars$error_variable, ", is not found among the variables in the data.")
+    }
+  }
+
+
+
+  # Defining sizes -------------------------------------------------------------
+  n <- nrow(data)
+
+  # Model of interest stack  ---------------------------------------------------
+
+  # Set up intercept vector for MOI:
+  beta.0 <- rep(1, n)
+
+  # Set up vector for variable with error
+  error_var_coefs <- paste0("beta.", vars$error_variable)
+  for(error_var in vars$error_variable){
+    beta.error_variable <- paste0("beta.", error_var)
+    assign(beta.error_variable, 1:n)
+  }
+
+
+  # Set up vectors for all error-free covariates with the correct names:
+  cov_moi_names <- c()
+
+  for(variable in vars$covariates_error_free){
+    var_name <- paste0("beta.", variable)
+    cov_moi_names <- c(cov_moi_names, var_name)
+    assign(var_name, as.matrix(data[variable]))
+  }
+
+  # The names of the variables that change based on the covariate names:
+  moi_effects <- paste0(c("beta.0", error_var_coefs, cov_moi_names), " = ",
+                        c("beta.0", error_var_coefs, cov_moi_names),
+                        collapse = ", ")
+
+  # Add (optional) random effect variable
+  if(nchar(vars$random_effects_moi) > 0){
+    # "list", "-" and "c" will be recognized as variables... so remove them
+    assign(vars$random_effect_variables_moi, as.matrix(data[vars$random_effect_variables_moi]))
+
+    reff_list_moi <- paste0(vars$random_effect_variables_moi, " = ", vars$random_effect_variables_moi)
+    moi_effects <- paste0(moi_effects, ", ", reff_list_moi)
+  }
+
+  # Add (optional) interaction variable
+  if(nchar(vars$error_interaction_variables) > 0){
+    for(interaction_var in vars$error_interaction_variables){
+      coef_name <- paste0("beta.", interaction_var, vars$error_variable)
+      assign(coef_name, 1:n)
+      weight_name <- paste0("weight.", interaction_var, vars$error_variable)
+      assign(weight_name, c(as.matrix(data[interaction_var])))
+
+      interaction_list <- paste0(coef_name, " = ", coef_name)
+      weight_list <- paste0(weight_name, " = ", weight_name)
+      moi_effects <- paste0(moi_effects, ", ", interaction_list,
+                            ", ", weight_list)
+    }
+  }
+
+  moi_effects_list <- NULL # Assign NULL to moi_effects_list, just to avoid notes when running checks.
+
+  # A string containing the code needed to define a list of all the objects:
+  moi_code <- paste0("moi_effects_list <- list(", moi_effects, ")")
+
+  # Evaluate the string of code from above:
+  eval(parse(text = moi_code))
+
+  # Response
+  ## if survival model, structure the response accordingly
+  if(family_moi %in% inla_survival_families()){
+    time_var <- vars$response_moi[1]
+    event_var <- vars$response_moi[2]
+    response_moi <- list(y_time = as.matrix(data[time_var]),
+                         y_event = as.matrix(data[event_var]))
+  }else{ ## otherwise response is just one vector
+    response_moi <- list(y_moi = as.matrix(data[vars$response_moi]))
+  }
+  # y = x + z...
+  stk_moi <- INLA::inla.stack(data = response_moi,
+                        A = list(1),
+                        effects = list(moi_effects_list),
+                        tag = "moi")
+
+  # Empty list to store the error and imputation stacks.
+  error_stacks <- list()
+  if(is.list(error_type)){
+    error_type_list <- error_type
+  }else{
+    error_type_list <- list(error_type)
+  }
+
+  # For each eror variable, either make a Berkson stack or a classical and imputation stack:
+  for(i in 1:length(vars$error_variable)) {
+    # Berkson stack --------------------------------------------------------------
+
+    if("berkson" %in% error_type_list[[i]]){
+      # 0 = -x_true + r + u_b
+      # Berkson effects
+      id_name <- paste0("id.", vars$error_variable[[i]])
+      weight_name <- paste0("weight.", vars$error_variable[[i]])
+
+      berkson_effects_list <- NULL # Assign NULL, just to avoid notes when running checks.
+      berkson_code <- paste0("berkson_effects_list <- list(", id_name,
+                               " = 1:n, ", weight_name, " = -1)")
+      eval(parse(text = berkson_code))
+      berkson_effects_list$id.r <- 1:n
+      berkson_effects_list$weight.r <- 1
+
+      # Berkson response
+      response_berkson <- NULL
+      berkson_tag <- paste0(vars$error_variable[[i]], "_berkson")
+      response_berkson_code <- paste0("response_berkson <- list(", berkson_tag, "= rep(0,n))")
+      eval(parse(text = response_berkson_code))
+
+      stk_b <- INLA::inla.stack(data = response_berkson,
+                                A = list(1),
+                                effects = list(berkson_effects_list),
+                                tag = berkson_tag)
+
+      # Add Berkson stack to list of error stacks
+      stk_b_name <- paste0("stk_b_", vars$error_variable[[i]])
+      stk_b_code <- paste0("error_stacks <- c(error_stacks, ", stk_b_name, " = list(stk_b))")
+      eval(parse(text = stk_b_code))
+    }
+
+
+    # Classical stack  -----------------------------------------------------------
+
+    # Set "height" of measurement error stack depending on no of repeats
+    if(repeated_observations){
+      error_var_list <- names(data)[grepl(paste0("\\b", vars$error_variable[[i]], "(\\d)\\b"), names(data))]
+      nr_repeats <- length(error_var_list)
+    }else{
+      error_var_list <- vars$error_variable[[i]]
+      nr_repeats <- 1
+    }
+
+    classical_id <- rep(1:n, nr_repeats)
+
+    # Latent variable r if Berkson ME, otherwise x
+    if("berkson" %in% error_type_list[[i]]){
+      classical_effects_list <- list(id.r = classical_id, weight.r = 1)
+    }else{
+      id_name <- paste0("id.", vars$error_variable[[i]])
+      weight_name <- paste0("weight.", vars$error_variable[[i]])
+
+      classical_effects_list <- NULL # Assign NULL, just to avoid notes when running checks.
+      # A string containing the code needed to define a list of all the objects:
+      classical_code <- paste0("classical_effects_list <- list(", id_name,
+                               " = classical_id, ", weight_name, " = 1)")
+      eval(parse(text = classical_code))
+
+      #classical_effects_list <- list(id.x = classical_id, weight.x = 1)
+    }
+
+    # Response
+    response_classical <- NULL
+    classical_response <- as.matrix(utils::stack(data[error_var_list])[1])
+
+    classical_tag <- paste0(vars$error_variable[[i]], "_classical")
+    response_classical_code <- paste0("response_classical <- list(",
+                                      classical_tag,
+                                      "= classical_response)")
+    eval(parse(text = response_classical_code))
+    #response_classical <- list(y_classical = classical_response)
+
+    # x = r + u_c
+    stk_c <- INLA::inla.stack(data = response_classical,
+                              A = list(1),
+                              effects = list(classical_effects_list),
+                              compress = FALSE,
+                              tag = classical_tag)
+
+    # Add classical stack to list of stacks
+    stk_c_name <- paste0("stk_c_", vars$error_variable[[i]])
+    stk_c_code <- paste0("error_stacks <- c(error_stacks, ", stk_c_name, " = list(stk_c))")
+    eval(parse(text = stk_c_code))
+
+
+    # Imputation stack  ----------------------------------------------------------
+
+    # Intercept for imputation model:
+    intercept_name <- paste0("alpha.", vars$error_variable[[i]], ".0")
+    assign(intercept_name, rep(1, n))
+
+    # Set up vectors for covariates in the imputation model
+    cov_imp_names <- c()
+
+    for(variable in vars$covariates_imp[[i]]){
+        var_name <- paste0("alpha.", vars$error_variable[[i]], ".", variable)
+        cov_imp_names <- c(cov_imp_names, var_name)
+        assign(var_name, as.matrix(data[variable]))
+    }
+
+    # The names of the variables that change based on the covariate names:
+    imp_effects <- paste0(c(intercept_name, cov_imp_names), " = ",
+                          c(intercept_name, cov_imp_names), collapse = ", ")
+
+    # Add (optional) random effect variable
+    if(nchar(vars$random_effects_imp[[i]]) > 0){
+      assign(vars$random_effect_variables_imp[[i]], as.matrix(data[vars$random_effect_variables_imp[[i]]]))
+      reff_list_imp <- paste0(vars$random_effect_variables_imp[[i]], " = ", vars$random_effect_variables_imp[[i]])
+      imp_effects <- paste0(imp_effects, ", ", reff_list_imp)
+    }
+
+    imp_effects_list <- NULL # Assign NULL to imp_effects_list, just to avoid notes when running checks.
+
+    # A string containing the code needed to define a list of all the objects:
+    imp_code <- paste0("imp_effects_list <- list(", imp_effects, ")")
+
+    # Evaluate the string of code from above:
+    eval(parse(text = imp_code))
+
+    # Latent variable r if Berkson ME, otherwise x
+    if("berkson" %in% error_type){
+      imp_effects_list$id.r <- 1:n
+      imp_effects_list$weight.r <- rep(-1, n)
+    }else{
+      id_code <- paste0("imp_effects_list$", id_name, " <- 1:n")
+      weight_code <- paste0("imp_effects_list$", weight_name, " <- rep(-1, n)")
+      #imp_effects_list$id.x <- 1:n
+      #imp_effects_list$weight.x <- rep(-1, n)
+      eval(parse(text = id_code))
+      eval(parse(text = weight_code))
+    }
+
+    # Response
+    response_imputation <- NULL
+    imputation_tag <- paste0(vars$error_variable[[i]], "_imp")
+    response_imputation_code <- paste0("response_imputation <- list(", imputation_tag, "= rep(0,n))")
+    eval(parse(text = response_imputation_code))
+    #response_imputation <- list(y_imp = rep(0, n))
+
+    # r = z + ...
+    stk_imp <- INLA::inla.stack(data = response_imputation,
+                                A = list(1),
+                                effects = list(imp_effects_list),
+                                tag = imputation_tag)
+
+    # Add imputation stack to list of stacks
+    stk_imp_name <- paste0("stk_imp_", vars$error_variable[[i]])
+    stk_imp_code <- paste0("error_stacks <- c(error_stacks, ", stk_imp_name, " = list(stk_imp))")
+    eval(parse(text = stk_imp_code))
+
+  } # End loop over error variables
+
+
+
+  stk_full <- NULL
+  error_stack_names <- names(error_stacks)
+  error_stack_names_string <- paste0("error_stacks$", error_stack_names, collapse = ", ")
+  stk_full_code <- paste0("stk_full <- INLA::inla.stack(stk_moi, ",
+                          error_stack_names_string, ", compress = FALSE)")
+
+  eval(parse(text = stk_full_code))
+
+  return(stk_full)
+}
+
+#' Construct scaling vector to scale the precision of non-mismeasured observations
+#'
+#' @param inlamemi_stack an object of class inlamemi.data.stack containing data structured
+#' @param error_type one of "classical", "berkson" or "missing".
+#' @param classical_error_scaling can be specified if the classical measurement error varies across observations. Must be a vector of the same length as the data.
+#' @param vars Results from a call to "extract_variables_from_formula" function.
+#'
+#' @return A vector reflecting the scaling factor for the residual terms in each model level.
+#' @export
+#'
+#' @examples
+#' stacks <- make_inlamemi_stacks(data = simple_data,
+#'                              formula_moi = y ~ x + z,
+#'                              formula_imp = x ~ z,
+#'                              error_type = c("classical", "berkson"))
+#' vars <- extract_variables_from_formula(formula_moi = y ~ x + z,
+#'                                        formula_imp = x ~ z)
+#' make_inlamemi_scaling_vector(stacks,
+#'                            error_type = c("classical", "berkson"),
+#'                            vars = vars)
+make_inlamemi_scaling_vector <- function(inlamemi_stack,
+                                       error_type,
+                                       classical_error_scaling = NULL,
+                                       vars){
+  # Scale the classical error precision of the perfectly measured values to a very high value (10^12).
+  # If we have only missing data/perfectly observed data, then the precision can be scaled for all (because it makes no difference for the missing values)
+  # but if we have measurement error (possibly varying), then the value of the precision is more meaningful.
+
+  stack_index <- inlamemi_stack$data$index
+  tags <- names(stack_index)
+  tags_classical <- tags[grepl("classical", tags)]
+  tags_imp <- tags[grepl("imp", tags)]
+
+  index_moi <- inlamemi_stack$data$index$moi
+  index_classical <- inlamemi_stack$data$index[tags_classical]
+  index_imp <- inlamemi_stack$data$index[tags_imp]
+
+  n_total <- nrow(inlamemi_stack$data$data)
+
+  # Default case:
+  scale_vec <- rep(1, n_total)
+
+  if(!is.list(error_type)){
+    error_type <- list(error_type)
+  }
+
+  for(i in length(vars$error_variable)){
+    if(!"classical" %in% error_type[[i]]){
+      # If there is no classical measurement error, then the classical error
+      # precision should be scaled very high to indicate that there is no error.
+      # Even if there is missingness, this scaling should be done, as the missing
+      # values will anyway be imputed.
+      tag <- paste0(vars$error_variable[[i]], "_classical")
+      index <- index_classical[[tag]]
+      scale_vec[index] <- 10^8
+    }
+  }
+
+  # The manual classical error scaling currently only works if there is just one error variable.
+  if(!is.null(classical_error_scaling)){
+    n_classical <- length(index_classical[[1]])
+    if(length(classical_error_scaling) != n_classical){
+      stop(paste0("The length of classical_error_scaling (",
+                  length(classical_error_scaling),
+                  ") is not the same as the number of observations (",
+                  n_classical,
+                  ")."))
+    }
+    # This can be used if the error varies for each observation somehow.
+    scale_vec[index_classical[[1]]] <- classical_error_scaling
+  }
+
+  return(scale_vec)
+}
+
+
+#' Make "control.family" argument for passing to the "inla" function
+#'
+#' @param family_moi a string indicating the likelihood family for the model of interest (the main model).
+#' @param error_type type of error (one or more of "classical", "berkson", "missing")
+#' @param prior.prec.moi a string containing the parameters for the prior for the precision of the residual term for the model of interest. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.moi = 'fixed'".
+#' @param prior.prec.berkson a string containing the parameters for the prior for the precision of the error term for the Berkson error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.berkson = 'fixed'".
+#' @param prior.prec.classical a string containing the parameters for the prior for the precision of the error term for the classical error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.classical = 'fixed'".
+#' @param prior.prec.imp a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.imputation = 'fixed'".
+#' @param prior.beta.error parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?
+#' @param initial.prec.moi the initial value for the precision of the residual term for the model of interest.
+#' @param initial.prec.berkson the initial value for the precision of the residual term for the Berkson error term.
+#' @param initial.prec.classical the initial value for the precision of the residual term for the classical error term.
+#' @param initial.prec.imp the initial value for the precision of the residual term for the latent variable r.
+#' @param control.family.moi control.family component for model of interest. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments, or in the cases when other hyperparameters are needed for the model of interest, see for instance survival models.
+#' @param control.family.berkson control.family component Berkson model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family.classical control.family component for classical model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family.imp control.family component for imputation model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family control.family for use in inla (can be provided directly instead of passing the "prior.prec...." and "initial.prec..." arguments. If this is specified, any other "control.family..." or "prior.prec..." arguments provided will be ignored.
+#'
+#' @return the "control.family" argument to be passed to inla, a list of "control.family" arguments for each model in the hierarchical measurement error model.
+#' @export
+#'
+#' @examples
+#' make_inlamemi_control.family(
+#'   family_moi = "gaussian",
+#'   error_type = c("berkson", "classical"),
+#'   prior.prec.moi = c(10, 9),
+#'   prior.prec.berkson = c(10, 9),
+#'   prior.prec.classical = c(10, 9),
+#'   prior.prec.imp = c(10, 9),
+#'   prior.beta.error = c(0, 1/1000),
+#'   initial.prec.moi = 1,
+#'   initial.prec.berkson = 1,
+#'   initial.prec.classical = 1,
+#'   initial.prec.imp = 1)
+#'
+#' make_inlamemi_control.family(
+#'   family_moi = "weibull.surv",
+#'   error_type = c("classical", "missing"),
+#'   control.family.moi =
+#'     list(hyper = list(alpha = list(param = 0.01,
+#'                                    initial = log(1.4),
+#'                                    fixed = FALSE))),
+#'   prior.prec.classical = c(0.5, 0.5),
+#'   prior.prec.imp = c(0.5, 0.5),
+#'   initial.prec.classical = 2.8,
+#'   initial.prec.imp = 1)
+make_inlamemi_control.family <- function(family_moi,
+                                       error_type = "classical",
+                                       prior.prec.moi = NULL,
+                                       prior.prec.berkson = NULL,
+                                       prior.prec.classical = NULL,
+                                       prior.prec.imp = NULL,
+                                       prior.beta.error = NULL,
+                                       initial.prec.moi = NULL,
+                                       initial.prec.berkson = NULL,
+                                       initial.prec.classical = NULL,
+                                       initial.prec.imp = NULL,
+                                       control.family.moi = NULL,
+                                       control.family.berkson = NULL,
+                                       control.family.classical = NULL,
+                                       control.family.imp = NULL,
+                                       control.family = NULL){
+  # Define some stuff
+  model_levels_without_moi <- union(error_type, c("classical", "imp")) # Always need classical
+  model_levels_without_moi_and_missing <- setdiff(model_levels_without_moi, "missing")
+
+  # If control.family is specified, just use that directly.
+  if(!is.null(control.family)){
+    return(control.family)
+  }
+  # Otherwise:
+
+  # Check if any defaults are needed -------------------------------------------
+  prec.list <- list(moi = prior.prec.moi, berkson = prior.prec.berkson,
+                    classical = prior.prec.classical, imp = prior.prec.imp)
+  # Not so easy to find indexes of NULL elements in list.
+  # Workaround is to find elements that have length 0.
+  which_prec_null <- names(prec.list[lengths(prec.list)==0])
+
+  # Find out which of these are missing:
+  which_need_defaults <- intersect(which_prec_null, model_levels_without_moi)
+
+  # Set defaults for necessary priors that have not been specified
+  for(component in which_need_defaults){
+    #warning(paste0("Using default prior Gamma(10, 9) for the precision of the ",
+    #               component, " model, and the initial value is set to 1 for the same term. This should be given a better value by specifying 'prior.prec.",
+    #               component, "' and 'initial.prec.", component, "'.\n"))
+    prior_code <- paste0("prior.prec.", component, " <- c(10, 9); ",
+                         "initial.prec.", component, " <- 1")
+    eval(parse(text = prior_code))
+  }
+
+  # Define control.family.moi --------------------------------------------------
+  if(is.null(control.family.moi)){ # If control.family.moi is not provided
+    if(family_moi %in% c("binomial", "poisson")){
+      control.family.moi <- list(hyper = list())
+    }
+    if(family_moi == "gaussian"){
+      # Check if default is needed
+      if(any(is.null(initial.prec.moi), is.null(prior.prec.moi))){
+        warning("Using default prior Gamma(10, 9) for the precision of the model of interest, and the initial value is set to 1 for the same term. This should be given a better value by specifying 'prior.prec.moi' and 'initial.prec.moi'.\n")
+        prior.prec.moi <- c(10, 9)
+        initial.prec.moi <- 1
+      }
+      control.family.moi <- list(hyper = list(prec = list(initial = log(initial.prec.moi),
+                                                          param = prior.prec.moi,
+                                                          fixed = FALSE)))
+    }
+  }
+  control.family <- list(control.family.moi)
+
+  # Optionally define control.family.berkson -----------------------------------
+  if("berkson" %in% error_type){
+    if(is.null(control.family.berkson)){ # If no control.fam.berk provided, insert arguments
+      control.family.berkson <- list(hyper = list(
+        prec = list(initial = log(initial.prec.berkson),
+                    param = prior.prec.berkson,
+                    fixed = FALSE)))
+    }
+    control.family <- append(control.family, list(control.family.berkson))
+  }
+
+  # Define control.family.classical --------------------------------------------
+  if(is.null(control.family.classical)){
+    control.family.classical <- list(hyper = list(
+      prec = list(initial = log(initial.prec.classical),
+                  param = prior.prec.classical,
+                  fixed = FALSE)))
+  }
+  control.family <- append(control.family, list(control.family.classical))
+
+  # Define control.family.imp --------------------------------------------------
+  if(is.null(control.family.imp)){
+    control.family.imp <- list(hyper = list(
+      prec = list(initial = log(initial.prec.imp),
+                  param = prior.prec.imp,
+                  fixed = FALSE)))
+  }
+  control.family <- append(control.family, list(control.family.imp))
+
+  return(control.family)
+}
+
+#' Fit model for measurement error and missing data in INLA
+#'
+#' A wrapper function around "INLA::inla()", providing the necessary structure to fit the hierarchical measurement error model that adjusts coefficient estimates to account for biases due to measurement error and missing data.
+#'
+#' @param formula_moi an object of class "formula", describing the main model to be fitted.
+#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
+#' @param family_moi a string indicating the likelihood family for the model of interest (the main model).
+#' @param data an object of class data.frame or list containing the variables in the model.
+#' @param error_type type of error (one or more of "classical", "berkson", "missing")
+#' @param error_variable character vector with the name(s) of the variable(s) with error.
+#' @param repeated_observations Does the variable with measurement error and/or missingness have repeated observations? If so, set this to "TRUE". In that case, when specifying the formula, use the name of the variable without any numbers, but when specifying the data, make sure that the repeated measurements end in a number, i.e "sbp1" and "sbp2".
+#' @param classical_error_scaling can be specified if the classical measurement error varies across observations. Must be a vector of the same length as the data.
+#' @param prior.prec.moi a string containing the parameters for the prior for the precision of the residual term for the model of interest.
+#' @param prior.prec.berkson a string containing the parameters for the prior for the precision of the error term for the Berkson error model.
+#' @param prior.prec.classical a string containing the parameters for the prior for the precision of the error term for the classical error model.
+#' @param prior.prec.imp a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.
+#' @param prior.beta.error parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?
+#' @param initial.prec.moi the initial value for the precision of the residual term for the model of interest.
+#' @param initial.prec.berkson the initial value for the precision of the residual term for the Berkson error term.
+#' @param initial.prec.classical the initial value for the precision of the residual term for the classical error term.
+#' @param initial.prec.imp the initial value for the precision of the residual term for the latent variable r.
+#' @param control.family.moi control.family component for model of interest. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments, or in the cases when other hyperparameters are needed for the model of interest, see for instance survival models.
+#' @param control.family.berkson control.family component Berkson model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family.classical control.family component for classical model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family.imp control.family component for imputation model. Can be specified here using the inla syntax instead of passing the "prior.prec..." and "initial.prec..." arguments. Useful in the cases when more flexibility is needed, for instance if one wants to specify a different prior distribution than Gamma.
+#' @param control.family control.family for use in inla (can be provided directly instead of passing the "prior.prec...." and "initial.prec..." arguments. If this is specified, any other "control.family..." or "prior.prec..." arguments provided will be ignored.
+#' @param control.predictor control.predictor for use in inla.
+#' @param ... other arguments to pass to `inla`.
+#'
+#' @return An object of class \code{inlamemi}.
+#' @export
+#'
+#' @examples
+#' simple_moi <- y ~ x + z
+#' simple_imp <- x ~ z
+#'
+#' # Fit the model
+#' simple_model <- fit_inlamemi(data = simple_data,
+#'                            formula_moi = simple_moi,
+#'                            formula_imp = simple_imp,
+#'                            family_moi = "gaussian",
+#'                            error_type = c("berkson", "classical"),
+#'                            error_variable = "x",
+#'                            prior.prec.moi = c(10, 9),
+#'                            prior.prec.berkson = c(10, 9),
+#'                            prior.prec.classical = c(10, 9),
+#'                            prior.prec.imp = c(10, 9),
+#'                            prior.beta.error = c(0, 1/1000),
+#'                            initial.prec.moi = 1,
+#'                            initial.prec.berkson = 1,
+#'                            initial.prec.classical = 1,
+#'                            initial.prec.imp = 1)
+fit_inlamemi <- function(formula_moi,
+                     formula_imp = NULL,
+                     family_moi,
+                     data,
+                     error_type = "classical",
+                     error_variable = NULL,
+                     repeated_observations = FALSE,
+                     classical_error_scaling = NULL,
+                     prior.prec.moi = NULL,
+                     prior.prec.berkson = NULL,
+                     prior.prec.classical = NULL,
+                     prior.prec.imp = NULL,
+                     prior.beta.error = NULL,
+                     initial.prec.moi = NULL,
+                     initial.prec.berkson = NULL,
+                     initial.prec.classical = NULL,
+                     initial.prec.imp = NULL,
+                     control.family.moi = NULL,
+                     control.family.berkson = NULL,
+                     control.family.classical = NULL,
+                     control.family.imp = NULL,
+                     control.family = NULL,
+                     control.predictor = NULL,
+                     ...){
+
+  # Some checks ----------------------------------------------------------------
+  if(family_moi != "gaussian" && !is.null(prior.prec.moi)){
+    warning(paste("The 'prior.prec.moi' argument is only needed when fitting a Gaussian model. You have specified 'family_moi = ",
+                  family_moi, "', so 'prior.prec.moi' will not be used."))
+  }
+
+  # Extract variables and structure these --------------------------------------
+  vars <- extract_variables_from_formula(formula_moi = formula_moi,
+                                         formula_imp = formula_imp,
+                                         error_variable = error_variable)
+
+  # Make formula from sub-models -----------------------------------------------
+  formula_full <- make_inlamemi_formula(formula_moi = formula_moi,
+                               formula_imp = formula_imp,
+                               family_moi = family_moi,
+                               error_type = error_type,
+                               prior.beta.error = prior.beta.error,
+                               vars = vars)
+
+  # Make the stacks for the joint model ----------------------------------------
+  data_stack <- make_inlamemi_stacks(formula_moi = formula_moi,
+                                   formula_imp = formula_imp,
+                                   family_moi = family_moi,
+                                   data = data,
+                                   error_type = error_type,
+                                   repeated_observations = repeated_observations,
+                                   vars = vars)
+
+  # Define model levels --------------------------------------------------------
+  #model_levels_without_moi <- union(error_type, c("classical", "imp")) # Always need classical
+  #model_levels_without_moi_and_missing <- setdiff(model_levels_without_moi, "missing")
+  # If survival model, the moi response has two elements. Otherwise just 1.
+  moi_levels <- ifelse("y_event" %in% data_stack$data$names, 2, 1)
+  model_levels_without_moi <- length(data_stack$data$names) - moi_levels
+
+  # Make scaling vector --------------------------------------------------------
+  scaling_vec <- make_inlamemi_scaling_vector(
+    inlamemi_stack = data_stack,
+    error_type = error_type,
+    classical_error_scaling = classical_error_scaling,
+    vars = vars)
+
+  # Add extra stuff to inla data -----------------------------------------------
+  n <- length(data_stack$data$index$moi) # Define number of observations
+  data_for_inla <- INLA::inla.stack.data(data_stack,
+                                         n = n,
+                                         scaling_vec = scaling_vec,
+                                         compress = FALSE)
+
+
+  # Make "control.family" ------------------------------------------------------
+  control.family <- make_inlamemi_control.family(family_moi = family_moi,
+                                               error_type = error_type,
+                                               prior.prec.moi = prior.prec.moi,
+                                               prior.prec.berkson = prior.prec.berkson,
+                                               prior.prec.classical = prior.prec.classical,
+                                               prior.prec.imp = prior.prec.imp,
+                                               prior.beta.error = prior.beta.error,
+                                               initial.prec.moi = initial.prec.moi,
+                                               initial.prec.berkson = initial.prec.berkson,
+                                               initial.prec.classical = initial.prec.classical,
+                                               initial.prec.imp = initial.prec.imp,
+                                               control.family.moi = control.family.moi,
+                                               control.family.berkson = control.family.berkson,
+                                               control.family.classical = control.family.classical,
+                                               control.family.imp = control.family.imp,
+                                               control.family = control.family)
+
+  # Specify "control.predictor" ------------------------------------------------
+  if(is.null(control.predictor)){
+    control.predictor <- list(compute = TRUE)
+  }
+
+  # Run everything in the "inla"-function --------------------------------------
+  inlamemi_model <- INLA::inla(
+    formula = formula_full,
+    family = c(family_moi, rep("gaussian", model_levels_without_moi)),
+    data = data_for_inla,
+    scale = scaling_vec,
+    control.family = control.family,
+    control.predictor = control.predictor,
+    ...
+  )
+
+  # Set call to be full formula
+  inlamemi_model$call <- formula_full
+
+  # Add interesting arguments to output
+  inlamemi_model$.args$formula_moi <- formula_moi
+  inlamemi_model$.args$formula_imp <- formula_imp
+  inlamemi_model$.args$error_type <- error_type
+  inlamemi_model$stack_data <- data_stack
+
+    # Set class ------------------------------------------------------------------
+  class(inlamemi_model) <- c("inlamemi", class(inlamemi_model))
+
+
+  return(inlamemi_model)
+}
