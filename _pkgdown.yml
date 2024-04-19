@@ -1,4 +1,32 @@
 url: https://emmaskarstein.github.io/inlamemi/
+
+reference:
+- title: Fit inlamemi model
+- contents:
+  - fit_inlamemi
+- title: Datasets
+- contents: 
+  - framingham
+  - nhanes_survival
+  - simple_data
+  - two_error_data
+- title: Summary, plot, etc.
+- contents:
+  - summary.inlamemi
+  - plot.inlamemi
+  - show_data_structure
+- title: Under-the-hood functions
+  desc:  Functions called by the model fitting function and the summary/print functions. In some cases, they may be useful to call directly.
+- contents:
+  - extract_variables_from_formula
+  - starts_with("make_")
+  - inla_survival_families
+  - simplify_inlamemi_model_summary
+
 template:
   bootstrap: 5
 
+navbar:
+  structure:
+    left:  [articles, reference]
+    right: [search, github]
