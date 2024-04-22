@@ -1,5 +1,8 @@
 url: https://emmaskarstein.github.io/inlamemi/
-
+navbar:
+  structure:
+    left:  [articles, reference]
+    right: [search, github]
 reference:
 - title: Fit inlamemi model
 - contents:
@@ -22,11 +25,5 @@ reference:
   - starts_with("make_")
   - inla_survival_families
   - simplify_inlamemi_model_summary
-
 template:
   bootstrap: 5
-
-navbar:
-  structure:
-    left:  [articles, reference]
-    right: [search, github]
