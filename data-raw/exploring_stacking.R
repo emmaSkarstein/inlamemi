@@ -194,7 +194,7 @@ stk_c <- inla.stack(data = list(y_classical = x),
                     tag = "classical")
 
 # Imputation/exposure model
-# 0 = r + alpha.0 + alpha.z + e_r
+# 0 = -r + alpha.0 + alpha.z + e_r
 stk_imp <- inla.stack(data = list(y_imp = rep(0, n)),
                       A = list(1),
                       effects = list(
