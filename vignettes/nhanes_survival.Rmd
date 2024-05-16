@@ -2,7 +2,7 @@
 title: "Survival data with repeated systolic blood pressure measurements"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{nhanes_survival}
+  %\VignetteIndexEntry{Survival data with repeated systolic blood pressure measurements}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
