@@ -14,11 +14,11 @@ make_inlamemi_scaling_vector(
 \arguments{
 \item{inlamemi_stack}{an object of class inlamemi.data.stack containing data structured}
 
-\item{error_type}{one of "classical", "berkson" or "missing".}
+\item{error_type}{type of error (one or more of "classical", "berkson", "missing")}
 
 \item{classical_error_scaling}{can be specified if the classical measurement error varies across observations. Must be a vector of the same length as the data.}
 
-\item{vars}{Results from a call to "extract_variables_from_formula" function.}
+\item{vars}{Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.}
 }
 \value{
 A vector reflecting the scaling factor for the residual terms in each model level.

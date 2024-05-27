@@ -3,20 +3,23 @@
 #' @param inlamemi_model the model returned from the fit_inlamemi function.
 #'
 #' @return A list of four data frames, containing the summaries for different components of the model. These are the coefficients of the model of interest, the coefficient of the variable with error, the coefficients of the imputation model, and the hyperparameters.
-#' @export
+#'
 simplify_inlamemi_model_summary <- function(inlamemi_model){
   # Extract the fixed effects and the hyperparameters from the inla summary
   fixed <- inlamemi_model$summary.fixed
   hyper <- inlamemi_model$summary.hyperpar
 
   # Identify the moi coefs and the imputation coefs, based on whether they start with alpha or beta.
-  moi_coef <- dplyr::filter(fixed, grepl("beta.", rownames(fixed)))
-  imp_coef <- dplyr::filter(fixed, grepl("alpha.", rownames(fixed)))
+  moi_coef <- dplyr::filter(fixed, grepl("beta.", rownames(fixed)))[,1:6]
+  imp_coef <- dplyr::filter(fixed, grepl("alpha.", rownames(fixed)))[,1:6]
+  mis_coef <- dplyr::filter(fixed, grepl("gamma.", rownames(fixed)))[,1:6]
 
   error_coef <- dplyr::filter(hyper, grepl("Beta for ", rownames(hyper)))
 
   error_var_name <- sub(".*Beta for ", "", rownames(error_coef))
   rownames(error_coef) <- error_var_name
+
+
 
   other_model_hyperpar <- dplyr::filter(hyper, !grepl("Beta for ", rownames(hyper)))
 
@@ -27,7 +30,11 @@ simplify_inlamemi_model_summary <- function(inlamemi_model){
     prec_names <- c("Precision for model of interest")
   }
   all_responses <- as.list(inlamemi_model$.args$formula[[2]])
-  error_and_imp <- all_responses[3:length(all_responses)]
+  non_moi <- all_responses[3:length(all_responses)]
+  model_names <- sub(".*_", "", non_moi)
+
+  error_and_imp <- non_moi[model_names %in% c("classical", "berkson", "imp")]
+
   prec_names_error_imp <- sapply(error_and_imp,
                                  function(x){paste("Precision for",
                                                    gsub("_", " ", toString(x)),
@@ -46,6 +53,7 @@ simplify_inlamemi_model_summary <- function(inlamemi_model){
   return(list(moi_coef = moi_coef,
               error_coef = error_coef,
               imp_coef = imp_coef,
+              mis_coef = mis_coef,
               other_model_hyperpar = other_model_hyperpar))
 }
 
@@ -89,6 +97,7 @@ summary.inlamemi <- function(object, ...){
 
   inlamemi_summary$formula_moi <- object$.args$formula_moi
   inlamemi_summary$formula_imp <- object$.args$formula_imp
+  inlamemi_summary$formula_mis <- object$.args$formula_mis
   inlamemi_summary$error_type <- object$.args$error_type
 
   class(inlamemi_summary) <- "summary.inlamemi"
@@ -110,11 +119,15 @@ print.summary.inlamemi <- function(x, ...){
   print(x$formula_moi, showEnv = FALSE)
   cat("\n")
 
-  # Print error model as well?
-
   cat("Formula for imputation model: \n")
   print(x$formula_imp, showEnv = FALSE)
   cat("\n")
+
+  if(!is.null(x$formula_mis)){
+    cat("Formula for missingness model: \n")
+    print(x$formula_mis, showEnv = FALSE)
+    cat("\n")
+  }
 
   cat("Error types: \n")
   print(x$error_type)
@@ -124,13 +137,19 @@ print.summary.inlamemi <- function(x, ...){
   print(x$moi_coef)
   cat("\n")
 
-  cat("Coefficient for error prone variable: \n")
+  cat("Coefficient for variable with measurement error and/or missingness: \n")
   print(x$error_coef)
   cat("\n")
 
   cat("Fixed effects for imputation model: \n")
   print(x$imp_coef)
   cat("\n")
+
+  if(!is.null(x$formula_mis)){
+    cat("Fixed effects for missingness model: \n")
+    print(x$mis_coef)
+    cat("\n")
+  }
 
   error_string <- paste(rownames(x$error_coef), collapse = ", ")
   cat(paste0("Model hyperparameters (apart from ",
@@ -219,8 +238,14 @@ show_data_structure <- function(stack){
     }else{
       var_comps <- unlist(strsplit(variable, split = "[.]"))
       var_coef <- var_comps[1]
-      var_subscript <- var_comps[2]
-      coef_name <- paste0("\\", var_coef, "_{", var_subscript, "}")
+      var_1 <- var_comps[2]
+      if(length(var_comps) == 3){
+        var_2 <- var_comps[3]
+        var_2_string <- paste0(",", var_2)
+      }else{
+        var_2_string <- ""
+      }
+      coef_name <- paste0("\\", var_coef, "_{", var_1, var_2_string, "}")
     }
     effect_table <- knitr::kable(effects[variable], format = "latex",
                                  row.names = FALSE, escape = FALSE,

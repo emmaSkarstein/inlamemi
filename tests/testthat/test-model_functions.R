@@ -1,3 +1,26 @@
+test_that("extract_random_effects works", {
+  # ONLY random effect
+  expected1 <- extract_random_effects(
+    formula = y ~ f(id, model = "iid",
+                    hyper = list(prec = list(initial = -15, param = c(2, 2))))
+  )
+
+  expect_equal(expected1$reff_vars, "id")
+  expect_equal(expected1$reff,
+               "f(id, model = \"iid\", hyper = list(prec = list(initial = -15, param = c(2, 2))))")
+
+  # Random effect and one covariate
+  expected2 <- extract_random_effects(
+    formula = y ~ x + f(id, model = "iid",
+                        hyper = list(prec = list(initial = -15, param = c(2, 2))))
+  )
+
+  expect_equal(expected2$reff_vars, "id")
+  expect_equal(expected2$reff,
+               "f(id, model = \"iid\", hyper = list(prec = list(initial = -15, param = c(2, 2))))")
+
+})
+
 test_that("extract_variables_from_formula works", {
   # Check that all elements are characters
   expected <- extract_variables_from_formula(formula_moi = y ~ x + z,
@@ -28,17 +51,44 @@ test_that("extract_variables_from_formula works", {
     formula_moi = y ~ f(id, model = "iid", hyper = list(prec = list(initial = -15, param = c(2, 2)))),
     formula_imp = x ~ f(group, model = "iid", hyper = list(prec = list(initial = -15, param = c(2, 2)))))
 
+  expect_equal(expected5$random_effect_variables_imp[[1]], "group")
+  expect_equal(expected5$random_effect_variables_moi[[1]], "id")
+
   # Random effect and one covariate
   expected6 <- extract_variables_from_formula(
     formula_moi = y ~ x + f(id, model = "iid", hyper = list(prec = list(initial = -15, param = c(2, 2)))),
     formula_imp = x ~ s + f(group, model = "iid", hyper = list(prec = list(initial = -15, param = c(2, 2)))))
 
+  expect_equal(expected6$random_effect_variables_imp[[1]], "group")
+  expect_equal(expected6$covariates_imp[[1]], "s")
+
   # Multiple error variables
   expected7 <- extract_variables_from_formula(formula_moi = y ~ x1 + x2:z,
                                               formula_imp = list(x1 ~ z, x2 ~ 1))
 
+  expect_equal(expected7$covariates_imp, list("z", character(0)))
+
+  # Missingness model with random effect
+  expected8 <- extract_variables_from_formula(
+    formula_moi = y ~ x + z1 + z2,
+    formula_imp = x ~ z1,
+    formula_mis = m ~ z2 + x + f(id, model = "iid", hyper = list(prec = list(initial = -15, param = c(2, 2)))))
+
+  expect_equal(expected8$random_effect_variables_mis[[1]], "id")
+  expect_equal(expected8$covariates_mis[[1]], c("z2", "x"))
+
+  # Multiple error variables with missingness models
+  expected9 <- extract_variables_from_formula(formula_moi = y ~ x1 + x2 + z1 + z2 + z3,
+                                              formula_imp = list(x1 ~ z1, x2 ~ 1),
+                                              formula_mis = list(m1 ~ z2 + z3, m2 ~ z1))
+
+  expect_equal(expected9$covariates_mis, list(c("z2", "z3"), "z1"))
+
   # Catching errors -----------------------------------------------------------
-  expect_error(extract_variables_from_formula(formula_moi = "string", formula_imp = simple_imp))
+  expect_error(extract_variables_from_formula(formula_moi = "string", formula_imp = x ~ z))
+  expect_error(extract_variables_from_formula(formula_moi = y ~ x + z,
+                                              formula_imp = y ~ z,
+                                              error_variable = "x"))
 
 })
 
@@ -67,14 +117,24 @@ test_that("make_inlamemi_formula works", {
                                   prior.beta.error = c(0, 1/1000))
   terms3 <- labels(terms(formula3))
   expect_equal(length(terms3), 6)
+
+  # Missingness model
+  formula4 <- make_inlamemi_formula(formula_moi = y ~ x + z,
+                        formula_imp = x ~ z,
+                        formula_mis = m ~ z,
+                        prior.beta.error = c(0, 1/1000),
+                        prior.gamma.error = c(0, 1/1000))
+  terms4 <- labels(terms(formula4))
+  expect_equal(length(terms4), 9)
 })
 
 test_that("make_inlamemi_stacks works", {
+  # Stacks ----
   # Simulated data, stacks with berkson level
   simple_stacks_cb <- make_inlamemi_stacks(formula_moi = y ~ x + z,
-                                         formula_imp = x ~ z,
-                                         data = simple_data,
-                                         error_type = c("classical", "berkson"))
+                                           formula_imp = x ~ z,
+                                           data = simple_data,
+                                           error_type = c("classical", "berkson"))
 
   # Check rows and columns of "data"
   expect_equal(nrow(simple_stacks_cb$data$data), 4*1000)
@@ -113,6 +173,16 @@ test_that("make_inlamemi_stacks works", {
 
   expect_equal(length(mult_error_stack$effects$names), 11)
 
+  # Should check random effect example here
+
+  # Missingness model
+  missingness_model_stack <- make_inlamemi_stacks(data = simple_data,
+                                                  formula_moi = y ~ x + z,
+                                                  formula_imp = x ~ z,
+                                                  formula_mis = m ~ z + x,
+                                                  error_type = "missing")
+
+
   # Catching errors -----------------------------------------------------------
 
   # Check if the error variable is called "error_variable"
@@ -122,11 +192,18 @@ test_that("make_inlamemi_stacks works", {
                              formula_moi = formula_moi,
                              formula_imp = formula_imp))
 
-  # Check if repeated observations are specified
+  # Repeated observation stuff --
+  # Check that the error variable is actually in the data
   expect_error(make_inlamemi_stacks(data = framingham,
-                                 formula_moi = disease ~ sbp + smoking,
-                                 formula_imp = sbp ~ smoking,
+                                 formula_moi = disease ~ SBP + smoking,
+                                 formula_imp = SBP ~ smoking,
                                  error_type = "classical"))
+  # Check that repeated_observations has been set to TRUE
+  framingham$sbp <- rep(NA, nrow(framingham)) # (normally the column will not be in the data, if i don't do this we get an errro and a warning message, and idk how to expect that)
+  expect_warning(make_inlamemi_stacks(data = framingham,
+                                    formula_moi = disease ~ sbp + smoking,
+                                    formula_imp = sbp ~ smoking,
+                                    error_type = "classical"))
 
   # Check if variables in formula are in data (but not sensitive to repeated measurements)
   expect_error(make_inlamemi_stacks(
@@ -136,6 +213,30 @@ test_that("make_inlamemi_stacks works", {
     error_type = c("classical", "missing"),
     repeated_observations = TRUE)
   )
+
+})
+
+test_that("make_inlamemi_families works", {
+  #Testing survival model and missingness model
+  surv_stack <- make_inlamemi_stacks(
+    formula_moi = inla.surv(t, d) ~ sbp + age + smoke + sex + diabetes,
+    formula_imp = sbp ~ age + smoke + sex + diabetes,
+    formula_mis = m ~ smoke,
+    family_moi = "weibull.surv",
+    data = nhanes_survival,
+    error_type = c("classical", "missing"),
+    repeated_observations = TRUE)
+
+  families_surv <- make_inlamemi_families(family_moi = "weibull.surv",
+                                          inlamemi_stack = surv_stack)
+  expect_equal(families_surv, c("weibull.surv", "gaussian", "gaussian", "binomial"))
+
+  nhanes_stack <- make_inlamemi_stacks(
+    formula_moi = inla.surv(t, d) ~ sbp + age + smoke + sex + diabetes,
+    formula_imp = sbp ~ age + smoke + sex + diabetes,
+    data = nhanes_survival,
+    error_type = c("classical", "missing"),
+    repeated_observations = TRUE)
 
 })
 
@@ -156,7 +257,6 @@ test_that("make_inlamemi_control.family works", {
     prior.prec.berkson = c(10, 9),
     prior.prec.classical = c(10, 9),
     prior.prec.imp = c(10, 9),
-    prior.beta.error = c(0, 1/1000),
     initial.prec.moi = 1,
     initial.prec.berkson = 1,
     initial.prec.classical = 1,
@@ -165,6 +265,23 @@ test_that("make_inlamemi_control.family works", {
   expect_equal(length(cont.fam), 4)
   expect_equal(cont.fam[[1]]$hyper$prec$initial, log(1))
   expect_equal(cont.fam[[1]]$hyper$prec$param, c(10, 9))
+
+  # With missingness model
+  cont.fam_mis <- make_inlamemi_control.family(
+    formula_mis = m ~ x + d,
+    family_moi = "gaussian",
+    error_type = c("berkson", "classical"),
+    prior.prec.moi = c(10, 9),
+    prior.prec.berkson = c(10, 9),
+    prior.prec.classical = c(10, 9),
+    prior.prec.imp = c(10, 9),
+    initial.prec.moi = 1,
+    initial.prec.berkson = 1,
+    initial.prec.classical = 1,
+    initial.prec.imp = 1)
+
+  expect_equal(length(cont.fam_mis), 5)
+
 })
 
 test_that("fit_inlamemi works", {
@@ -218,6 +335,8 @@ test_that("fit_inlamemi works", {
                                   param = prior.prec.x2,
                                   fixed = FALSE)))
   )
+
+  # Multiple error variables
   multiple_model <- fit_inlamemi(formula_moi = y ~ x1 + x2 + z,
                                formula_imp = list(x1 ~ z, x2 ~ 1),
                                family_moi = "gaussian",
@@ -228,6 +347,24 @@ test_that("fit_inlamemi works", {
                                control.predictor = list(compute = TRUE)
   )
 
+  # Missingness model
+  mis_mod <- fit_inlamemi(formula_moi = y ~ x + z1 + z2,
+                          formula_imp = x ~ z1,
+                          formula_mis = m ~ z2 + x,
+                          family_moi = "gaussian",
+                          data = mar_data,
+                          error_type = "missing",
+                          prior.beta.error = c(0, 1/1000),
+                          prior.gamma.error = c(0, 1/1000),
+                          prior.prec.moi = c(10, 9),
+                          prior.prec.imp = c(10, 9),
+                          initial.prec.moi = 1,
+                          initial.prec.imp = 1)
+
+  #class(mis_mod) <- "inla"
+  summary(mis_mod)
+
+  labels(terms(mis_mod$.args$formula))
   # Catching errors -----------------------------------------------------------
 
 })

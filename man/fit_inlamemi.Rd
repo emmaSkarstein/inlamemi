@@ -7,6 +7,7 @@
 fit_inlamemi(
   formula_moi,
   formula_imp = NULL,
+  formula_mis = NULL,
   family_moi,
   data,
   error_type = "classical",
@@ -18,6 +19,7 @@ fit_inlamemi(
   prior.prec.classical = NULL,
   prior.prec.imp = NULL,
   prior.beta.error = NULL,
+  prior.gamma.error = NULL,
   initial.prec.moi = NULL,
   initial.prec.berkson = NULL,
   initial.prec.classical = NULL,
@@ -35,6 +37,8 @@ fit_inlamemi(
 \item{formula_moi}{an object of class "formula", describing the main model to be fitted.}
 
 \item{formula_imp}{an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.}
+
+\item{formula_mis}{an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.}
 
 \item{family_moi}{a string indicating the likelihood family for the model of interest (the main model).}
 
@@ -57,6 +61,8 @@ fit_inlamemi(
 \item{prior.prec.imp}{a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.}
 
 \item{prior.beta.error}{parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?}
+
+\item{prior.gamma.error}{parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?}
 
 \item{initial.prec.moi}{the initial value for the precision of the residual term for the model of interest.}
 
@@ -87,13 +93,10 @@ An object of class \code{inlamemi}.
 A wrapper function around "INLA::inla()", providing the necessary structure to fit the hierarchical measurement error model that adjusts coefficient estimates to account for biases due to measurement error and missing data.
 }
 \examples{
-simple_moi <- y ~ x + z
-simple_imp <- x ~ z
-
 # Fit the model
 simple_model <- fit_inlamemi(data = simple_data,
-                           formula_moi = simple_moi,
-                           formula_imp = simple_imp,
+                           formula_moi = y ~ x + z,
+                           formula_imp = x ~ z,
                            family_moi = "gaussian",
                            error_type = c("berkson", "classical"),
                            error_variable = "x",

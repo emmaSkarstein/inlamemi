@@ -5,13 +5,13 @@
 \title{Make "control.family" argument for passing to the "inla" function}
 \usage{
 make_inlamemi_control.family(
+  formula_mis = NULL,
   family_moi,
   error_type = "classical",
   prior.prec.moi = NULL,
   prior.prec.berkson = NULL,
   prior.prec.classical = NULL,
   prior.prec.imp = NULL,
-  prior.beta.error = NULL,
   initial.prec.moi = NULL,
   initial.prec.berkson = NULL,
   initial.prec.classical = NULL,
@@ -24,19 +24,19 @@ make_inlamemi_control.family(
 )
 }
 \arguments{
+\item{formula_mis}{an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.}
+
 \item{family_moi}{a string indicating the likelihood family for the model of interest (the main model).}
 
 \item{error_type}{type of error (one or more of "classical", "berkson", "missing")}
 
-\item{prior.prec.moi}{a string containing the parameters for the prior for the precision of the residual term for the model of interest. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.moi = 'fixed'".}
+\item{prior.prec.moi}{a string containing the parameters for the prior for the precision of the residual term for the model of interest.}
 
-\item{prior.prec.berkson}{a string containing the parameters for the prior for the precision of the error term for the Berkson error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.berkson = 'fixed'".}
+\item{prior.prec.berkson}{a string containing the parameters for the prior for the precision of the error term for the Berkson error model.}
 
-\item{prior.prec.classical}{a string containing the parameters for the prior for the precision of the error term for the classical error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.classical = 'fixed'".}
+\item{prior.prec.classical}{a string containing the parameters for the prior for the precision of the error term for the classical error model.}
 
-\item{prior.prec.imp}{a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.imputation = 'fixed'".}
-
-\item{prior.beta.error}{parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?}
+\item{prior.prec.imp}{a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.}
 
 \item{initial.prec.moi}{the initial value for the precision of the residual term for the model of interest.}
 
@@ -70,7 +70,6 @@ make_inlamemi_control.family(
   prior.prec.berkson = c(10, 9),
   prior.prec.classical = c(10, 9),
   prior.prec.imp = c(10, 9),
-  prior.beta.error = c(0, 1/1000),
   initial.prec.moi = 1,
   initial.prec.berkson = 1,
   initial.prec.classical = 1,

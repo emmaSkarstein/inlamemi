@@ -98,6 +98,9 @@ plot.inlamemi <- function(x,
                            y = .data$coefficient_name,
                            label = round(.data$mean, digits = 3)),
                        vjust = -1, size = 3.5) +
+    # Scale y-axis to avoid cutting off text ( think defaults are mult = .05, add = .6)
+    ggplot2::scale_y_discrete(expand = ggplot2::expansion(mult = c(0.05, 0.1),
+                                                          add = 0.6)) +
     # Colors
     ggplot2::scale_color_manual(values = color_pal) +
     # Lables

@@ -63,3 +63,19 @@
 #' }
 #' @source The dataset is simulated.
 "two_error_data"
+
+#' Simulated data with observation missing at random (MAR)
+#'
+#' A simulated dataset to demonstrate how to set up a model in the case where there are two variables with measurement error.
+#'
+#' @format ## `mar_data`
+#' A data frame with 1000 rows and 5 columns:
+#' \describe{
+#'   \item{y}{Response variable}
+#'   \item{x}{Observed value of covariate, with almost 20 percent missing}
+#'   \item{x_true}{Correct version of x, without missingness}
+#'   \item{z1}{Covariate correlated with x}
+#'   \item{z2}{Covariate correlated with the missingness of x}
+#' }
+#' @source The dataset is simulated.
+"mar_data"

@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, message = FALSE}
 library(inlamemi)
 library(INLA)
 ```
@@ -24,6 +24,14 @@ In this vignette, we show how to build the measurement error and missingness mod
 There are two ways to structure the data for the models, the first option is the one taken in [Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Skarstein et al (2023)](https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.202300078), where the matrices are constructed directly by hand. The other approach is the one that is used internally in `inlamemi`, where we use the function `inla.stack()` to define the data structure for each sub-model, and then join these together. This latter approach is a bit more modular, and so this is the approach we will show here.
 
 ## A short explanation of `inla.stack()` for hierarchical modelling
+The `inla.stack()` function is most commonly used for spatial modelling with stochastic partial differential equations (SPDE), since the data then is a bit more complex to structure. A description of using stacks in that context can be found in [chapter 7.3.3 of *Bayesian inference with INLA](https://becarioprecario.bitbucket.io/inla-gitbook/ch-spatial.html#spatial-models-using-stochastic-partial-differential-equations). However, they can also be quite useful when defining hierarchical models with multiple likelihoods, which traditionally need to be defined by setting up matrices where the structure of the matrices encode the structure of the model, as explained in [chapter 6.4 of *Bayesian inference with INLA*](https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLAfeatures.html#sec:sevlik). The stacks are eventually converted to these matrices by INLA, but for the modeller it may be more convenient to define the model through the stacks. one reason is that when setting up the matrices you need to know from the beginning how many levels you will have in the model, since this determines the number of columns in the matrices. However, with the stacks, each model level has its own stack, and previous stacks do not change if you add additional stacks. That is, the definition of stacks for each model level can be done independently. 
+
+The `inla.stack` function takes four arguments:
+
+- `data`: a list of the data on the left side of the formula (the response)
+- `A`: a list of projector matrices, in our case for non-spatial models this is just set to `list(1)`
+- `effects`: a list of the SPDE index and covariates, in our case, just a list of a list containing the covariates and random effects. 
+- `tag`: a character vector labelling this group, which can be useful for extracting certain parts of the stack later.
 
 
 ## Classical and Berkson measurement error and missingness

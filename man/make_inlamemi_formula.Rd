@@ -7,10 +7,12 @@
 make_inlamemi_formula(
   formula_moi,
   formula_imp,
+  formula_mis = NULL,
   family_moi = "gaussian",
   error_type = "classical",
   error_variable = NULL,
   prior.beta.error,
+  prior.gamma.error = NULL,
   vars = NULL
 )
 }
@@ -19,13 +21,17 @@ make_inlamemi_formula(
 
 \item{formula_imp}{an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.}
 
+\item{formula_mis}{an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.}
+
 \item{family_moi}{a string indicating the likelihood family for the model of interest (the main model).}
 
-\item{error_type}{type of error (one of "classical", "berkson", "missing")}
+\item{error_type}{type of error (one or more of "classical", "berkson", "missing")}
 
-\item{error_variable}{the name of the variable with error}
+\item{error_variable}{character vector with the name(s) of the variable(s) with error.}
 
 \item{prior.beta.error}{parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?}
+
+\item{prior.gamma.error}{parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?}
 
 \item{vars}{Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.}
 }

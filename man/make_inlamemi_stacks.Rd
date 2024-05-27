@@ -7,9 +7,11 @@
 make_inlamemi_stacks(
   formula_moi,
   formula_imp,
+  formula_mis = NULL,
   family_moi = "gaussian",
   data,
   error_type = "classical",
+  error_variable = NULL,
   repeated_observations = FALSE,
   vars = NULL
 )
@@ -19,11 +21,15 @@ make_inlamemi_stacks(
 
 \item{formula_imp}{an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.}
 
+\item{formula_mis}{an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.}
+
 \item{family_moi}{a string indicating the likelihood family for the model of interest (the main model).}
 
-\item{data}{A data frame with response and covariate variables for the main model and the imputation model.}
+\item{data}{an object of class data.frame or list containing the variables in the model.}
 
-\item{error_type}{Type of error (one or more of "classical", "berkson", "missing")}
+\item{error_type}{type of error (one or more of "classical", "berkson", "missing")}
+
+\item{error_variable}{character vector with the name(s) of the variable(s) with error.}
 
 \item{repeated_observations}{Does the variable with measurement error and/or missingness have repeated observations? If so, set this to "TRUE". In that case, when specifying the formula, use the name of the variable without any numbers, but when specifying the data, make sure that the repeated measurements end in a number, i.e "sbp1" and "sbp2".}
 
