@@ -1120,8 +1120,12 @@ fit_inlamemi <- function(formula_moi,
     control.family = control.family)
 
   # Specify "control.predictor" ------------------------------------------------
+  # More on control.predictor link for multiple likelihood models here:
+  # https://groups.google.com/g/r-inla-discussion-group/c/XZEsk3gR3No
+  # Identify which model level is gaussian
+  gauss_loc <- which(model_families == "gaussian")[1]
   if(is.null(control.predictor)){
-    control.predictor <- list(compute = TRUE)
+    control.predictor <- list(compute = TRUE, link = gauss_loc)
   }
 
   # Run everything in the "inla"-function --------------------------------------

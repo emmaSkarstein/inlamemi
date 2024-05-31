@@ -2,7 +2,7 @@
 title: "Multiple variables with measurement error and missingness"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{multiple_error_variables}
+  %\VignetteIndexEntry{Multiple variables with measurement error and missingness}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

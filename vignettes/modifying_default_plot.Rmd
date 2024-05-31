@@ -1,0 +1,145 @@
+---
+title: "Modifying the default plot"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Modifying the default plot}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(inlamemi)
+library(ggplot2)
+```
+
+Once we have fitted an `inlamemi` model, we can use the `inlamemi` plot method to see a visual summary of the estimated coefficients and their 95% credible intervals.
+
+As an example, we use a data set with missingness in one variable. For the model, we will then have three levels: the model of interest, the imputation model, and the missingness model. 
+
+```{r}
+mis_mod <- fit_inlamemi(formula_moi = y ~ x + z1 + z2,
+                          formula_imp = x ~ z1,
+                          formula_mis = m ~ z2 + x,
+                          family_moi = "gaussian",
+                          data = mar_data,
+                          error_type = "missing",
+                          prior.beta.error = c(0, 1/1000),
+                          prior.gamma.error = c(0, 1/1000),
+                          prior.prec.moi = c(10, 9),
+                          prior.prec.imp = c(10, 9),
+                          initial.prec.moi = 1,
+                          initial.prec.imp = 1)
+```
+
+This is the default plot:
+```{r}
+plot(mis_mod)
+```
+The `plot()` function itself has some arguments that can be used to exclude sub-models, or to create a circle highlighting the coefficients of the variable with error or missingness. There is also an option to make the coefficient names into greek letters:
+```{r}
+plot(mis_mod, greek_coefficients = TRUE)
+```
+
+
+But there are also some further modifications that can be made to the plot object, which is an object of class `ggplot`:
+
+```{r}
+mis_plot <- plot(mis_mod)
+class(mis_plot)
+```
+
+This means that we can use standard `ggplot2` functions to build on this plot.
+
+If you are familiar with `ggplot2`, you know that it takes a data frame, and then it lets us map the data in the columns very elegantly in whichever way we specify. That means that the plot created above has also been created based on a data frame, and in order to modify the object further, we need to know the names of the columns, in order to refer to them correctly. We can access the data frame like this:
+
+```{r}
+mis_plot$data
+```
+
+Now, let's say we would like to have three separate plots, one for each sub-model. We could do this using `facet_wrap()`:
+
+```{r}
+mis_plot +
+  facet_wrap(~model_type, scales = "free")
+```
+
+We can make the same plot with the greek names:
+
+```{r}
+plot(mis_mod, greek_coefficients = TRUE) +
+  facet_wrap(~model_type, scales = "free")
+```
+
+We could also add a different theme:
+
+```{r}
+plot(mis_mod, greek_coefficients = TRUE) +
+  facet_wrap(~model_type, scales = "free") +
+  theme_minimal()
+```
+Any other changes through the `theme` function could also be done, for instance we could remove the legend since this isn't necessary when we have a faceted plot.
+
+```{r}
+plot(mis_mod, greek_coefficients = TRUE) +
+  facet_wrap(~model_type, scales = "free") +
+  theme(legend.position = "none")
+```
+You could also change the font and font size here, plus many other options. Here are some ways you could modify the font in the facet header and axis title, using the `showtext` package for selecting a different font from Google fonts:
+```{r, eval = FALSE}
+library(showtext)
+showtext_auto()
+js <- "Josefin Sans"
+font_add_google(js)
+
+plot(mis_mod, greek = TRUE) +
+  facet_wrap(~model_type, scales = "free") +
+  theme(legend.position = "none",
+        strip.text = element_text(family = js, size = 13),
+        axis.title = element_text(js))
+```
+
+The plots can also be faceted by variable instead of model level:
+```{r}
+plot(mis_mod, greek_coefficients = TRUE) +
+  facet_wrap(~variable, scales = "free", labeller = label_parsed) 
+```
+In this case, that isn't terribly useful, but if you for instance have estimates from another model you would like to compare with inlamemi, you could join those results to `mis_plot$data` and then facet by variable (with method on the y-axis) to see the comparison clearly.
+
+If you would like to add points or lines to the plot, this can also be done in an additional `geom` layer. For instance, since this data is simulated, I can add points at the numbers that were used for the simulation:
+```{r}
+mis_truth <- tibble::tribble(
+  ~"variable", ~"value",
+  "beta.0",  1,
+  "beta.x",  2, 
+  "beta.z1", 2, 
+  "beta.z2", 2,
+  "alpha.x.0",  1,
+  "alpha.x.z1", 0.3, 
+  "gamma.x.0", -1.5,
+  "gamma.x.z2", -0.5,
+  "gamma.x", 0
+  )
+
+plot(mis_mod) +
+    geom_point(data = mis_truth, aes(x = value))
+```
+Or we could add a vertical line at zero:
+
+```{r}
+plot(mis_mod) +
+    geom_vline(xintercept = 0, linetype = "dotted")
+```
+
+
+
+
+
+
+

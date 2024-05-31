@@ -86,7 +86,7 @@ survival_model <- fit_inlamemi(
                                   param = prior.prec.x,
                                   fixed = FALSE)))),
   prior.beta.error = c(0, 1/1000), # Prior for beta.sbp
-  control.predictor=list(link=3)) # Why 3?
+  control.predictor=list(link=3)) # To specify that for the missing values, we use the third link function ("gaussian", from the imputation model) to predict them.
 ```
 
 ```{r}

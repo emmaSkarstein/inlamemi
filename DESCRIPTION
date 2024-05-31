@@ -30,7 +30,8 @@ Imports:
     ggplot2,
     rlang,
     stats,
-    methods
+    methods,
+    scales
 Depends: 
     R (>= 2.10)
 URL: https://emmaskarstein.github.io/inlamemi/, https://github.com/emmaSkarstein/inlamemi

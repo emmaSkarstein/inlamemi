@@ -4,7 +4,17 @@
 \alias{plot.inlamemi}
 \title{Plot model summary}
 \usage{
-\method{plot}{inlamemi}(x, plot_moi = TRUE, plot_imp = TRUE, plot_intercepts = TRUE, ...)
+\method{plot}{inlamemi}(
+  x,
+  plot_moi = TRUE,
+  plot_imp = TRUE,
+  plot_mis = TRUE,
+  plot_intercepts = TRUE,
+  error_variable_highlight = FALSE,
+  greek = FALSE,
+  palette = NULL,
+  ...
+)
 }
 \arguments{
 \item{x}{the model returned from the fit_inlamemi function.}
@@ -13,7 +23,15 @@
 
 \item{plot_imp}{should the posterior mean for the coefficients of the imputation model be plotted? Defaults to TRUE.}
 
-\item{plot_intercepts}{should the posterior mean for the intercept(s) be plotted?}
+\item{plot_mis}{should the posterior mean for the coefficients of the missingness model be plotted? Defaults to TRUE.}
+
+\item{plot_intercepts}{should the posterior mean for the intercept(s) be plotted? Defaults to TRUE.}
+
+\item{error_variable_highlight}{should the coefficient(s) of the variable(s) with error be highlighted? (circled in black) Defaults to FALSE.}
+
+\item{greek}{make the coefficient names into greek letters with the covariate name as subscript. Defaults to FALSE.}
+
+\item{palette}{either a number (between 1 and 5), indicating the number of the color palette to be used, or a vector of the colors to be used.}
 
 \item{...}{other arguments}
 }

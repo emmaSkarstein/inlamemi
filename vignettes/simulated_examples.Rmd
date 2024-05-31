@@ -93,7 +93,7 @@ summary(simple_model)
 
 ```{r}
 simple.truth <- tibble::tribble(
-  ~"coefficient_name", ~"value",
+  ~"variable", ~"value",
   "beta.x",  beta.x, 
   "beta.z",  beta.z, 
 #  "beta.0",  beta.0, 
@@ -167,7 +167,7 @@ summary(missing_model)
 ```
 ```{r}
 missing_truth <- tibble::tribble(
-  ~"coefficient_name", ~"value",
+  ~"variable", ~"value",
   "beta.0", beta.0,
   "beta.x",  beta.x, 
   "beta.z",  beta.z,
@@ -248,7 +248,7 @@ reff_model <- fit_inlamemi(formula_moi = y ~ x + z +
 summary(reff_model)
 
 reff.truth <- tibble::tribble(
-  ~"coefficient_name", ~"value",
+  ~"variable", ~"value",
   "beta.x",  2, 
   "beta.z",  2, 
   "beta.0",  1, 
@@ -382,7 +382,7 @@ airpollution_model <- fit_inlamemi(data = airpollution_scaled,
 airpollution_summary <- summary(airpollution_model)
 
 airpollution.truth <- tibble::tribble(
-  ~"coefficient_name", ~"value",
+  ~"variable", ~"value",
   "beta.pollution", beta.pollution, 
   "beta.gender",    beta.gender, 
   "beta.district",  beta.district, 
@@ -486,7 +486,7 @@ birthweight_model <- fit_inlamemi(data = birthweight_scaled,
 summary(birthweight_model)
 
 birthweight.truth <- tibble::tribble(
-  ~"coefficient_name", ~"value",
+  ~"variable", ~"value",
   "beta.mom_weight",      beta.mom_weight, 
   "beta.gestation_time",  beta.gestation_time, 
   "beta.age",             beta.age, 
