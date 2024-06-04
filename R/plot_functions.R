@@ -150,9 +150,9 @@ plot.inlamemi <- function(x,
   color_pal_list <- list()
   color_pal_list[[2]] <- c("#7AA6CA", "#DDAA33", "#EE849D")
 
-  color_pal_list[[1]] <- c("#E4B15B", "#C2535E", "#347789")
+  color_pal_list[[3]] <- c("#347789", "#E4B15B", "#C2535E")
 
-  color_pal_list[[3]] <- c("#fb8b24", "#d90368", "#820263")
+  color_pal_list[[1]] <- c("#fb8b24", "#d90368", "#820263")
 
   color_pal_list[[4]] <- c("#c9cba3", "#ffe1a8", "#e26d5c")
 

@@ -26,7 +26,7 @@ knitr::opts_chunk$set(
 <!-- badges: end -->
 
 
-Fitting measurement error models and missing data imputation models in INLA is not trivial, and requires several workarounds in order to fit the model. At the same time, a Bayesian hierarchical framework is very attractive for modeling these types of data, since the hierarchical model structure alllows us to describe how the data were collected, and any errors they may have, through the model specification. By supplying informative priors, we may be able to adjust for biases due to these errors, and propagate any uncertainty they cause. Until recently, it has been complicated to implement these kinds of models in R-INLA. This package provides a helpful interface that makes measurement error and missing data modelling in R-INLA much more feasible.
+Fitting measurement error models and missing data imputation models in INLA is not trivial, and requires several workarounds in order to fit the model. At the same time, a Bayesian hierarchical framework is very attractive for modeling these types of data, since the hierarchical model structure allows us to describe how the data were collected, and any errors they may have, through the model specification. By supplying informative priors, we may be able to adjust for biases due to these errors, and propagate any uncertainty they cause. Until recently, it has been complicated to implement these kinds of models in R-INLA. This package provides a helpful interface that makes measurement error and missing data modelling in R-INLA much more feasible.
 
 ## Installation
 
@@ -56,6 +56,7 @@ Examples of how to use the package can be found in the vignettes.
 | [Simulated examples (multiple examples)](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html) | Gaussian, Binomial | Berkson, classical, missing | Random effect(s) in the model of interest, interaction effects |
 | [Multiple variables with measurement error and missingness](https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html) | Gaussian | Classical |  Multiple mismeasured covariates |
 |[How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html) ||| A deep dive into how the data is structured in order to correctly fit the model. |
+|[How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/how_to_not_use_inlamemi.html) ||| An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured.|
 
 
 ## Quick guide: How can I use this package?
@@ -91,7 +92,7 @@ We write that as
 imputation_formula <- x ~ z
 ```
 
-When adjusting for measurement error, we are completely dependent on having some information about the measurement error variaces $\sigma_{u_c}^2$ (for the classical error) and $\sigma_{u_b}^2$ (for the Berkson error), since the size of this variance will affect how the estimates are biased. We can gain information about these variances in a few different ways, if repeated measurements have been made then these can be put directly into the model to estimate the error variance, or if we have some expert knowledge about the error size, then that can be used to specify an informative prior for the variance (or precision, since in INLA the precision is used, rather than the variance). 
+When adjusting for measurement error, we are completely dependent on having some information about the measurement error variances $\sigma_{u_c}^2$ (for the classical error) and $\sigma_{u_b}^2$ (for the Berkson error), since the size of this variance will affect how the estimates are biased. We can gain information about these variances in a few different ways, if repeated measurements have been made then these can be put directly into the model to estimate the error variance, or if we have some expert knowledge about the error size, then that can be used to specify an informative prior for the variance (or precision, since in INLA the precision is used, rather than the variance). 
 
 In this case, since we have in fact simulated the data ourselves, we know that the error variances are in both cases close to 1, so we specify priors that have modes at 1.
 

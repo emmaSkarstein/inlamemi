@@ -10,7 +10,7 @@ Authors@R: c(
          role = c("aut"),
          comment = c(ORCID = "0000-0002-8425-0757"))
   )
-Description: Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations.
+Description: Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) <doi:10.1002/bimj.202300078>. See Skarstein and Muff (2024) (insert arxiv link) for details on using the package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -21,7 +21,8 @@ Suggests:
     knitr,
     testthat (>= 3.0.0),
     tibble,
-    rmarkdown
+    rmarkdown,
+    spelling
 Additional_repositories: 
     https://inla.r-inla-download.org/R/testing
 Config/testthat/edition: 3
@@ -35,3 +36,4 @@ Imports:
 Depends: 
     R (>= 2.10)
 URL: https://emmaskarstein.github.io/inlamemi/, https://github.com/emmaSkarstein/inlamemi
+Language: en-US

@@ -322,7 +322,7 @@ plot(interact_model)
 |:-----------|:----------|:--------|:----------|:------------|
 |Berkson, classical | Binomial | asthma | airpollution | gender, age, district |
 
-In this example, we simulate data from a fictitious, but realistic scenario where we want examine if people in areas with high air pollution seem to have asthma more than in areas with lower air pollution. But the air pollution value for the people in the study canot be observed directly, instead sensors have been placed at certain locations, and the value for a person is set to be the value gathered at the closest sensor. This leads to a Berkson error. In addition to that, we believe that there is some noise in the measurements due to imprecision in the sensor. This corresponds to a classical measurement error. 
+In this example, we simulate data from a fictitious, but realistic scenario where we want examine if people in areas with high air pollution seem to have asthma more than in areas with lower air pollution. But the air pollution value for the people in the study cannot be observed directly, instead sensors have been placed at certain locations, and the value for a person is set to be the value gathered at the closest sensor. This leads to a Berkson error. In addition to that, we believe that there is some noise in the measurements due to imprecision in the sensor. This corresponds to a classical measurement error. 
 
 TODO: random intercept model for district instead of treating it as continuous variable.
 
@@ -396,209 +396,72 @@ plot(airpollution_model, plot_intercepts = FALSE) +
   geom_point(data = airpollution.truth, aes(x = value))
 ```
 
-
-
-## Birthweight example (inactive)
-
-|Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
-|:-----------|:----------|:--------|:----------|:------------|
-|Classical, missing values | Gaussian | birthweight | mother's weight | age, gestation time |
-
-In this example, we construct fictitious data mimicking a scenario where we are interested in studying the birth weight of newborn babies, and how slightly misreported weights of the mother influence the baby's weight. 
-In this example we therefore have the mother's weight as a covariate with classical error, and in addition a few of the weight measurements for the mothers are missing.
-
-Status: Occasionally get crash message, this seems to be when the response is a very different scale from the covariates. When I don't get the crash message, I still get the wrong estimate for everything except beta.gestationtime.
-
-### Generating the data
+## Poisson regression with classical error and missing data
 
 ```{r}
-set.seed(2024)
-n <- 1000
+set.seed(1)
+nn <- 1000
 
-# Covariate without error, correlated with error-variable:
-age <- rgamma(n, shape = 60, scale = 0.5)
+z <- rbinom(nn, 1, 0.5)
+x <- rnorm(nn, 1-0.5*z, 1)
 
-# Covariate without error, uncorrelated with other covariates:
-gestation_time <- rnorm(n, mean = 40, sd = 2)
+# Error
+w <- x + rnorm(nn, 0, 1)
 
-# Covariate with classical error:
-alpha.age <- 0.4; alpha.0 <- 50
-mom_weight_correct <- rnorm(n, mean = alpha.0 + alpha.age*age, sd = 4)
-mom_weight <- mom_weight_correct + rnorm(n, mean = 0, sd = 3) # Classical error
+# Generating missing data, depending on z
+eta <- -1 + z
+prob_missing <- exp(eta)/(1 + exp(eta))
+missing_index <- rbinom(nn, 1, prob_missing)
 
-# Missingness:
-m_pred <- -1.35 - 0.001*age # This gives a mean probability of missing of ca 0.2.
-m_prob <- exp(m_pred)/(1 + exp(m_pred))
-m_index <- as.logical(rbinom(n, 1, prob = m_prob)) # MAR
-# m_index <- sample(1:n, 0.2*n, replace = FALSE) # MCAR
-mom_weight[m_index] <- NA
+# Proportion missing:
+sum(missing_index)/nn
 
-# Response:
-beta.0 <- 0; beta.mom_weight <- 5; beta.age <- -5; beta.gestation_time <- 5
-birthweight <- beta.0 + beta.mom_weight*mom_weight_correct + 
-  beta.age*age + beta.gestation_time*gestation_time + 
-  rnorm(n, mean = 0, sd = 30)
-hist(birthweight)
+# Replace the values in w by missing in case the index for missingness is =1:
+w <- ifelse(missing_index==1, NA, w)
 
-birthweight <- data.frame(birthweight, mom_weight, age, gestation_time)
+# Random effect to include in the regression model:
+re <- rep(rnorm(nn/20), each = 20)
+
+# Linear predictor
+eta <-  x + z + re  
+
+# Generate Poisson response
+y <- rpois(nn, exp(eta))
+
+data_pois <- data.frame(x = x, z = z, y = y, w = w, id = rep(seq(1:50), each = 20))
 ```
 
-### Fitting the model
+Simple regression models with correct and error-prone variables to check the effect:
 
 ```{r}
-# Priors for y, measurement error and true x-value precision
-prior.prec.y <- c(10, 9) # Gamma(0.5, 0.5)
-prior.prec.u_b <- c(100, 100) # Gamma(0.5, 0.5)
-prior.prec.u_c <- c(100, 100) # Gamma(0.5, 0.5)
-prior.prec.r <- c(0.5, 0.5) # Gamma(0.5, 0.5)
+library(lme4)
+summary(glmer(y ~ x + z + (1|id), data = data_pois, family="poisson"))
 
-# Initial values
-initial.prec.y <- 1
-initial.prec.u_b <- 1
-initial.prec.u_c <- 1/9
-initial.prec.r <- 1
+summary(glmer(y ~ w + z + (1|id),data=data4,family="poisson"))$coef
 ```
 
 
-```{r, eval = FALSE}
-birthweight_scaled <- birthweight %>% 
-  mutate(across(c(mom_weight, age, gestation_time), 
-                ~ c(scale(., scale = FALSE))))
+Modeling error and missing data with INLA:
 
-birthweight_moi <- birthweight ~ mom_weight + age + gestation_time
-birthweight_imp <- mom_weight ~ age 
+```{r,eval=FALSE}
+model_pois <- fit_inlamemi(data = data_pois,
+                       formula_moi = y ~ w + z + f(id,model="iid"),
+                       formula_imp = w ~ z,
+                       formula_mis = m ~ z,
+                       family_moi = "poisson",
+                       error_type = c("classical","missing"),
+                       # prior.prec.moi = c(10, 9),
+                       # prior.prec.berkson = c(10, 9),
+                       prior.prec.classical = c(19, 9),
+                       prior.prec.imp = c(10, 9),
+                       prior.beta.error = c(0, 1/1000),
+                       #initial.prec.moi = 1,
+                       #initial.prec.berkson = 1,
+                       initial.prec.classical = 2,
+                       initial.prec.imp = 1)
 
-birthweight_model <- fit_inlamemi(data = birthweight_scaled, 
-                         formula_moi = birthweight_moi, 
-                         formula_imp = birthweight_imp, 
-                         family_moi = "gaussian",
-                         error_type = c("classical"),
-                         prior.prec.moi = c(10, 9),
-                         prior.prec.berkson = c(100, 1), 
-                         prior.prec.classical = c(100, 1),
-                         prior.prec.imp = c(10, 9),
-                         prior.beta.error = c(0, 1/1000),
-                         initial.prec.moi = 1,
-                         initial.prec.berkson = 1,
-                         initial.prec.classical = 1/9,
-                         initial.prec.imp = 1)
-
-summary(birthweight_model)
-
-birthweight.truth <- tibble::tribble(
-  ~"variable", ~"value",
-  "beta.mom_weight",      beta.mom_weight, 
-  "beta.gestation_time",  beta.gestation_time, 
-  "beta.age",             beta.age, 
-  #"beta.0",               beta.0, 
-  #"alpha.age",            alpha.age, 
-  #"alpha.0",              alpha.0
-  )
-
-plot(birthweight_model, plot_intercept = FALSE, plot_imp = FALSE) +
-  geom_point(data = birthweight.truth, aes(x = value))
+summary(model_pois)
+plot(model_pois)
 ```
-## Pumpkin weights (inactive)
-
-```{r, message = FALSE, eval = FALSE}
-library(tidyverse)
-
-pumpkins_original <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2021/2021-10-19/pumpkins.csv')
-
-visdat::vis_miss(select(pumpkins_original, c("weight_lbs", "ott")))
-
-pumpkins <- pumpkins_original %>% 
-  separate(col = id, sep = "-", into = c("year", "type")) %>% 
-  select(c("weight_lbs", "ott", "year", "type", "grower_name")) %>% 
-  mutate(across(c("year", "weight_lbs", "ott"), as.numeric)) %>% 
-  mutate(across(c("type"), as.factor)) %>% 
-  drop_na("weight_lbs") %>% 
-  distinct() %>% 
-  filter(ott > 10 & ott < 600) %>% # Many ott values are zero, why?
-  filter(!(type %in% c("T", "L"))) %>% 
-  # Scale weight and ott
-  mutate(across(c("weight_lbs", "ott"), ~ (. - mean(.))/sd(.))) %>% 
-  mutate(ott2 = ott^2) %>% 
-  mutate(type = case_match(type, 
-                           "F" ~ "Field_Pumpkin",
-                           "P" ~ "Giant_Pumpkin",
-                           "S" ~ "Giant_Squash",
-                           "W" ~ "Giant_Watermelon",
-                           "L" ~ "Long_Gourd",
-                           "T" ~ "Tomato")) %>% 
-  # Dummy code the type:
-  mutate(dum = 1, type_copy = type) %>% 
-  pivot_wider(names_from = type_copy,
-              values_from = dum,
-              values_fill = 0)
-
-# Types: F = "Field Pumpkin", P = "Giant Pumpkin", S = "Giant Squash", W = "Giant Watermelon", L = "Long Gourd" (length in inches, not weight in pounds), T = Tomato
-
-ggplot(pumpkins, aes(x = ott, y = weight_lbs, color = type)) +
-  geom_point(alpha = 0.5)
-
-str(pumpkins)
-
-pumpkin_model_lm <- lm(weight_lbs ~ ott*type, data = pumpkins)
-summary(pumpkin_model_lm)
-
-ott_model <- lm(ott ~ type, data = pumpkins)
-summary(ott_model)
-
-#library(lme4)
-#pumpkin_lmer <- lmer(weight_lbs ~ ott + (ott | type), data = pumpkins)
-#coef(pumpkin_model)$type
-#plot(pumpkin_model)
-
-# Artificially remove some of the ott measurements
-missing_id <- sample(c(1, NA), size = nrow(pumpkins), 
-                     prob = c(0.7, 0.3), replace = TRUE)
-pumpkins$ott_truth <- pumpkins$ott
-pumpkins$ott <- pumpkins$ott_truth*missing_id
-
-visdat::vis_miss(select(pumpkins, c("weight_lbs", "ott")))
-```
-
-```{r, eval = FALSE}
-library(inlamemi)
-library(INLA)
-
-inla_pumpkin_naive <- inla(
-  formula = weight_lbs ~ ott + Giant_Pumpkin + Giant_Squash + Giant_Watermelon, 
-  data = pumpkins,
-  family = "gaussian")
-
-inla_pumpkin_correct <- inla(
-  formula = weight_lbs ~ ott_truth + Giant_Pumpkin + Giant_Squash + Giant_Watermelon, 
-  data = pumpkins,
-  family = "gaussian")
-
-inla_pumpkin_naive$summary.fixed
-inla_pumpkin_correct$summary.fixed
-
-pumpkin_model <- fit_inlamemi(
-  formula_moi = weight_lbs ~ ott + Giant_Pumpkin + Giant_Squash + Giant_Watermelon,
-  formula_imp = ott ~ weight_lbs + Giant_Pumpkin + Giant_Squash + Giant_Watermelon,
-  family_moi = "gaussian",
-  data = pumpkins,
-  error_type = "missing",
-  prior.prec.moi = c(0.5, 3),
-  prior.prec.imp = c(0.5, 3),
-  prior.beta.error = c(0, 1/1000),
-  initial.prec.moi = 0.28,
-  initial.prec.imp = 0.76)
-
-summary(pumpkin_model)
-
-plot(pumpkin_model)
-
-pumpkin_model$summary.fixed
-
-summary.inla(pumpkin_model)
-```
-
-
-
-
 
 

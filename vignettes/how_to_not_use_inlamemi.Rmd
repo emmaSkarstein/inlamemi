@@ -36,7 +36,7 @@ The `inla.stack` function takes four arguments:
 
 ## Classical and Berkson measurement error and missingness
 
-In the first example, we use the dataset `simple_data`, generated in the vignette [Simulated examples](simulated_examples.Rmd). This dataset has classical and Berkson measurement error, and missing data, and so the main model we want to fit is 
+In the first example, we use the dataset `simple_data`, generated in the vignette [Simulated examples](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html). This dataset has classical and Berkson measurement error, and missing data, and so the main model we want to fit is 
 
 $$
   y_i = \beta_0 + \beta_x x_i + \beta_z z_i + \varepsilon_i,
@@ -104,7 +104,7 @@ For the main regression model, we have the model
 $$
   y_i = \beta_0 + \beta_x x_i + \beta_z z_i + \varepsilon_i,
 $$
-which is definied in a stack like this:
+which is defined in a stack like this:
 ```{r}
 stk_moi <- inla.stack(data = list(y_moi = data$y),
                       A = list(1),
