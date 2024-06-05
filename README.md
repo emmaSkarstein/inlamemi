@@ -54,14 +54,14 @@ heavily on the priors you give them.
 
 Examples of how to use the package can be found in the vignettes.
 
-| Vignette name                                                                                                                                   | Likelihood for MOI | Error type                  | Other features                                                                                                                                                                                                                                                                       |
-|:------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------|:----------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [Influence of systolic blood pressure on coronary heart disease](https://emmaskarstein.github.io/inlamemi/articles/Framingham_heart_study.html) | Binomial           | Classical                   | Repeated measurements of error prone variable, interaction effect with error variable                                                                                                                                                                                                |
-| [Survival data with repeated systolic blood pressure measurements](https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival.html)      | Weibull survival   | Classical, missing          | Repeated measurements of error prone variable                                                                                                                                                                                                                                        |
-| [Simulated examples (multiple examples)](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html)                             | Gaussian, Binomial | Berkson, classical, missing | Random effect(s) in the model of interest, interaction effects                                                                                                                                                                                                                       |
-| [Multiple variables with measurement error and missingness](https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html)    | Gaussian           | Classical                   | Multiple mismeasured covariates                                                                                                                                                                                                                                                      |
-| [How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html)                              |                    |                             | A deep dive into how the data is structured in order to correctly fit the model.                                                                                                                                                                                                     |
-| [How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/how_to_not_use_inlamemi.html)                                     |                    |                             | An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured. |
+| Vignette name                                                                                                                                   | Likelihood for MOI          | Error type                  | Other features                                                                                                                                                                                                                                                                       |
+|:------------------------------------------------------------------------------------------------------------------------------------------------|:----------------------------|:----------------------------|:-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [Influence of systolic blood pressure on coronary heart disease](https://emmaskarstein.github.io/inlamemi/articles/Framingham_heart_study.html) | Binomial                    | Classical                   | Repeated measurements of error prone variable, interaction effect with error variable                                                                                                                                                                                                |
+| [Survival data with repeated systolic blood pressure measurements](https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival.html)      | Weibull survival            | Classical, missing          | Repeated measurements of error prone variable                                                                                                                                                                                                                                        |
+| [Simulated examples (multiple examples)](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html)                             | Gaussian, Binomial, Poisson | Berkson, classical, missing | Random effect(s) in the model of interest, interaction effects                                                                                                                                                                                                                       |
+| [Multiple variables with measurement error and missingness](https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html)    | Gaussian                    | Classical                   | Multiple mismeasured covariates                                                                                                                                                                                                                                                      |
+| [How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html)                              |                             |                             | A deep dive into how the data is structured in order to correctly fit the model.                                                                                                                                                                                                     |
+| [How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/how_to_not_use_inlamemi.html)                                     |                             |                             | An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured. |
 
 ## Quick guide: How can I use this package?
 
@@ -153,29 +153,29 @@ summary(simple_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.033026 0.2180123  0.6138633 1.033084   1.439243 1.027895
-#> beta.z 1.917584 0.3864576  1.2288394 1.909269   2.564330 1.914807
+#> beta.0 1.027956 0.2185053  0.6085896 1.025854   1.434766 1.021004
+#> beta.z 1.906813 0.3873275  1.2158176 1.894296   2.556740 1.904250
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
-#>           mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.97372 0.2004474    1.57592 1.974808   2.365151 1.979359
+#>            mean        sd 0.025quant 0.5quant 0.975quant     mode
+#> beta.x 1.972649 0.2029525   1.566473 1.974896   2.365541 1.984445
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033072 0.05062702  0.9337517 1.033080   1.132348 1.033080
-#> alpha.x.z 2.024724 0.05229018  1.9222133 2.024707   2.127334 2.024707
+#> alpha.x.0 1.033078 0.05060148  0.9338064 1.033086   1.132303 1.033086
+#> alpha.x.z 2.024712 0.05226422  1.9222529 2.024694   2.127272 2.024694
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean        sd 0.025quant  0.5quant
-#> Precision for model of interest 1.1296438 0.3611017  0.5687836 1.0802476
-#> Precision for x berkson model   1.1276500 0.3432483  0.5969603 1.0798782
-#> Precision for x classical model 0.9246613 0.1082345  0.7314450 0.9178791
-#> Precision for x imp model       0.9766683 0.1246095  0.7541066 0.9689121
+#> Precision for model of interest 1.1299995 0.3666955  0.5611600 1.0796224
+#> Precision for x berkson model   1.1269739 0.3461986  0.5882062 1.0799184
+#> Precision for x classical model 0.9253109 0.1088522  0.7317659 0.9182306
+#> Precision for x imp model       0.9779404 0.1256207  0.7521229 0.9706161
 #>                                 0.975quant      mode
-#> Precision for model of interest   1.974715 0.9894367
-#> Precision for x berkson model     1.934947 0.9908576
-#> Precision for x classical model   1.157015 0.9034797
-#> Precision for x imp model         1.243899 0.9537543
+#> Precision for model of interest   1.988328 0.9871190
+#> Precision for x berkson model     1.937381 0.9928605
+#> Precision for x classical model   1.159767 0.9028002
+#> Precision for x imp model         1.245850 0.9573579
 ```
 
 And we can use the default plot function to see a plot of the fixed
