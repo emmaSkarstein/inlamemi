@@ -1,7 +1,7 @@
 Package: inlamemi
 Type: Package
 Title: Missing Data and Measurement Error Modelling in INLA 
-Version: 0.1.0
+Version: 1.0.0
 Authors@R: c(
   person("Emma", "Skarstein", email = "emma@skarstein.no",
          role = c("cre", "aut", "cph"), 
