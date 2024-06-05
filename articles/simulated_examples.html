@@ -26,7 +26,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">inlamemi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -187,30 +187,30 @@ scenario.</p>
 <span><span class="co">#&gt; [1] "berkson"   "classical"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
-<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.026626 0.2181506  0.6061939 1.024817   1.439871 1.019726</span></span>
-<span><span class="co">#&gt; beta.z 1.904144 0.3865125  1.2017634 1.892944   2.565891 1.902289</span></span>
+<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant      mode</span></span>
+<span><span class="co">#&gt; beta.0 1.024862 0.2193778  0.6040421 1.021328   1.438993 0.9829212</span></span>
+<span><span class="co">#&gt; beta.z 1.900244 0.3890032  1.2011613 1.884815   2.562620 1.8976146</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973256 0.1950636   1.582884 1.975411   2.350892 1.984566</span></span>
+<span><span class="co">#&gt; beta.x 1.973194 0.1990602   1.573663 1.975784   2.357376 1.986854</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033087 0.05059993  0.9338183 1.033095   1.132309 1.033095</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024693 0.05226282  1.9222367 2.024675   2.127250 2.024675</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033085 0.05057660  0.9338626 1.033094   1.132262 1.033094</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024695 0.05223851  1.9222871 2.024678   2.127205 2.024678</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1281922 0.3521841  0.5812529 1.0799795</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1257961 0.3322545  0.6028547 1.0824555</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9241335 0.1056272  0.7358504 0.9174207</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9787882 0.1223211  0.7578818 0.9719988</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1277611 0.3547515  0.5680472 1.0819311</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1218492 0.3367256  0.5931165 1.0775442</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9260484 0.1076681  0.7340370 0.9192363</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9787096 0.1240749  0.7548030 0.9717672</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.953264 0.9909490</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.898707 1.0023294</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.151205 0.9027135</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.238678 0.9600329</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.949429 0.9986577</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.905962 0.9958115</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.157393 0.9045730</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.242467 0.9596193</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simple.truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
@@ -333,27 +333,27 @@ missing covariate in R-INLA.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;             mean         sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; beta.0 0.9737528 0.04833328  0.8801111 0.9736232   1.067822 0.9735263</span></span>
-<span><span class="co">#&gt; beta.z 1.9437130 0.07582159  1.7996329 1.9429208   2.088528 1.9422852</span></span>
+<span><span class="co">#&gt; beta.0 0.9750113 0.04829904  0.8809489 0.9751782   1.068511 0.9753029</span></span>
+<span><span class="co">#&gt; beta.z 1.9461728 0.07572645  1.8012840 1.9469692   2.089684 1.9474447</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
-<span><span class="co">#&gt;            mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 2.024906 0.03439358   1.956669 2.025086   2.092089 2.025839</span></span>
+<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.x 2.024713 0.0344163   1.957628 2.024485   2.093137 2.023528</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.031089 0.03135904  0.9695935 1.031086   1.092603 1.031086</span></span>
-<span><span class="co">#&gt; alpha.x.z 1.983403 0.03206059  1.9205212 1.983404   2.046282 1.983404</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.031097 0.03138359  0.9695534 1.031094   1.092659 1.031094</span></span>
+<span><span class="co">#&gt; alpha.x.z 1.983402 0.03208571  1.9204705 1.983403   2.046330 1.983403</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                     mean         sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.056678 0.05231637  0.9580042 1.055187</span></span>
-<span><span class="co">#&gt; Precision for x classical model 1.134214 0.33691529  0.6375683 1.080015</span></span>
-<span><span class="co">#&gt; Precision for x imp model       1.066411 0.04971277  0.9705661 1.065706</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.055919 0.05239240  0.9572442 1.054378</span></span>
+<span><span class="co">#&gt; Precision for x classical model 1.139862 0.33837246  0.6520696 1.082580</span></span>
+<span><span class="co">#&gt; Precision for x imp model       1.066613 0.04991819  0.9722868 1.065251</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.163944 1.0517973</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.950085 0.9722481</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.166247 1.0652854</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.163484 1.0507879</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.967888 0.9653849</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.168792 1.0621208</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">missing_truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
@@ -440,7 +440,7 @@ like this:</p>
 <span>                    family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">naive_model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.22, Running = 0.202, Post = 0.0174, Total = 0.439 </span></span>
+<span><span class="co">#&gt;     Pre = 0.22, Running = 0.201, Post = 0.0174, Total = 0.439 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;               mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
 <span><span class="co">#&gt; (Intercept) -0.316 0.560     -1.429   -0.316      0.796 -0.316   0</span></span>
@@ -493,28 +493,28 @@ like this:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;              mean         sd 0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; beta.0 -0.3672113 0.54958957  -1.460669 -0.3675691  0.7281972 -0.3675611</span></span>
-<span><span class="co">#&gt; beta.z  2.0222269 0.05797487   1.908513  2.0222302  2.1359224  2.0222302</span></span>
+<span><span class="co">#&gt; beta.0 -0.3628973 0.54064180  -1.437162 -0.3628669   0.711207 -0.3628556</span></span>
+<span><span class="co">#&gt; beta.z  2.0221915 0.05819312   1.908060  2.0221894   2.136335  2.0221893</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 2.156075 0.2195212   1.727201  2.15495   2.591532 2.150249</span></span>
+<span><span class="co">#&gt; beta.x 2.129123 0.1867003   1.769642 2.126417   2.504665 2.114802</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
-<span><span class="co">#&gt;                mean        sd  0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 0.1022764 0.0712205 -0.03740425 0.1022764  0.2419571 0.1022764</span></span>
+<span><span class="co">#&gt;                mean         sd  0.025quant  0.5quant 0.975quant      mode</span></span>
+<span><span class="co">#&gt; alpha.x.0 0.1022765 0.07135818 -0.03768393 0.1022765  0.2422369 0.1022765</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean         sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 0.1136232 0.02394043 0.07406403 0.1110816</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9604836 0.34294233 0.45311685 0.9058728</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.2550716 0.02870575 0.20361379 0.2533443</span></span>
-<span><span class="co">#&gt; Precision for id                0.4175742 0.18059329 0.16617223 0.3842578</span></span>
+<span><span class="co">#&gt; Precision for model of interest 0.1100114 0.01913136 0.07789303 0.1081426</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9928145 0.32180639 0.49484810 0.9482209</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.2515723 0.02506930 0.20665233 0.2500586</span></span>
+<span><span class="co">#&gt; Precision for id                0.4278583 0.17859035 0.17541544 0.3959973</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest  0.1678893 0.1060416</span></span>
-<span><span class="co">#&gt; Precision for x classical model  1.7847234 0.8057599</span></span>
-<span><span class="co">#&gt; Precision for x imp model        0.3164945 0.2496775</span></span>
-<span><span class="co">#&gt; Precision for id                 0.8627299 0.3246001</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest  0.1529866 0.1041124</span></span>
+<span><span class="co">#&gt; Precision for x classical model  1.7473943 0.8662003</span></span>
+<span><span class="co">#&gt; Precision for x imp model        0.3052642 0.2465019</span></span>
+<span><span class="co">#&gt; Precision for id                 0.8652792 0.3384629</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">reff.truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
@@ -611,28 +611,28 @@ would be specified in the formula for the model of interest as
 <span><span class="co">#&gt; [1] "classical"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
-<span><span class="co">#&gt;               mean         sd 0.025quant   0.5quant 0.975quant        mode</span></span>
-<span><span class="co">#&gt; beta.0  1.00811772 0.07958479  0.8520056  1.0081209  1.1642120  1.00812102</span></span>
-<span><span class="co">#&gt; beta.s -0.08606816 0.13383486 -0.3485757 -0.0860634  0.1764123 -0.08606338</span></span>
+<span><span class="co">#&gt;               mean         sd 0.025quant    0.5quant 0.975quant      mode</span></span>
+<span><span class="co">#&gt; beta.0  1.00800563 0.07961142  0.8518416  1.00800873  1.1641525  1.008009</span></span>
+<span><span class="co">#&gt; beta.s -0.08587282 0.13382013 -0.3483517 -0.08586798  0.1765784 -0.085868</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;             mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.sx 2.055256 0.06326207   1.930559 2.055309   2.179645 2.055528</span></span>
-<span><span class="co">#&gt; beta.x  1.709562 0.04042136   1.630186 1.709494   1.789340 1.709208</span></span>
+<span><span class="co">#&gt; beta.sx 2.055964 0.06322126   1.931894 2.055829   2.180819 2.055270</span></span>
+<span><span class="co">#&gt; beta.x  1.709733 0.04039576   1.629982 1.709810   1.789035 1.710131</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                 mean         sd  0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 0.03481148 0.06852751 -0.09959191 0.03481148  0.1692149 0.03481148</span></span>
+<span><span class="co">#&gt; alpha.x.0 0.03481148 0.06852601 -0.09958898 0.03481149  0.1692119 0.03481149</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.sx, beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean         sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 0.4106913 0.03321657  0.3489957 0.4094212</span></span>
-<span><span class="co">#&gt; Precision for x classical model 4.0992297 0.44031936  3.3044811 4.0745657</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.2253615 0.01060415  0.2052552 0.2250956</span></span>
+<span><span class="co">#&gt; Precision for model of interest 0.4105381 0.03319299  0.3492641 0.4091390</span></span>
+<span><span class="co">#&gt; Precision for x classical model 4.0995367 0.44031595  3.2964217 4.0777415</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.2252504 0.01059631  0.2051209 0.2249979</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest  0.4796899 0.4070330</span></span>
-<span><span class="co">#&gt; Precision for x classical model  5.0361392 4.0232854</span></span>
-<span><span class="co">#&gt; Precision for x imp model        0.2469983 0.2245305</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest  0.4798700 0.4062291</span></span>
+<span><span class="co">#&gt; Precision for x classical model  5.0279413 4.0377802</span></span>
+<span><span class="co">#&gt; Precision for x imp model        0.2468329 0.2244869</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">interact_model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulated_examples_files/figure-html/unnamed-chunk-14-1.png" width="480" style="display: block; margin: auto;"></p>
