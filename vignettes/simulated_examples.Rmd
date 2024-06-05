@@ -316,84 +316,60 @@ plot(interact_model)
 
 
 
-## Air pollution example 
+## Logistic regression with classical error and missing data
 
 |Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
 |:-----------|:----------|:--------|:----------|:------------|
-|Berkson, classical | Binomial | asthma | airpollution | gender, age, district |
+| Classical, missing | Binomial | $y$ | $w$ | $z$ |
 
-In this example, we simulate data from a fictitious, but realistic scenario where we want examine if people in areas with high air pollution seem to have asthma more than in areas with lower air pollution. But the air pollution value for the people in the study cannot be observed directly, instead sensors have been placed at certain locations, and the value for a person is set to be the value gathered at the closest sensor. This leads to a Berkson error. In addition to that, we believe that there is some noise in the measurements due to imprecision in the sensor. This corresponds to a classical measurement error. 
-
-TODO: random intercept model for district instead of treating it as continuous variable.
-
-### Generating the data
+Here we show how to fit a logistic regression model.
 
 ```{r}
-set.seed(2034)
-n <- 1000
-gender <- sample(c(0,1), n, replace = TRUE)
-age <- rgamma(n, shape = 10, scale = 3)
-district <- sample(1:10, n, replace = TRUE)
+set.seed(1)
+nn <- 1000
 
-alpha.0 <- 3; alpha.district <- 0.05
-pollution_b <- alpha.0 + alpha.district*district + 
-  rnorm(n, mean = 0, sd = 4) # Berkson error
-pollution <- pollution_b + rnorm(n, 0, 1) # Classical and Berkson error (this is what is observed)
-pollution_correct <- pollution_b + rnorm(n, mean = 0, sd = 2) # Correct
+z <- rbinom(nn, 1, 0.5)
+x <- rnorm(nn, 1-0.5*z, 1)
 
-beta.0 <- -8; beta.pollution <- 1; beta.gender <- -1; 
-beta.age <- 0.5; beta.district <- -2
+# Error
+w <- x + rnorm(nn, 0, 1)
 
-asthma_predictor <- beta.0 + beta.pollution*pollution_correct + 
-  beta.gender*gender + beta.age*age + beta.district*district
-asthma_prob <- exp(asthma_predictor)/(1 + exp(asthma_predictor))
-asthma <- rbinom(n, 1, prob = asthma_prob)
+# Generating missing data, depending on z
+eta <- -1 + z
+prob_missing <- exp(eta)/(1 + exp(eta))
+missing_index <- rbinom(nn, 1, prob_missing)
 
-airpollution <- data.frame(asthma = asthma, 
-                           pollution = pollution, 
-                           district, 
-                           age, 
-                           gender)
+# Proportion missing:
+sum(missing_index)/nn
+
+# Replace the values in w by missing in case the index for missingness is =1:
+w <- ifelse(missing_index==1, NA, w)
+
+# Generate binomial response
+eta <- x + z 
+prob <- exp(eta)/(1 + exp(eta))
+y <- rbinom(nn, 1, prob)
+
+data_binom <- data.frame(x = x, z = z, y = y, w = w)
 ```
 
-### Fitting the model
+Modeling error and missing data:
 
-```{r}
-# Scale the data
-airpollution_scaled <- airpollution %>% 
-  mutate(across(c(pollution, age), ~ c(scale(., scale = FALSE))))
+```{r,eval=FALSE}
+model_binom <- fit_inlamemi(data = data_binom,
+                       formula_moi = y ~ w + z,
+                       formula_imp = w ~ z,
+                       formula_mis = m ~ z,
+                       family_moi = "binomial",
+                       error_type = c("classical","missing"),
+                       prior.prec.classical = c(10, 9),
+                       prior.prec.imp = c(10, 9),
+                       prior.beta.error = c(0, 1/1000),
+                       initial.prec.classical = 2,
+                       initial.prec.imp = 1)
 
-airpollution_moi <- asthma ~ pollution + district + age + gender
-airpollution_imp <- pollution ~ district
-
-airpollution_model <- fit_inlamemi(data = airpollution_scaled, 
-                         formula_moi = airpollution_moi, 
-                         formula_imp = airpollution_imp, 
-                         family_moi = "binomial",
-                         error_type = c("berkson", "classical"),
-                         prior.prec.berkson = c(1000, 999), 
-                         prior.prec.classical = c(1000, 999),
-                         prior.prec.imp = c(0.5, 0.5),
-                         prior.beta.error = c(0, 1/1000),
-                         initial.prec.berkson = 1,
-                         initial.prec.classical = 1,
-                         initial.prec.imp = 1/16)
-
-airpollution_summary <- summary(airpollution_model)
-
-airpollution.truth <- tibble::tribble(
-  ~"variable", ~"value",
-  "beta.pollution", beta.pollution, 
-  "beta.gender",    beta.gender, 
-  "beta.district",  beta.district, 
-  "beta.age",       beta.age, 
-#  "beta.0",         beta.0, 
-  "alpha.pollution.district", alpha.district, 
-#  "alpha.0",        alpha.0
-)
-
-plot(airpollution_model, plot_intercepts = FALSE) +
-  geom_point(data = airpollution.truth, aes(x = value))
+summary(model_binom)
+plot(model_binom)
 ```
 
 ## Poisson regression with classical error and missing data
@@ -401,6 +377,8 @@ plot(airpollution_model, plot_intercepts = FALSE) +
 |Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
 |:-----------|:----------|:--------|:----------|:------------|
 | Classical, missing | Poisson | $y$ | $w$ | $z$ |
+
+Here we show how to fit a Poisson regression model, where the model of interest has a random intercept term.
 
 ```{r}
 set.seed(1)
@@ -445,7 +423,7 @@ summary(glmer(y ~ w + z + (1|id), data = data_pois, family="poisson"))$coef
 ```
 
 
-Modeling error and missing data with INLA:
+Modeling error and missing data:
 
 ```{r,eval=FALSE}
 model_pois <- fit_inlamemi(data = data_pois,
