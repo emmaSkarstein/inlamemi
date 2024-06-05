@@ -40,6 +40,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -233,38 +234,34 @@ view it like this:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
-<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode          kld</span></span>
-<span><span class="co">#&gt; beta.0 1.031022 0.2113497  0.6110862 1.032289   1.432569 1.030923 1.066649e-06</span></span>
-<span><span class="co">#&gt; beta.z 2.026534 0.6420045  0.9768445 2.052159   3.016461 2.038838 1.212088e-05</span></span>
+<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.0 1.030646 0.2112383  0.6088491 1.034320   1.438286 1.034769</span></span>
+<span><span class="co">#&gt; beta.z 2.029205 0.6728023  0.9199233 2.073389   3.058175 2.048395</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Coefficient for error prone variable: </span></span>
-<span><span class="co">#&gt;             mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x1 1.940767 0.3473502   1.265468 1.937873   2.633095 1.925672</span></span>
-<span><span class="co">#&gt; beta.x2 2.074281 0.3069052   1.461624 2.077154   2.670000 2.089300</span></span>
+<span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
+<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.x1 1.93643 0.3687764   1.221488 1.932687   2.673458 1.916832</span></span>
+<span><span class="co">#&gt; beta.x2 2.06828 0.3250084   1.419306 2.071383   2.698958 2.084509</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                 mean         sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; alpha.x1.0 1.0361516 0.04400730  0.9498432 1.0361516   1.122460 1.0361516</span></span>
-<span><span class="co">#&gt; alpha.x1.z 1.9748165 0.04480327  1.8869471 1.9748165   2.062686 1.9748165</span></span>
-<span><span class="co">#&gt; alpha.x2.0 0.9734143 0.04551378  0.8841532 0.9734143   1.062675 0.9734143</span></span>
-<span><span class="co">#&gt;                     kld</span></span>
-<span><span class="co">#&gt; alpha.x1.0 1.117882e-12</span></span>
-<span><span class="co">#&gt; alpha.x1.z 1.161477e-12</span></span>
-<span><span class="co">#&gt; alpha.x2.0 2.679751e-14</span></span>
+<span><span class="co">#&gt; alpha.x1.0 1.0361515 0.04401169  0.9498350 1.0361515   1.122468 1.0361515</span></span>
+<span><span class="co">#&gt; alpha.x1.z 1.9748164 0.04480773  1.8869387 1.9748164   2.062694 1.9748164</span></span>
+<span><span class="co">#&gt; alpha.x2.0 0.9734143 0.04553154  0.8841191 0.9734143   1.062710 0.9734143</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x1, beta.x2): </span></span>
 <span><span class="co">#&gt;                                       mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest  1.1369742 0.3483556  0.5868749 1.0921251</span></span>
-<span><span class="co">#&gt; Precision for x1 classical model 1.0689972 0.2041603  0.7190652 1.0514683</span></span>
-<span><span class="co">#&gt; Precision for x1 imp model       1.0395326 0.1962593  0.7107899 1.0201172</span></span>
-<span><span class="co">#&gt; Precision for x2 classical model 1.0266408 0.1680053  0.7395780 1.0118565</span></span>
-<span><span class="co">#&gt; Precision for x2 imp model       0.9386691 0.1496302  0.6756403 0.9279738</span></span>
+<span><span class="co">#&gt; Precision for model of interest  1.1407588 0.3669656  0.5852494 1.0860268</span></span>
+<span><span class="co">#&gt; Precision for x1 classical model 1.0743312 0.2197779  0.7008398 1.0544233</span></span>
+<span><span class="co">#&gt; Precision for x1 imp model       1.0387665 0.2080965  0.6945443 1.0167755</span></span>
+<span><span class="co">#&gt; Precision for x2 classical model 1.0310458 0.1790871  0.7277934 1.0143899</span></span>
+<span><span class="co">#&gt; Precision for x2 imp model       0.9370801 0.1568627  0.6629738 0.9253292</span></span>
 <span><span class="co">#&gt;                                  0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest    1.944279 1.0103701</span></span>
-<span><span class="co">#&gt; Precision for x1 classical model   1.519731 1.0194614</span></span>
-<span><span class="co">#&gt; Precision for x1 imp model         1.480706 0.9803755</span></span>
-<span><span class="co">#&gt; Precision for x2 classical model   1.399282 0.9807722</span></span>
-<span><span class="co">#&gt; Precision for x2 imp model         1.263155 0.9086746</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest    2.013996 0.9843853</span></span>
+<span><span class="co">#&gt; Precision for x1 classical model   1.562228 1.0184073</span></span>
+<span><span class="co">#&gt; Precision for x1 imp model         1.510517 0.9717736</span></span>
+<span><span class="co">#&gt; Precision for x2 classical model   1.430762 0.9796053</span></span>
+<span><span class="co">#&gt; Precision for x2 imp model         1.278710 0.9041168</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">two_error_model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="multiple_error_variables_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>

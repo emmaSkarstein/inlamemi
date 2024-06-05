@@ -23,6 +23,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -60,13 +61,13 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">make_inlamemi_control.family</span><span class="op">(</span></span>
+<span>  formula_mis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">family_moi</span>,</span>
 <span>  error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>  prior.prec.moi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prior.prec.berkson <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prior.prec.classical <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prior.prec.imp <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  prior.beta.error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.moi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.berkson <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.classical <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -81,7 +82,11 @@
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>family_moi</dt>
+    <dl><dt>formula_mis</dt>
+<dd><p>an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.</p></dd>
+
+
+<dt>family_moi</dt>
 <dd><p>a string indicating the likelihood family for the model of interest (the main model).</p></dd>
 
 
@@ -90,23 +95,19 @@
 
 
 <dt>prior.prec.moi</dt>
-<dd><p>a string containing the parameters for the prior for the precision of the residual term for the model of interest. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.moi = 'fixed'".</p></dd>
+<dd><p>a string containing the parameters for the prior for the precision of the residual term for the model of interest.</p></dd>
 
 
 <dt>prior.prec.berkson</dt>
-<dd><p>a string containing the parameters for the prior for the precision of the error term for the Berkson error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.berkson = 'fixed'".</p></dd>
+<dd><p>a string containing the parameters for the prior for the precision of the error term for the Berkson error model.</p></dd>
 
 
 <dt>prior.prec.classical</dt>
-<dd><p>a string containing the parameters for the prior for the precision of the error term for the classical error model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.classical = 'fixed'".</p></dd>
+<dd><p>a string containing the parameters for the prior for the precision of the error term for the classical error model.</p></dd>
 
 
 <dt>prior.prec.imp</dt>
-<dd><p>a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model. If this precision should be fixed (to the value given as the initial value), this can be done by specifying "prior.prec.imputation = 'fixed'".</p></dd>
-
-
-<dt>prior.beta.error</dt>
-<dd><p>parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?</p></dd>
+<dd><p>a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.</p></dd>
 
 
 <dt>initial.prec.moi</dt>
@@ -161,7 +162,6 @@
 <span class="r-in"><span>  prior.prec.berkson <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  prior.beta.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>  initial.prec.moi <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  initial.prec.berkson <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>  initial.prec.classical <span class="op">=</span> <span class="fl">1</span>,</span></span>

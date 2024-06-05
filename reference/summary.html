@@ -25,6 +25,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -122,33 +123,30 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "berkson"   "classical"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for model of interest: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant      mode          kld</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.025134 0.2189277  0.6058403 1.021552   1.432125 0.9835465 2.210744e-06</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.900976 0.3880808  1.2097716 1.885099   2.553702 1.8978173 2.220084e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient for error prone variable: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.972201 0.2050054   1.559952 1.975134   2.367044 1.987718</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.028503 0.2203462  0.6071929 1.025588   1.454842 1.023696</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.907560 0.3906445  1.2036794 1.898140   2.616729 1.908706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient for variable with measurement error and/or missingness: </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant    mode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.973503 0.1966796   1.584232 1.974213   2.358629 1.97717</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for imputation model: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               mean         sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033086 0.05058159  0.9338528 1.033094   1.132272 1.033094</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024695 0.05224384  1.9222762 2.024677   2.127215 2.024677</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>                    kld</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 3.120013e-11</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 5.296063e-11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033082 0.05058810  0.9338342 1.033090   1.132279 1.033090</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024704 0.05225101  1.9222744 2.024685   2.127242 2.024685</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model hyperparameters (apart from beta.x): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                      mean        sd 0.025quant  0.5quant</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1311567 0.3689404  0.5589386 1.0804393</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1254803 0.3476925  0.5825068 1.0788162</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9258963 0.1095304  0.7315634 0.9186325</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9786054 0.1264815  0.7503058 0.9715460</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1216884 0.3539440  0.5600179 1.0769495</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1217399 0.3393852  0.5971437 1.0744550</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9263018 0.1074763  0.7328492 0.9201077</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9780175 0.1237004  0.7570022 0.9703424</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 0.975quant      mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.994649 0.9873521</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.937293 0.9928624</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.162229 0.9026326</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.247384 0.9595189</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.937884 0.9961054</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.920248 0.9861854</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.155428 0.9077959</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.243238 0.9552656</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

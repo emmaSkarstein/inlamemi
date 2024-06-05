@@ -40,6 +40,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -84,22 +85,16 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emmaskarstein.github.io/inlamemi/">inlamemi</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">INLA</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: Matrix</span></span>
-<span><span class="co">#&gt; Loading required package: sp</span></span>
-<span><span class="co">#&gt; This is INLA_24.05.13-1 built 2024-05-13 07:49:46 UTC.</span></span>
-<span><span class="co">#&gt;  - See www.r-inla.org/contact-us for how to get help.</span></span>
-<span><span class="co">#&gt;  - List available models/likelihoods/etc with inla.list.models()</span></span>
-<span><span class="co">#&gt;  - Use inla.doc(&lt;NAME&gt;) to access documentation</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">INLA</span><span class="op">)</span></span></code></pre></div>
 <p>In this vignette, we show how to build the measurement error and
 missingness models that <code>inlamemi</code> can fit, but without using
 <code>inlamemi</code>. This is so that if you have a model that for some
 reason does not work within <code>inlamemi</code>, you can see some
 examples of how to fit these models “manually”.</p>
 <p>There are two ways to structure the data for the models, the first
-option is the one taken in <a href="https://arxiv.org/abs/1302.3065" class="external-link">Muff et al (2015)</a> and <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.202300078" class="external-link">Skarstein
-et al (2023)</a>, where the matrices are constructed directly by hand.
-The other approach is the one that is used internally in
+option is the one taken in <a href="https://arxiv.org/abs/1302.3065" class="external-link">Muff et al (2015)</a> and <a href="https://doi.org/10.1002/bimj.202300078" class="external-link">Skarstein et al
+(2023)</a>, where the matrices are constructed directly by hand. The
+other approach is the one that is used internally in
 <code>inlamemi</code>, where we use the function
 <code><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack()</a></code> to define the data structure for each
 sub-model, and then join these together. This latter approach is a bit
@@ -108,12 +103,47 @@ more modular, and so this is the approach we will show here.</p>
 <h2 id="a-short-explanation-of-inla-stack-for-hierarchical-modelling">A short explanation of <code>inla.stack()</code> for hierarchical
 modelling<a class="anchor" aria-label="anchor" href="#a-short-explanation-of-inla-stack-for-hierarchical-modelling"></a>
 </h2>
+<p>The <code><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack()</a></code> function is most commonly used for
+spatial modelling with stochastic partial differential equations (SPDE),
+since the data then is a bit more complex to structure. A description of
+using stacks in that context can be found in <a href="https://becarioprecario.bitbucket.io/inla-gitbook/ch-spatial.html#spatial-models-using-stochastic-partial-differential-equations" class="external-link">chapter
+7.3.3 of <em>Bayesian inference with INLA</em></a>. However, they can
+also be quite useful when defining hierarchical models with multiple
+likelihoods, which traditionally need to be defined by setting up
+matrices where the structure of the matrices encode the structure of the
+model, as explained in <a href="https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLAfeatures.html#sec:sevlik" class="external-link">chapter
+6.4 of <em>Bayesian inference with INLA</em></a>. The stacks are
+eventually converted to these matrices by INLA, but for the modeller it
+may be more convenient to define the model through the stacks. one
+reason is that when setting up the matrices you need to know from the
+beginning how many levels you will have in the model, since this
+determines the number of columns in the matrices. However, with the
+stacks, each model level has its own stack, and previous stacks do not
+change if you add additional stacks. That is, the definition of stacks
+for each model level can be done independently.</p>
+<p>The <code>inla.stack</code> function takes four arguments:</p>
+<ul>
+<li>
+<code>data</code>: a list of the data on the left side of the
+formula (the response)</li>
+<li>
+<code>A</code>: a list of projector matrices, in our case for
+non-spatial models this is just set to <code>list(1)</code>
+</li>
+<li>
+<code>effects</code>: a list of the SPDE index and covariates, in
+our case, just a list of a list containing the covariates and random
+effects.</li>
+<li>
+<code>tag</code>: a character vector labelling this group, which can
+be useful for extracting certain parts of the stack later.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="classical-and-berkson-measurement-error-and-missingness">Classical and Berkson measurement error and missingness<a class="anchor" aria-label="anchor" href="#classical-and-berkson-measurement-error-and-missingness"></a>
 </h2>
 <p>In the first example, we use the dataset <code>simple_data</code>,
-generated in the vignette <a href="simulated_examples.Rmd">Simulated
+generated in the vignette <a href="https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html">Simulated
 examples</a>. This dataset has classical and Berkson measurement error,
 and missing data, and so the main model we want to fit is</p>
 <p><span class="math display">\[
@@ -167,7 +197,7 @@ observations.</p>
 by defining the stacks for each model level.</p>
 <p>For the main regression model, we have the model <span class="math display">\[
   y_i = \beta_0 + \beta_x x_i + \beta_z z_i + \varepsilon_i,
-\]</span> which is definied in a stack like this:</p>
+\]</span> which is defined in a stack like this:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_moi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y_moi <span class="op">=</span> <span class="va">data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>,</span>
 <span>                      A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
@@ -217,8 +247,8 @@ formulation that we also could have specified manually.</p>
 <code class="sourceCode R"><span><span class="va">stk_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span><span class="va">stk_moi</span>, <span class="va">stk_b</span>, <span class="va">stk_c</span>, <span class="va">stk_imp</span><span class="op">)</span></span></code></pre></div>
 <p>For this model, we have two latent effects, <code>x</code> and
 <code>r</code>, which are both specified in the formula. For further
-details on the formula, see the supplementary material of <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/bimj.202300078" class="external-link">Skarstein
-et al (2023)</a>, which can be found online here: <a href="https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html" class="external-link uri">https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html</a></p>
+details on the formula, see the supplementary material of <a href="https://doi.org/10.1002/bimj.202300078" class="external-link">Skarstein et al
+(2023)</a>, which can be found online here: <a href="https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html" class="external-link uri">https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html</a></p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y_moi</span>, <span class="va">y_berkson</span>, <span class="va">y_classical</span>, <span class="va">y_imp</span><span class="op">)</span> <span class="op">~</span> <span class="op">-</span> <span class="fl">1</span> <span class="op">+</span> <span class="va">beta.0</span> <span class="op">+</span> <span class="va">beta.z</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/f.html" class="external-link">f</a></span><span class="op">(</span><span class="va">beta.x</span>, copy <span class="op">=</span> <span class="st">"id.x"</span>,</span>
@@ -254,11 +284,11 @@ these.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_sim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.326, Running = 1.25, Post = 0.134, Total = 1.71 </span></span>
+<span><span class="co">#&gt;     Pre = 0.33, Running = 1.28, Post = 0.129, Total = 1.74 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;          mean    sd 0.025quant 0.5quant 0.975quant  mode kld</span></span>
-<span><span class="co">#&gt; beta.0  1.031 0.218      0.603    1.033      1.441 1.024   0</span></span>
-<span><span class="co">#&gt; beta.z  1.914 0.386      1.176    1.904      2.575 1.908   0</span></span>
+<span><span class="co">#&gt; beta.0  1.033 0.218      0.611    1.033      1.442 1.026   0</span></span>
+<span><span class="co">#&gt; beta.z  1.917 0.387      1.221    1.907      2.570 1.913   0</span></span>
 <span><span class="co">#&gt; alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0</span></span>
 <span><span class="co">#&gt; alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -270,19 +300,19 @@ these.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                             mean    sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations    1.135 0.371      0.556    1.085</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.124 0.324      0.612    1.083</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.924 0.104      0.738    0.918</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.979 0.121      0.760    0.972</span></span>
-<span><span class="co">#&gt; Beta for beta.x                            1.973 0.192      1.588    1.976</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations    1.131 0.365      0.568    1.080</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.130 0.339      0.603    1.083</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.926 0.108      0.733    0.919</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.977 0.124      0.755    0.969</span></span>
+<span><span class="co">#&gt; Beta for beta.x                            1.975 0.198      1.580    1.976</span></span>
 <span><span class="co">#&gt;                                            0.975quant  mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations          2.00 0.994</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]       1.88 1.006</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]       1.15 0.903</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4]       1.24 0.961</span></span>
-<span><span class="co">#&gt; Beta for beta.x                                  2.34 1.986</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations          1.99 0.985</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]       1.92 0.997</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]       1.16 0.906</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4]       1.24 0.954</span></span>
+<span><span class="co">#&gt; Beta for beta.x                                  2.36 1.981</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.04 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.01 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>
@@ -316,8 +346,9 @@ covariate <code>z2</code> (corresponding to the missingness model).</p>
 <span><span class="va">x_obs</span><span class="op">[</span><span class="va">m</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">x_obs</span><span class="op">)</span><span class="op">)</span><span class="op">/</span><span class="fu"><a href="https://rdrr.io/r/base/length.html" class="external-link">length</a></span><span class="op">(</span><span class="va">x_obs</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] 0.183</span></span>
-<span></span>
+<span><span class="co">#&gt; [1] 0.183</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span></span>
 <span><span class="va">beta.0</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="va">beta.x</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">beta.z1</span> <span class="op">&lt;-</span> <span class="fl">2</span>; <span class="va">beta.z2</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
 <span><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">beta.0</span> <span class="op">+</span> <span class="va">beta.x</span><span class="op">*</span><span class="va">x</span> <span class="op">+</span> <span class="va">beta.z1</span><span class="op">*</span><span class="va">z1</span> <span class="op">+</span> <span class="va">beta.z2</span><span class="op">*</span><span class="va">z2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span>
 <span></span>
@@ -326,7 +357,7 @@ covariate <code>z2</code> (corresponding to the missingness model).</p>
 y_i = \beta_0 + \beta_x x_{true,i} + \beta_{z_1} z_{1,i} + \beta_{z_2}
 z_{2,i} + \varepsilon_i ,
 \]</span> and the stack is:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_moi</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y_moi <span class="op">=</span> <span class="va">missing_data</span><span class="op">$</span><span class="va">y</span><span class="op">)</span>,</span>
 <span>                      A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>                      effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -341,7 +372,7 @@ case, but the model is <span class="math display">\[
 \]</span> where the precision of <span class="math inline">\(u_{c,i}\)</span> is set to be very high for those
 <span class="math inline">\(i\)</span> where <span class="math inline">\(x_{obs,i}\)</span> is observed. The stack for this
 level is:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y_classical <span class="op">=</span> <span class="va">missing_data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span>,</span>
 <span>                    A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>                    effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -351,7 +382,7 @@ level is:</p>
 <p>Next we have the imputation model <span class="math display">\[
   0 = -x_{true,i} + \alpha_0 + \alpha_{z_1} z_{1,i} + \varepsilon_{x,i},
 \]</span> and the stack is</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_imp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y_imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>                      effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -366,7 +397,7 @@ depend on other covariates. The model is <span class="math display">\[
   \text{logit}(p_{m,i}) = \gamma_0 + \gamma_x x_{true,i} + \gamma_{z_2}
 z_{2,i},
 \]</span> and the stack is:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_mis</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>y_mis <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">missing_data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      A <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span>,</span>
 <span>                      effects <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
@@ -375,12 +406,12 @@ z_{2,i},
 <span>                             gamma.z2 <span class="op">=</span> <span class="va">missing_data</span><span class="op">$</span><span class="va">z2</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                      tag <span class="op">=</span> <span class="st">"missingness"</span><span class="op">)</span></span></code></pre></div>
 <p>We join the stacks together:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stk_full</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack</a></span><span class="op">(</span><span class="va">stk_moi</span>, <span class="va">stk_c</span>, <span class="va">stk_imp</span>, <span class="va">stk_mis</span><span class="op">)</span></span></code></pre></div>
 <p>In defining the formula, we now need to define the hyperparameter
 <code>gamma.x</code>, the same way as we define <code>beta.x</code>.
 This is a scaled copy of <code>id.x</code>.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">formula</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="va">y_moi</span>, <span class="va">y_classical</span>, <span class="va">y_imp</span>, <span class="va">y_mis</span><span class="op">)</span> <span class="op">~</span> <span class="op">-</span> <span class="fl">1</span> <span class="op">+</span></span>
 <span>  <span class="va">beta.0</span> <span class="op">+</span> <span class="va">beta.z1</span> <span class="op">+</span> <span class="va">beta.z2</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/f.html" class="external-link">f</a></span><span class="op">(</span><span class="va">beta.x</span>, copy <span class="op">=</span> <span class="st">"id.x"</span>,</span>
@@ -393,7 +424,7 @@ This is a scaled copy of <code>id.x</code>.</p>
 <p>Since we don’t have any measurement error in this case, we set the
 precision to be very high for the classical error model in the argument
 <code>scale</code>.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_mnar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.html" class="external-link">inla</a></span><span class="op">(</span><span class="va">formula</span>, data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.stack.html" class="external-link">inla.stack.data</a></span><span class="op">(</span><span class="va">stk_full</span><span class="op">)</span>,</span>
 <span>                  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"gaussian"</span>, <span class="st">"gaussian"</span>, <span class="st">"gaussian"</span>, <span class="st">"binomial"</span><span class="op">)</span>,</span>
 <span>                  scale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="fl">8</span>, <span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1</span>, <span class="va">n</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -408,21 +439,21 @@ precision to be very high for the classical error model in the argument
 <span>                                                  param <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
 <span>                                                  fixed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                    <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>                  control.predictor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>compute <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span>                  control.predictor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>compute <span class="op">=</span> <span class="cn">TRUE</span>, link <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_mnar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.29, Running = 2.29, Post = 0.323, Total = 2.9 </span></span>
+<span><span class="co">#&gt;     Pre = 0.282, Running = 2.29, Post = 0.329, Total = 2.9 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;            mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
-<span><span class="co">#&gt; beta.0    1.039 0.050      0.941    1.039      1.137  1.039   0</span></span>
+<span><span class="co">#&gt; beta.0    1.039 0.050      0.941    1.039      1.137  1.038   0</span></span>
 <span><span class="co">#&gt; beta.z1   2.004 0.036      1.933    2.004      2.076  2.004   0</span></span>
 <span><span class="co">#&gt; beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0</span></span>
 <span><span class="co">#&gt; alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0</span></span>
 <span><span class="co">#&gt; alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0</span></span>
-<span><span class="co">#&gt; gamma.0  -1.510 0.122     -1.753   -1.508     -1.274 -1.508   0</span></span>
-<span><span class="co">#&gt; gamma.z2 -0.425 0.088     -0.597   -0.425     -0.252 -0.425   0</span></span>
+<span><span class="co">#&gt; gamma.0  -1.510 0.122     -1.754   -1.509     -1.275 -1.509   0</span></span>
+<span><span class="co">#&gt; gamma.z2 -0.425 0.088     -0.598   -0.425     -0.252 -0.425   0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Random effects:</span></span>
 <span><span class="co">#&gt;   Name     Model</span></span>
@@ -433,18 +464,18 @@ precision to be very high for the classical error model in the argument
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                              mean    sd 0.025quant 0.5quant</span></span>
 <span><span class="co">#&gt; Precision for the Gaussian observations     0.984 0.048      0.892    0.983</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.126 0.342      0.593    1.079</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.023 0.047      0.932    1.023</span></span>
-<span><span class="co">#&gt; Beta for beta.x                             1.954 0.035      1.885    1.954</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                           -0.036 0.089     -0.211   -0.036</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.135 0.363      0.604    1.076</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.023 0.047      0.933    1.023</span></span>
+<span><span class="co">#&gt; Beta for beta.x                             1.953 0.035      1.885    1.953</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                           -0.036 0.089     -0.212   -0.035</span></span>
 <span><span class="co">#&gt;                                            0.975quant   mode</span></span>
 <span><span class="co">#&gt; Precision for the Gaussian observations         1.081  0.981</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]      1.926  0.993</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]      1.119  1.022</span></span>
-<span><span class="co">#&gt; Beta for beta.x                                 2.022  1.954</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                                0.139 -0.035</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]      2.017  0.962</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]      1.119  1.021</span></span>
+<span><span class="co">#&gt; Beta for beta.x                                 2.021  1.954</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                                0.138 -0.034</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.21 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.20 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>

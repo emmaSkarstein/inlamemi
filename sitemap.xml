@@ -19,6 +19,9 @@
     <loc>https://emmaskarstein.github.io/inlamemi/articles/index.html</loc>
   </url>
   <url>
+    <loc>https://emmaskarstein.github.io/inlamemi/articles/modifying_default_plot.html</loc>
+  </url>
+  <url>
     <loc>https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html</loc>
   </url>
   <url>
@@ -32,6 +35,12 @@
   </url>
   <url>
     <loc>https://emmaskarstein.github.io/inlamemi/index.html</loc>
+  </url>
+  <url>
+    <loc>https://emmaskarstein.github.io/inlamemi/news/index.html</loc>
+  </url>
+  <url>
+    <loc>https://emmaskarstein.github.io/inlamemi/reference/extract_random_effects.html</loc>
   </url>
   <url>
     <loc>https://emmaskarstein.github.io/inlamemi/reference/extract_variables_from_formula.html</loc>
@@ -52,16 +61,19 @@
     <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_control.family.html</loc>
   </url>
   <url>
-    <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_formula.html</loc>
+    <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_families.html</loc>
   </url>
   <url>
-    <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_matrices.html</loc>
+    <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_formula.html</loc>
   </url>
   <url>
     <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_scaling_vector.html</loc>
   </url>
   <url>
     <loc>https://emmaskarstein.github.io/inlamemi/reference/make_inlamemi_stacks.html</loc>
+  </url>
+  <url>
+    <loc>https://emmaskarstein.github.io/inlamemi/reference/mar_data.html</loc>
   </url>
   <url>
     <loc>https://emmaskarstein.github.io/inlamemi/reference/nhanes_survival.html</loc>

@@ -23,6 +23,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -74,7 +75,7 @@
 
 
 <dt>error_type</dt>
-<dd><p>one of "classical", "berkson" or "missing".</p></dd>
+<dd><p>type of error (one or more of "classical", "berkson", "missing")</p></dd>
 
 
 <dt>classical_error_scaling</dt>
@@ -82,7 +83,7 @@
 
 
 <dt>vars</dt>
-<dd><p>Results from a call to "extract_variables_from_formula" function.</p></dd>
+<dd><p>Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.</p></dd>
 
 </dl></div>
     <div class="section level2">

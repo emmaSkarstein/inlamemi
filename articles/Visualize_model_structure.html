@@ -40,6 +40,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -238,7 +239,7 @@ chunk option:</p>
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -249,7 +250,7 @@ chunk option:</p>
 \vdots\\
 1\\
 \end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x}\underbrace{\begin{bmatrix}
+\alpha_{x,z}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -397,7 +398,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -411,7 +412,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \vdots\\
 1\\
 \end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x}\underbrace{\begin{bmatrix}
+\alpha_{x,z}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -534,7 +535,7 @@ access the stacks from the model object:</p>
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -548,7 +549,7 @@ access the stacks from the model object:</p>
 \vdots\\
 1\\
 \end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x}\underbrace{\begin{bmatrix}
+\alpha_{x,z}\underbrace{\begin{bmatrix}
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -562,6 +563,171 @@ access the stacks from the model object:</p>
 \vdots\\
 0.77\\
 \end{bmatrix}}_{\texttt{alpha.x.z}}\]</span></p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mis_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z1</span> <span class="op">+</span> <span class="va">z2</span>,</span>
+<span>                          formula_imp <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z1</span>,</span>
+<span>                          formula_mis <span class="op">=</span> <span class="va">m</span> <span class="op">~</span> <span class="va">z2</span> <span class="op">+</span> <span class="va">x</span>,</span>
+<span>                          family_moi <span class="op">=</span> <span class="st">"gaussian"</span>,</span>
+<span>                          data <span class="op">=</span> <span class="va">mar_data</span>,</span>
+<span>                          error_type <span class="op">=</span> <span class="st">"missing"</span>,</span>
+<span>                          prior.beta.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>                          prior.gamma.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>                          prior.prec.moi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
+<span>                          prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
+<span>                          initial.prec.moi <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>                          initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/show_data_structure.html">show_data_structure</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">$</span><span class="va">stack_data</span><span class="op">)</span><span class="op">$</span><span class="va">matrix_string</span><span class="op">)</span></span></code></pre></div>
+<p><span class="math display">\[\underbrace{\begin{bmatrix}
+7.9 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+2.58 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
+\texttt{NA} &amp; 2.31 &amp; \texttt{NA} &amp; \texttt{NA}\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+\texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
+\texttt{NA} &amp; \texttt{NA} &amp; 0 &amp; \texttt{NA}\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+\texttt{NA} &amp; \texttt{NA} &amp; 0 &amp; \texttt{NA}\\
+\texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; 0\\
+\vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
+\texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; 1\\
+\end{bmatrix}}_{\texttt{Y}}
+=
+\beta_{0}\underbrace{\begin{bmatrix}
+1\\
+\vdots\\
+1\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix}
+1\\
+\vdots\\
+1000\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z1}\underbrace{\begin{bmatrix}
+0.98\\
+\vdots\\
+0.77\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{beta.z1}} +
+\beta_{z2}\underbrace{\begin{bmatrix}
+-0.05\\
+\vdots\\
+-0.72\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{beta.z2}} + \underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+1\\
+\vdots\\
+1000\\
+-1\\
+\vdots\\
+-1000\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+1\\
+\vdots\\
+1\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{alpha.x.0}} +
+\alpha_{x,z1}\underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+0.98\\
+\vdots\\
+0.77\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\end{bmatrix}}_{\texttt{alpha.x.z1}} +
+\gamma_{x,0}\underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+1\\
+\vdots\\
+1\\
+\end{bmatrix}}_{\texttt{gamma.x.0}} +
+\gamma_{x,z2}\underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+-0.05\\
+\vdots\\
+-0.72\\
+\end{bmatrix}}_{\texttt{gamma.x.z2}} +
+\gamma_{x}\underbrace{\begin{bmatrix}
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+\texttt{NA}\\
+\vdots\\
+\texttt{NA}\\
+1\\
+\vdots\\
+1000\\
+\end{bmatrix}}_{\texttt{gamma.x}}\]</span></p>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>

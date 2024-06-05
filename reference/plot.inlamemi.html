@@ -23,6 +23,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -60,7 +61,17 @@
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for inlamemi</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">x</span>, plot_moi <span class="op">=</span> <span class="cn">TRUE</span>, plot_imp <span class="op">=</span> <span class="cn">TRUE</span>, plot_intercepts <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  plot_moi <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  plot_imp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  plot_mis <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  plot_intercepts <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  error_variable_highlight <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  greek <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  palette <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -77,8 +88,24 @@
 <dd><p>should the posterior mean for the coefficients of the imputation model be plotted? Defaults to TRUE.</p></dd>
 
 
+<dt>plot_mis</dt>
+<dd><p>should the posterior mean for the coefficients of the missingness model be plotted? Defaults to TRUE.</p></dd>
+
+
 <dt>plot_intercepts</dt>
-<dd><p>should the posterior mean for the intercept(s) be plotted?</p></dd>
+<dd><p>should the posterior mean for the intercept(s) be plotted? Defaults to TRUE.</p></dd>
+
+
+<dt>error_variable_highlight</dt>
+<dd><p>should the coefficient(s) of the variable(s) with error be highlighted? (circled in black) Defaults to FALSE.</p></dd>
+
+
+<dt>greek</dt>
+<dd><p>make the coefficient names into greek letters with the covariate name as subscript. Defaults to FALSE.</p></dd>
+
+
+<dt>palette</dt>
+<dd><p>either a number (between 1 and 5), indicating the number of the color palette to be used, or a vector of the colors to be used.</p></dd>
 
 
 <dt>...</dt>

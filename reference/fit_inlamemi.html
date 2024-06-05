@@ -23,6 +23,7 @@
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
     <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
+    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
     <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
@@ -62,6 +63,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">fit_inlamemi</span><span class="op">(</span></span>
 <span>  <span class="va">formula_moi</span>,</span>
 <span>  formula_imp <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  formula_mis <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">family_moi</span>,</span>
 <span>  <span class="va">data</span>,</span>
 <span>  error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
@@ -73,6 +75,7 @@
 <span>  prior.prec.classical <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prior.prec.imp <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  prior.beta.error <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  prior.gamma.error <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.moi <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.berkson <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  initial.prec.classical <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -95,6 +98,10 @@
 
 <dt>formula_imp</dt>
 <dd><p>an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.</p></dd>
+
+
+<dt>formula_mis</dt>
+<dd><p>an object of class "formula", describing the missingness model. Does not need to have a response variable, since this will always be a binary missingness indicator.</p></dd>
 
 
 <dt>family_moi</dt>
@@ -139,6 +146,10 @@
 
 <dt>prior.beta.error</dt>
 <dd><p>parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?</p></dd>
+
+
+<dt>prior.gamma.error</dt>
+<dd><p>parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?</p></dd>
 
 
 <dt>initial.prec.moi</dt>
@@ -194,13 +205,10 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">simple_moi</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span></span></span>
-<span class="r-in"><span><span class="va">simple_imp</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fit the model</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Fit the model</span></span></span>
 <span class="r-in"><span><span class="va">simple_model</span> <span class="op">&lt;-</span> <span class="fu">fit_inlamemi</span><span class="op">(</span>data <span class="op">=</span> <span class="va">simple_data</span>,</span></span>
-<span class="r-in"><span>                           formula_moi <span class="op">=</span> <span class="va">simple_moi</span>,</span></span>
-<span class="r-in"><span>                           formula_imp <span class="op">=</span> <span class="va">simple_imp</span>,</span></span>
+<span class="r-in"><span>                           formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span>,</span></span>
+<span class="r-in"><span>                           formula_imp <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z</span>,</span></span>
 <span class="r-in"><span>                           family_moi <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
 <span class="r-in"><span>                           error_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"berkson"</span>, <span class="st">"classical"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                           error_variable <span class="op">=</span> <span class="st">"x"</span>,</span></span>
