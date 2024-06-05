@@ -188,29 +188,29 @@ scenario.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.027315 0.2189829  0.6085332 1.024800   1.441139 1.021141</span></span>
-<span><span class="co">#&gt; beta.z 1.905325 0.3880586  1.2138787 1.894281   2.569913 1.904732</span></span>
+<span><span class="co">#&gt; beta.0 1.026626 0.2181506  0.6061939 1.024817   1.439871 1.019726</span></span>
+<span><span class="co">#&gt; beta.z 1.904144 0.3865125  1.2017634 1.892944   2.565891 1.902289</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973276 0.2000501   1.574567 1.974935   2.362227 1.981925</span></span>
+<span><span class="co">#&gt; beta.x 1.973256 0.1950636   1.582884 1.975411   2.350892 1.984566</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033082 0.05060948  0.9337941 1.033090   1.132322 1.033090</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024703 0.05227280  1.9222284 2.024685   2.127281 2.024685</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033087 0.05059993  0.9338183 1.033095   1.132309 1.033095</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024693 0.05226282  1.9222367 2.024675   2.127250 2.024675</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1252230 0.3539423  0.5649675 1.0800559</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1223249 0.3412762  0.5920258 1.0756728</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9249165 0.1079897  0.7323247 0.9180865</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9778230 0.1249904  0.7535123 0.9704081</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1281922 0.3521841  0.5812529 1.0799795</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1257961 0.3322545  0.6028547 1.0824555</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9241335 0.1056272  0.7358504 0.9174207</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9787882 0.1223211  0.7578818 0.9719988</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.943073 0.9982481</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.922324 0.9890352</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.156939 0.9034424</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.244779 0.9566508</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.953264 0.9909490</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.898707 1.0023294</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.151205 0.9027135</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.238678 0.9600329</span></span></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simple.truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
@@ -333,27 +333,27 @@ missing covariate in R-INLA.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;             mean         sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; beta.0 0.9757738 0.04896832  0.8796617 0.9761004   1.070444 0.9762324</span></span>
-<span><span class="co">#&gt; beta.z 1.9476128 0.07732350  1.7963137 1.9489431   2.094781 1.9493479</span></span>
+<span><span class="co">#&gt; beta.0 0.9737528 0.04833328  0.8801111 0.9736232   1.067822 0.9735263</span></span>
+<span><span class="co">#&gt; beta.z 1.9437130 0.07582159  1.7996329 1.9429208   2.088528 1.9422852</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 2.025217 0.03456361    1.95873 2.024695   2.094801 2.022452</span></span>
+<span><span class="co">#&gt; beta.x 2.024906 0.03439358   1.956669 2.025086   2.092089 2.025839</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.031094 0.03135920  0.9695975 1.031090   1.092609 1.031090</span></span>
-<span><span class="co">#&gt; alpha.x.z 1.983403 0.03206103  1.9205188 1.983403   2.046283 1.983403</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.031089 0.03135904  0.9695935 1.031086   1.092603 1.031086</span></span>
+<span><span class="co">#&gt; alpha.x.z 1.983403 0.03206059  1.9205212 1.983404   2.046282 1.983404</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                     mean         sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.056631 0.05278215  0.9579539 1.054832</span></span>
-<span><span class="co">#&gt; Precision for x classical model 1.124929 0.41028665  0.4951776 1.066337</span></span>
-<span><span class="co">#&gt; Precision for x imp model       1.067111 0.04993268  0.9712932 1.066250</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.056678 0.05231637  0.9580042 1.055187</span></span>
+<span><span class="co">#&gt; Precision for x classical model 1.134214 0.33691529  0.6375683 1.080015</span></span>
+<span><span class="co">#&gt; Precision for x imp model       1.066411 0.04971277  0.9705661 1.065706</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.165729 1.0501979</span></span>
-<span><span class="co">#&gt; Precision for x classical model   2.086298 0.9575508</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.167844 1.0651917</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.163944 1.0517973</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.950085 0.9722481</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.166247 1.0652854</span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">missing_truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
@@ -440,7 +440,7 @@ like this:</p>
 <span>                    family <span class="op">=</span> <span class="st">"gaussian"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">naive_model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.214, Running = 0.2, Post = 0.0154, Total = 0.43 </span></span>
+<span><span class="co">#&gt;     Pre = 0.22, Running = 0.202, Post = 0.0174, Total = 0.439 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;               mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
 <span><span class="co">#&gt; (Intercept) -0.316 0.560     -1.429   -0.316      0.796 -0.316   0</span></span>
@@ -493,28 +493,28 @@ like this:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;              mean         sd 0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; beta.0 -0.3677133 0.54846493  -1.458720 -0.3681191  0.7255582 -0.3681071</span></span>
-<span><span class="co">#&gt; beta.z  2.0222515 0.05799871   1.908491  2.0222547  2.1359935  2.0222547</span></span>
+<span><span class="co">#&gt; beta.0 -0.3672113 0.54958957  -1.460669 -0.3675691  0.7281972 -0.3675611</span></span>
+<span><span class="co">#&gt; beta.z  2.0222269 0.05797487   1.908513  2.0222302  2.1359224  2.0222302</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 2.164924 0.2270781   1.719028  2.16453   2.613117 2.162894</span></span>
+<span><span class="co">#&gt; beta.x 2.156075 0.2195212   1.727201  2.15495   2.591532 2.150249</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
-<span><span class="co">#&gt;                mean         sd  0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 0.1022764 0.07123917 -0.03744067 0.1022764  0.2419934 0.1022764</span></span>
+<span><span class="co">#&gt;                mean        sd  0.025quant  0.5quant 0.975quant      mode</span></span>
+<span><span class="co">#&gt; alpha.x.0 0.1022764 0.0712205 -0.03740425 0.1022764  0.2419571 0.1022764</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean         sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 0.1147267 0.02525080 0.07311724 0.1120119</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9461163 0.34019887 0.44688455 0.8906958</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.2562232 0.02951676 0.20318603 0.2544903</span></span>
-<span><span class="co">#&gt; Precision for id                0.4178827 0.18193384 0.16325072 0.3847013</span></span>
+<span><span class="co">#&gt; Precision for model of interest 0.1136232 0.02394043 0.07406403 0.1110816</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9604836 0.34294233 0.45311685 0.9058728</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.2550716 0.02870575 0.20361379 0.2533443</span></span>
+<span><span class="co">#&gt; Precision for id                0.4175742 0.18059329 0.16617223 0.3842578</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest  0.1720303 0.1067366</span></span>
-<span><span class="co">#&gt; Precision for x classical model  1.7675644 0.7893616</span></span>
-<span><span class="co">#&gt; Precision for x imp model        0.3192452 0.2509637</span></span>
-<span><span class="co">#&gt; Precision for id                 0.8648481 0.3246952</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest  0.1678893 0.1060416</span></span>
+<span><span class="co">#&gt; Precision for x classical model  1.7847234 0.8057599</span></span>
+<span><span class="co">#&gt; Precision for x imp model        0.3164945 0.2496775</span></span>
+<span><span class="co">#&gt; Precision for id                 0.8627299 0.3246001</span></span></code></pre></div>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="va">reff.truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
@@ -612,34 +612,34 @@ would be specified in the formula for the model of interest as
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant   0.5quant 0.975quant        mode</span></span>
-<span><span class="co">#&gt; beta.0  1.00807904 0.07956372  0.8520084  1.0080821  1.1641325  1.00808225</span></span>
-<span><span class="co">#&gt; beta.s -0.08601788 0.13376476 -0.3483881 -0.0860131  0.1763251 -0.08601309</span></span>
+<span><span class="co">#&gt; beta.0  1.00811772 0.07958479  0.8520056  1.0081209  1.1642120  1.00812102</span></span>
+<span><span class="co">#&gt; beta.s -0.08606816 0.13383486 -0.3485757 -0.0860634  0.1764123 -0.08606338</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;             mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.sx 2.055632 0.06322840   1.931668 2.055456   2.180621 2.054725</span></span>
-<span><span class="co">#&gt; beta.x  1.709550 0.04045061   1.629995 1.709523   1.789264 1.709411</span></span>
+<span><span class="co">#&gt; beta.sx 2.055256 0.06326207   1.930559 2.055309   2.179645 2.055528</span></span>
+<span><span class="co">#&gt; beta.x  1.709562 0.04042136   1.630186 1.709494   1.789340 1.709208</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                 mean         sd  0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 0.03481148 0.06852284 -0.09958278 0.03481148  0.1692057 0.03481148</span></span>
+<span><span class="co">#&gt; alpha.x.0 0.03481148 0.06852751 -0.09959191 0.03481148  0.1692149 0.03481148</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.sx, beta.x): </span></span>
-<span><span class="co">#&gt;                                     mean         sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 0.410809 0.03336134  0.3488785 0.4095219</span></span>
-<span><span class="co">#&gt; Precision for x classical model 4.101656 0.44266318  3.2973886 4.0786776</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.225301 0.01059457  0.2051775 0.2250476</span></span>
+<span><span class="co">#&gt;                                      mean         sd 0.025quant  0.5quant</span></span>
+<span><span class="co">#&gt; Precision for model of interest 0.4106913 0.03321657  0.3489957 0.4094212</span></span>
+<span><span class="co">#&gt; Precision for x classical model 4.0992297 0.44031936  3.3044811 4.0745657</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.2253615 0.01060415  0.2052552 0.2250956</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest  0.4801418 0.4070877</span></span>
-<span><span class="co">#&gt; Precision for x classical model  5.0381626 4.0345124</span></span>
-<span><span class="co">#&gt; Precision for x imp model        0.2468827 0.2245327</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest  0.4796899 0.4070330</span></span>
+<span><span class="co">#&gt; Precision for x classical model  5.0361392 4.0232854</span></span>
+<span><span class="co">#&gt; Precision for x imp model        0.2469983 0.2245305</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">interact_model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="simulated_examples_files/figure-html/unnamed-chunk-14-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="air-pollution-example">Air pollution example<a class="anchor" aria-label="anchor" href="#air-pollution-example"></a>
+<h2 id="logistic-regression-with-classical-error-and-missing-data">Logistic regression with classical error and missing data<a class="anchor" aria-label="anchor" href="#logistic-regression-with-classical-error-and-missing-data"></a>
 </h2>
 <table class="table">
 <colgroup>
@@ -657,96 +657,59 @@ would be specified in the formula for the model of interest as
 <th align="left">Other covariate(s)</th>
 </tr></thead>
 <tbody><tr class="odd">
-<td align="left">Berkson, classical</td>
+<td align="left">Classical, missing</td>
 <td align="left">Binomial</td>
-<td align="left">asthma</td>
-<td align="left">airpollution</td>
-<td align="left">gender, age, district</td>
+<td align="left"><span class="math inline">\(y\)</span></td>
+<td align="left"><span class="math inline">\(w\)</span></td>
+<td align="left"><span class="math inline">\(z\)</span></td>
 </tr></tbody>
 </table>
-<p>In this example, we simulate data from a fictitious, but realistic
-scenario where we want examine if people in areas with high air
-pollution seem to have asthma more than in areas with lower air
-pollution. But the air pollution value for the people in the study
-cannot be observed directly, instead sensors have been placed at certain
-locations, and the value for a person is set to be the value gathered at
-the closest sensor. This leads to a Berkson error. In addition to that,
-we believe that there is some noise in the measurements due to
-imprecision in the sensor. This corresponds to a classical measurement
-error.</p>
-<p>TODO: random intercept model for district instead of treating it as
-continuous variable.</p>
-<div class="section level3">
-<h3 id="generating-the-data-4">Generating the data<a class="anchor" aria-label="anchor" href="#generating-the-data-4"></a>
-</h3>
+<p>Here we show how to fit a logistic regression model.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">2034</span><span class="op">)</span></span>
-<span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
-<span><span class="va">gender</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">1</span><span class="op">)</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="va">age</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/GammaDist.html" class="external-link">rgamma</a></span><span class="op">(</span><span class="va">n</span>, shape <span class="op">=</span> <span class="fl">10</span>, scale <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
-<span><span class="va">district</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, <span class="va">n</span>, replace <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
+<span><span class="va">nn</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
 <span></span>
-<span><span class="va">alpha.0</span> <span class="op">&lt;-</span> <span class="fl">3</span>; <span class="va">alpha.district</span> <span class="op">&lt;-</span> <span class="fl">0.05</span></span>
-<span><span class="va">pollution_b</span> <span class="op">&lt;-</span> <span class="va">alpha.0</span> <span class="op">+</span> <span class="va">alpha.district</span><span class="op">*</span><span class="va">district</span> <span class="op">+</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">4</span><span class="op">)</span> <span class="co"># Berkson error</span></span>
-<span><span class="va">pollution</span> <span class="op">&lt;-</span> <span class="va">pollution_b</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="co"># Classical and Berkson error (this is what is observed)</span></span>
-<span><span class="va">pollution_correct</span> <span class="op">&lt;-</span> <span class="va">pollution_b</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, mean <span class="op">=</span> <span class="fl">0</span>, sd <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="co"># Correct</span></span>
+<span><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">nn</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nn</span>, <span class="fl">1</span><span class="op">-</span><span class="fl">0.5</span><span class="op">*</span><span class="va">z</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">beta.0</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">8</span>; <span class="va">beta.pollution</span> <span class="op">&lt;-</span> <span class="fl">1</span>; <span class="va">beta.gender</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span>; </span>
-<span><span class="va">beta.age</span> <span class="op">&lt;-</span> <span class="fl">0.5</span>; <span class="va">beta.district</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">2</span></span>
+<span><span class="co"># Error</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">nn</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">asthma_predictor</span> <span class="op">&lt;-</span> <span class="va">beta.0</span> <span class="op">+</span> <span class="va">beta.pollution</span><span class="op">*</span><span class="va">pollution_correct</span> <span class="op">+</span> </span>
-<span>  <span class="va">beta.gender</span><span class="op">*</span><span class="va">gender</span> <span class="op">+</span> <span class="va">beta.age</span><span class="op">*</span><span class="va">age</span> <span class="op">+</span> <span class="va">beta.district</span><span class="op">*</span><span class="va">district</span></span>
-<span><span class="va">asthma_prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">asthma_predictor</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">asthma_predictor</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">asthma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">1</span>, prob <span class="op">=</span> <span class="va">asthma_prob</span><span class="op">)</span></span>
+<span><span class="co"># Generating missing data, depending on z</span></span>
+<span><span class="va">eta</span> <span class="op">&lt;-</span> <span class="op">-</span><span class="fl">1</span> <span class="op">+</span> <span class="va">z</span></span>
+<span><span class="va">prob_missing</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">missing_index</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">nn</span>, <span class="fl">1</span>, <span class="va">prob_missing</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">airpollution</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>asthma <span class="op">=</span> <span class="va">asthma</span>, </span>
-<span>                           pollution <span class="op">=</span> <span class="va">pollution</span>, </span>
-<span>                           <span class="va">district</span>, </span>
-<span>                           <span class="va">age</span>, </span>
-<span>                           <span class="va">gender</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="fitting-the-model-3">Fitting the model<a class="anchor" aria-label="anchor" href="#fitting-the-model-3"></a>
-</h3>
+<span><span class="co"># Proportion missing:</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">missing_index</span><span class="op">)</span><span class="op">/</span><span class="va">nn</span></span>
+<span><span class="co">#&gt; [1] 0.393</span></span></code></pre></div>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Scale the data</span></span>
-<span><span class="va">airpollution_scaled</span> <span class="op">&lt;-</span> <span class="va">airpollution</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
-<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/across.html" class="external-link">across</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">pollution</span>, <span class="va">age</span><span class="op">)</span>, <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">.</span>, scale <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span></span>
+<span><span class="co"># Replace the values in w by missing in case the index for missingness is =1:</span></span>
+<span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">missing_index</span><span class="op">==</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="va">w</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">airpollution_moi</span> <span class="op">&lt;-</span> <span class="va">asthma</span> <span class="op">~</span> <span class="va">pollution</span> <span class="op">+</span> <span class="va">district</span> <span class="op">+</span> <span class="va">age</span> <span class="op">+</span> <span class="va">gender</span></span>
-<span><span class="va">airpollution_imp</span> <span class="op">&lt;-</span> <span class="va">pollution</span> <span class="op">~</span> <span class="va">district</span></span>
+<span><span class="co"># Generate binomial response</span></span>
+<span><span class="va">eta</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span> </span>
+<span><span class="va">prob</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span><span class="op">/</span><span class="op">(</span><span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">exp</a></span><span class="op">(</span><span class="va">eta</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Binomial.html" class="external-link">rbinom</a></span><span class="op">(</span><span class="va">nn</span>, <span class="fl">1</span>, <span class="va">prob</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">airpollution_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">airpollution_scaled</span>, </span>
-<span>                         formula_moi <span class="op">=</span> <span class="va">airpollution_moi</span>, </span>
-<span>                         formula_imp <span class="op">=</span> <span class="va">airpollution_imp</span>, </span>
-<span>                         family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
-<span>                         error_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"berkson"</span>, <span class="st">"classical"</span><span class="op">)</span>,</span>
-<span>                         prior.prec.berkson <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">999</span><span class="op">)</span>, </span>
-<span>                         prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1000</span>, <span class="fl">999</span><span class="op">)</span>,</span>
-<span>                         prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.5</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span>                         prior.beta.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>,</span>
-<span>                         initial.prec.berkson <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                         initial.prec.classical <span class="op">=</span> <span class="fl">1</span>,</span>
-<span>                         initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">16</span><span class="op">)</span></span>
+<span><span class="va">data_binom</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, z <span class="op">=</span> <span class="va">z</span>, y <span class="op">=</span> <span class="va">y</span>, w <span class="op">=</span> <span class="va">w</span><span class="op">)</span></span></code></pre></div>
+<p>Modeling error and missing data:</p>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_binom</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_binom</span>,</span>
+<span>                       formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">w</span> <span class="op">+</span> <span class="va">z</span>,</span>
+<span>                       formula_imp <span class="op">=</span> <span class="va">w</span> <span class="op">~</span> <span class="va">z</span>,</span>
+<span>                       formula_mis <span class="op">=</span> <span class="va">m</span> <span class="op">~</span> <span class="va">z</span>,</span>
+<span>                       family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
+<span>                       error_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"classical"</span>,<span class="st">"missing"</span><span class="op">)</span>,</span>
+<span>                       prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
+<span>                       prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span>
+<span>                       prior.beta.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">/</span><span class="fl">1000</span><span class="op">)</span>,</span>
+<span>                       initial.prec.classical <span class="op">=</span> <span class="fl">2</span>,</span>
+<span>                       initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">airpollution_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">airpollution_model</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">airpollution.truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
-<span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
-<span>  <span class="st">"beta.pollution"</span>, <span class="va">beta.pollution</span>, </span>
-<span>  <span class="st">"beta.gender"</span>,    <span class="va">beta.gender</span>, </span>
-<span>  <span class="st">"beta.district"</span>,  <span class="va">beta.district</span>, </span>
-<span>  <span class="st">"beta.age"</span>,       <span class="va">beta.age</span>, </span>
-<span><span class="co">#  "beta.0",         beta.0, </span></span>
-<span>  <span class="st">"alpha.pollution.district"</span>, <span class="va">alpha.district</span>, </span>
-<span><span class="co">#  "alpha.0",        alpha.0</span></span>
-<span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">airpollution_model</span>, plot_intercepts <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">airpollution.truth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="simulated_examples_files/figure-html/unnamed-chunk-16-1.png" width="480" style="display: block; margin: auto;"></p>
-</div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_binom</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">model_binom</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="poisson-regression-with-classical-error-and-missing-data">Poisson regression with classical error and missing data<a class="anchor" aria-label="anchor" href="#poisson-regression-with-classical-error-and-missing-data"></a>
@@ -774,7 +737,9 @@ continuous variable.</p>
 <td align="left"><span class="math inline">\(z\)</span></td>
 </tr></tbody>
 </table>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<p>Here we show how to fit a Poisson regression model, where the model
+of interest has a random intercept term.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
 <span><span class="va">nn</span> <span class="op">&lt;-</span> <span class="fl">1000</span></span>
 <span></span>
@@ -792,7 +757,7 @@ continuous variable.</p>
 <span><span class="co"># Proportion missing:</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">missing_index</span><span class="op">)</span><span class="op">/</span><span class="va">nn</span></span>
 <span><span class="co">#&gt; [1] 0.393</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="co"># Replace the values in w by missing in case the index for missingness is =1:</span></span>
 <span><span class="va">w</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">missing_index</span><span class="op">==</span><span class="fl">1</span>, <span class="cn">NA</span>, <span class="va">w</span><span class="op">)</span></span>
@@ -809,13 +774,13 @@ continuous variable.</p>
 <span><span class="va">data_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">x</span>, z <span class="op">=</span> <span class="va">z</span>, y <span class="op">=</span> <span class="va">y</span>, w <span class="op">=</span> <span class="va">w</span>, id <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span><span class="op">)</span>, each <span class="op">=</span> <span class="fl">20</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Simple regression models with correct and error-prone variables to
 check the effect:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lme4/lme4/" class="external-link">lme4</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">glmer</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">id</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data_pois</span>, family<span class="op">=</span><span class="st">"poisson"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="fu">glmer</span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">w</span> <span class="op">+</span> <span class="va">z</span> <span class="op">+</span> <span class="op">(</span><span class="fl">1</span><span class="op">|</span><span class="va">id</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">data_pois</span>, family<span class="op">=</span><span class="st">"poisson"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">coef</span></span></code></pre></div>
-<p>Modeling error and missing data with INLA:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<p>Modeling error and missing data:</p>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model_pois</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">data_pois</span>,</span>
 <span>                       formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">w</span> <span class="op">+</span> <span class="va">z</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/f.html" class="external-link">f</a></span><span class="op">(</span><span class="va">id</span>,model<span class="op">=</span><span class="st">"iid"</span><span class="op">)</span>,</span>
 <span>                       formula_imp <span class="op">=</span> <span class="va">w</span> <span class="op">~</span> <span class="va">z</span>,</span>
