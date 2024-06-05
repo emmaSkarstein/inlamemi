@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 
 In this tutorial, we re-do the analysis from two previous publications that use the same data set. The data set contains the heart disease status for a number of patients, along with repeated measurements of their systolic blood pressure and their smoking status. The data is also included in the package, simply type `?framingham` for more details.
 
-```{r, message = FALSE}
+```{r, message = FALSE, warning = FALSE}
 library(inlamemi)
 library(INLA)
 library(ggplot2)
@@ -26,7 +26,8 @@ library(ggplot2)
 head(framingham)
 ```
 
-The two publications are [Bayesian analysis of measurement error models using INLA, Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Reverse attenuation in interaction terms due to covariate measurement error, Muff & Keller (2015)](https://onlinelibrary.wiley.com/doi/10.1002/bimj.201400157). 
+The two publications are [Bayesian analysis of measurement error models using INLA, Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Reverse attenuation in interaction terms due to covariate measurement error, Muff & Keller (2015)](https://doi.org/10.1002/bimj.201400157).
+
 
 ## First example: A logistic regression model with repeated measurements
 
@@ -122,7 +123,7 @@ ggplot(results, aes(x = mean, y = model, color = variable)) +
 |Classical (with interaction effects) | Binomial | `disease` | `sbp1`, `sbp2` | `smoking` |
 
 
-In this example, we artificially increase the measurement error for the smoking group in order to study a model with homoscedastic measurement error. The model in this example is identical to that in [Muff & Keller (2015)](https://onlinelibrary.wiley.com/doi/10.1002/bimj.201400157)
+In this example, we artificially increase the measurement error for the smoking group in order to study a model with homoscedastic measurement error. The model in this example is identical to that in [Muff & Keller (2015)](https://doi.org/10.1002/bimj.201400157)
 
 ```{r}
 framingham2 <- framingham
