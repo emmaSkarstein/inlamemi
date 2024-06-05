@@ -17,3 +17,11 @@ A vector specifying the likelihood family for each model level.
 \description{
 Make vector of likelihood families
 }
+\examples{
+simple_stack <- make_inlamemi_stacks(formula_moi = y ~ x + z,
+                                     formula_imp = x ~ z,
+                                     data = simple_data,
+                                     error_type = c("classical"))
+make_inlamemi_families(family_moi = "gaussian",
+                       inlamemi_stack = simple_stack)
+}

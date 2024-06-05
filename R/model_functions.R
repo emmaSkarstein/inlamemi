@@ -1,10 +1,6 @@
-
-
-
 #' Make formula for measurement error and missing data model
 #'
 #' @param vars Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.
-#'
 #' @inheritParams fit_inlamemi
 #'
 #' @return An object of class "formula".
@@ -14,10 +10,10 @@
 #' f_moi <- y ~ x + z
 #' f_imp <- x ~ z
 #' make_inlamemi_formula(formula_moi = f_moi,
-#'                     formula_imp = f_imp,
-#'                     error_type = "classical",
-#'                     prior.beta.error = c(0, 1/1000)
-#'                     )
+#'                       formula_imp = f_imp,
+#'                       error_type = "classical",
+#'                       prior.beta.error = c(0, 1/1000)
+#'                       )
 make_inlamemi_formula <- function(formula_moi,
                                   formula_imp,
                                   formula_mis = NULL,
@@ -217,106 +213,6 @@ make_inlamemi_formula <- function(formula_moi,
   formula <- paste(response_string, "~", formula_RHS)
 
   return(stats::as.formula(formula))
-}
-
-
-#' Make matrices for joint model specification in INLA
-#'
-#' @param data A data frame with response and covariate variables for the main model and the imputation model.
-#' @param formula_moi an object of class "formula", describing the main model to be fitted.
-#' @param formula_imp an object of class "formula", describing the imputation model for the mismeasured and/or missing observations.
-#' @param error_type Type of error (one or more of "classical", "berkson", "missing")
-#'
-#' @return A data frame with all the data needed for the model, structured in the right way for INLA.
-make_inlamemi_matrices <- function(data,
-                          formula_moi,
-                          formula_imp,
-                          error_type = "classical"){
-  # Weaknesses:
-  #  limited to the one classical, one berkson, one missing (same var) case, so model size must be 2+2
-
-  # Set up sizes
-  n <- nrow(data)
-  n_models <- 2 + 2 # Num of error mods plus MOI and imp. mod.
-  Y_ncol <- n_models
-  Y_nrow <- n_models*n
-  #cov_nrows <- n_models*n
-
-  # Extract and group all variables from formulas:
-  vars <- extract_variables_from_formula(formula_moi = formula_moi,
-                                         formula_imp = formula_imp)
-
-  if(vars$error_variable == "error_variable"){
-    stop("Please name the variable with error something other than 'error_variable', as this name is used internally in the code and will lead to errors.")
-  }
-
-  # For all non-error covariates, the procedure is the same. So only the error-prone covariate needs to be treated separately.
-  # Similar for the imputation model.
-
-  # Set up the response matrix:
-  Y <- matrix(NA, Y_nrow, Y_ncol)
-
-  Y[1:n, 1] <- as.matrix(data[vars$response_moi])         # Regression model of interest response
-  Y[n+(1:n), 2] <- rep(0, n)                              # Berkson error model response
-  Y[2*n+(1:n), 3] <- as.matrix(data[vars$error_variable]) # Classical error model response
-  Y[3*n+(1:n), 4] <- rep(0, n)                            # Imputation model response
-
-  # Set up intercept vector for MOI:
-  beta.0 <- c(rep(1, n), rep(NA, 3*n))
-
-  # Set up vector for the variable with error/missingness, and corresponding
-  # vectors to enable imputation:
-  beta.error_variable <- paste0("beta.", vars$error_variable)
-  assign(beta.error_variable, c(1:n, rep(NA, 3*n)))
-
-  id.x <- c(rep(NA, n), 1:n, rep(NA, n), rep(NA, n))
-  weight.x <- c(rep(NA, n), rep(-1, n), rep(NA, n), rep(NA, n))
-
-  id.r <- c(rep(NA, n), 1:n, 1:n, 1:n)
-  weight.r <- c(rep(NA, n), rep(1, n), rep(1, n), rep(-1, n))
-
-  # Set up vectors for all error-free covariates with the correct names:
-  cov_moi_names <- c()
-
-  for(variable in vars$covariates_error_free){
-    var_name <- paste0("beta.", variable)
-    cov_moi_names <- c(cov_moi_names, var_name)
-    assign(var_name, c(as.matrix(data[variable]), rep(NA, 3*n)))
-  }
-
-  # Intercept for imputation model:
-  alpha.0 <- c(rep(NA, 3*n), rep(1, n))
-
-  # Set up vectors for covariates in the imputation model
-  cov_imp_names <- c()
-
-  for(variable in vars$covariates_imp){
-    var_name <- paste0("alpha.", variable)
-    cov_imp_names <- c(cov_imp_names, var_name)
-    assign(var_name, c(rep(NA, 3*n), as.matrix(data[variable])))
-  }
-
-  # How do I save the objects that have names based on user input into a list?
-  # I generate a string that contains the code I want to run, and then I use
-  # eval(parse(.)) to actually run that code. Since I do have the names of the
-  # variables as strings, such a string will be easy to generate.
-
-  # The names of the objects I defined explicitly above:
-  fixed_objects <- "Y = Y, beta.0 = beta.0, id.x = id.x, weight.x = weight.x, id.r = id.r, weight.r = weight.r, alpha.0 = alpha.0, "
-
-  # The names of the variables that change based on the covariate names:
-  variable_objects <- paste0(c(beta.error_variable, cov_moi_names, cov_imp_names), " = ",
-                             c(beta.error_variable, cov_moi_names, cov_imp_names), collapse = ", ")
-
-  dd <- NULL # Assign NULL to dd, just to avoid notes when running checks.
-
-  # A string containing the code needed to define a list of all the objects:
-  define_dataframe <- paste0("dd <- list(", fixed_objects, variable_objects, ")")
-
-  # Evaluate the string of code from above:
-  eval(parse(text = define_dataframe))
-
-  return(dd)
 }
 
 #' Make data stacks for joint model specification in INLA
@@ -741,7 +637,16 @@ make_inlamemi_stacks <- function(formula_moi,
 #' @inheritParams fit_inlamemi
 #' @param inlamemi_stack object of type inla.stack
 #'
+#' @export
+#'
 #' @return A vector specifying the likelihood family for each model level.
+#' @examples
+#' simple_stack <- make_inlamemi_stacks(formula_moi = y ~ x + z,
+#'                                      formula_imp = x ~ z,
+#'                                      data = simple_data,
+#'                                      error_type = c("classical"))
+#' make_inlamemi_families(family_moi = "gaussian",
+#'                        inlamemi_stack = simple_stack)
 make_inlamemi_families <- function(family_moi, inlamemi_stack){
   level_names <- names(inlamemi_stack$data$names)
   model_names <- sub(".*_", "", level_names)

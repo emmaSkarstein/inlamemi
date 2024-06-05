@@ -45,8 +45,8 @@ Make formula for measurement error and missing data model
 f_moi <- y ~ x + z
 f_imp <- x ~ z
 make_inlamemi_formula(formula_moi = f_moi,
-                    formula_imp = f_imp,
-                    error_type = "classical",
-                    prior.beta.error = c(0, 1/1000)
-                    )
+                      formula_imp = f_imp,
+                      error_type = "classical",
+                      prior.beta.error = c(0, 1/1000)
+                      )
 }

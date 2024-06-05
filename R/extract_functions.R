@@ -40,6 +40,10 @@ extract_random_effects <- function(formula){
 #'
 #' @importFrom stats terms
 #' @importFrom methods is
+#'
+#' @examples
+#' extract_variables_from_formula(formula_moi = y ~ x + z,
+#'                                formula_imp = x ~ z)
 extract_variables_from_formula <- function(formula_moi,
                                            formula_imp,
                                            formula_mis = NULL,
