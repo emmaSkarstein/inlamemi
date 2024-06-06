@@ -284,11 +284,11 @@ these.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_sim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.322, Running = 1.48, Post = 0.127, Total = 1.93 </span></span>
+<span><span class="co">#&gt;     Pre = 0.371, Running = 1.57, Post = 0.15, Total = 2.09 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;          mean    sd 0.025quant 0.5quant 0.975quant  mode kld</span></span>
-<span><span class="co">#&gt; beta.0  1.030 0.218      0.612    1.029      1.440 1.025   0</span></span>
-<span><span class="co">#&gt; beta.z  1.912 0.387      1.226    1.903      2.566 1.911   0</span></span>
+<span><span class="co">#&gt; beta.0  1.032 0.219      0.612    1.031      1.444 1.026   0</span></span>
+<span><span class="co">#&gt; beta.z  1.915 0.388      1.223    1.905      2.573 1.912   0</span></span>
 <span><span class="co">#&gt; alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0</span></span>
 <span><span class="co">#&gt; alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -300,19 +300,19 @@ these.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                             mean    sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations    1.126 0.354      0.571    1.080</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.125 0.343      0.594    1.077</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.925 0.108      0.731    0.919</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.979 0.125      0.754    0.971</span></span>
-<span><span class="co">#&gt; Beta for beta.x                            1.973 0.201      1.574    1.975</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations    1.128 0.363      0.560    1.080</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.124 0.340      0.597    1.077</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.926 0.108      0.732    0.919</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.978 0.125      0.755    0.971</span></span>
+<span><span class="co">#&gt; Beta for beta.x                            1.973 0.199      1.578    1.975</span></span>
 <span><span class="co">#&gt;                                            0.975quant  mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations          1.95 0.994</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]       1.93 0.989</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]       1.16 0.905</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4]       1.25 0.958</span></span>
-<span><span class="co">#&gt; Beta for beta.x                                  2.37 1.980</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations          1.97 0.992</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]       1.92 0.990</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]       1.16 0.906</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4]       1.25 0.956</span></span>
+<span><span class="co">#&gt; Beta for beta.x                                  2.36 1.980</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.02 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.01 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>
@@ -444,15 +444,15 @@ precision to be very high for the classical error model in the argument
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_mnar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 0.277, Running = 1.88, Post = 0.143, Total = 2.3 </span></span>
+<span><span class="co">#&gt;     Pre = 0.322, Running = 2.34, Post = 0.373, Total = 3.03 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;            mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
-<span><span class="co">#&gt; beta.0    1.039 0.050      0.941    1.039      1.138  1.040   0</span></span>
-<span><span class="co">#&gt; beta.z1   2.004 0.036      1.933    2.004      2.076  2.004   0</span></span>
+<span><span class="co">#&gt; beta.0    1.040 0.050      0.942    1.040      1.138  1.040   0</span></span>
+<span><span class="co">#&gt; beta.z1   2.005 0.036      1.933    2.005      2.076  2.005   0</span></span>
 <span><span class="co">#&gt; beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0</span></span>
-<span><span class="co">#&gt; alpha.0   1.010 0.032      0.947    1.010      1.074  1.010   0</span></span>
+<span><span class="co">#&gt; alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0</span></span>
 <span><span class="co">#&gt; alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0</span></span>
-<span><span class="co">#&gt; gamma.0  -1.508 0.123     -1.755   -1.507     -1.272 -1.507   0</span></span>
+<span><span class="co">#&gt; gamma.0  -1.514 0.123     -1.758   -1.513     -1.276 -1.514   0</span></span>
 <span><span class="co">#&gt; gamma.z2 -0.425 0.088     -0.598   -0.425     -0.252 -0.425   0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Random effects:</span></span>
@@ -463,19 +463,19 @@ precision to be very high for the classical error model in the argument
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                              mean    sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations     0.983 0.048      0.891    0.982</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.141 0.393      0.579    1.072</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.024 0.048      0.934    1.022</span></span>
-<span><span class="co">#&gt; Beta for beta.x                             1.953 0.035      1.885    1.953</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                           -0.036 0.090     -0.211   -0.036</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations     0.983 0.048      0.892    0.982</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.130 0.362      0.584    1.076</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.024 0.047      0.935    1.023</span></span>
+<span><span class="co">#&gt; Beta for beta.x                             1.953 0.035      1.886    1.953</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                           -0.037 0.089     -0.216   -0.035</span></span>
 <span><span class="co">#&gt;                                            0.975quant   mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations         1.081  0.981</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]      2.107  0.943</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]      1.122  1.018</span></span>
-<span><span class="co">#&gt; Beta for beta.x                                 2.021  1.953</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                                0.142 -0.037</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations         1.082  0.980</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]      1.994  0.974</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]      1.122  1.019</span></span>
+<span><span class="co">#&gt; Beta for beta.x                                 2.023  1.951</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                                0.135 -0.029</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.14 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.17 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>

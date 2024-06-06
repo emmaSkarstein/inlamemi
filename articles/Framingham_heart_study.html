@@ -202,12 +202,12 @@ argument).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;                    mean        sd 0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; beta.0       -2.3632167 0.2707248 -2.8955728 -2.3627007 -1.8337882 -2.3626951</span></span>
-<span><span class="co">#&gt; beta.smoking  0.3999613 0.2996516 -0.1872857  0.3998374  0.9879154  0.3998372</span></span>
+<span><span class="co">#&gt; beta.0       -2.3632169 0.2707244 -2.8955722 -2.3627010 -1.8337889 -2.3626954</span></span>
+<span><span class="co">#&gt; beta.smoking  0.3999615 0.2996515 -0.1872855  0.3998376  0.9879154  0.3998374</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
-<span><span class="co">#&gt;             mean       sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.sbp 1.89687 0.574248  0.7920293 1.888275   3.052752 1.851331</span></span>
+<span><span class="co">#&gt;              mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.sbp 1.896867 0.5742014  0.7921111 1.888275    3.05265 1.851342</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                          mean         sd  0.025quant    0.5quant 0.975quant</span></span>
@@ -219,11 +219,11 @@ argument).</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.sbp): </span></span>
 <span><span class="co">#&gt;                                       mean       sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for sbp classical model 75.90848 3.687485   68.87052 75.83194</span></span>
-<span><span class="co">#&gt; Precision for sbp imp model       19.90276 1.235353   17.57558 19.86663</span></span>
+<span><span class="co">#&gt; Precision for sbp classical model 75.90848 3.687490   68.87056 75.83192</span></span>
+<span><span class="co">#&gt; Precision for sbp imp model       19.90275 1.235354   17.57557 19.86663</span></span>
 <span><span class="co">#&gt;                                   0.975quant     mode</span></span>
-<span><span class="co">#&gt; Precision for sbp classical model   83.38562 75.70678</span></span>
-<span><span class="co">#&gt; Precision for sbp imp model         22.43761 19.79912</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for sbp classical model   83.38568 75.70669</span></span>
+<span><span class="co">#&gt; Precision for sbp imp model         22.43760 19.79912</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">framingham_model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Framingham_heart_study_files/figure-html/unnamed-chunk-6-1.png" width="700"></p>
@@ -402,56 +402,51 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span></span>
 <span><span class="va">framingham_model2.1</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
 <span><span class="co">#&gt;                                                 mean       sd 0.025quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.985476 3.755864 69.1985359</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.876250 1.235412 17.5445036</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.537548 1.299590 -4.1957195</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.096002 1.153201  0.9119081</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.910241 3.711892 69.0139582</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.882433 1.233654 17.5223427</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.540984 1.304385 -4.2191604</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.097598 1.156956  0.9164693</span></span>
 <span><span class="co">#&gt;                                             0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.783665  83.967668 75.120632</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.841656  22.406712 19.780515</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.503762   0.917168 -1.353095</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.067820   5.449519  2.942687</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.769630 83.6250444 75.377764</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.858606 22.3771456 19.842323</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.503617  0.9113089 -1.335623</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.066261  5.4678256  2.925966</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.2</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
-<span><span class="co">#&gt;                                                  mean       sd 0.025quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 157.087339 7.227804 143.261533</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.132066 1.653050  19.081344</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.500449 1.445493  -3.372930</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                            2.918584 1.114874   0.745898</span></span>
+<span><span class="co">#&gt;                                                  mean       sd  0.025quant</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 157.030481 7.228352 143.2405626</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.123867 1.649270  19.0361676</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.501794 1.440057  -3.3855513</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                            2.921175 1.114224   0.7632343</span></span>
 <span><span class="co">#&gt;                                               0.5quant 0.975quant        mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 156.9478514 171.713171 156.7264357</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.0621020  25.586458  21.9053551</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.4913114   2.318463  -0.4530052</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                            2.9110406   5.135525   2.8793829</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 156.8783286 171.694648 156.6047163</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.0691154  25.525963  21.9736137</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.4852669   2.284232  -0.4149666</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                            2.9091439   5.150193   2.8580703</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.3</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
 <span><span class="co">#&gt;                                                 mean       sd 0.025quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.164769 2.190592 41.0024135</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.174942 1.275577 16.7775257</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.606883 1.422704 -4.4610246</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.314641 1.270508  0.8607154</span></span>
-<span><span class="co">#&gt;                                             0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.112902  49.625435 45.012027</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.135761  21.797531 19.064256</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.588824   1.140299 -1.511730</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.298720   5.862846  3.230784</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.164565 2.190686 41.0037805</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.174254 1.275488 16.7757203</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.608182 1.424364 -4.4726498</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.315697 1.272033  0.8650962</span></span>
+<span><span class="co">#&gt;                                            0.5quant 0.975quant      mode</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.11209  49.627185 45.008745</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.13552  21.795359 19.065814</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.58774   1.134962 -1.500026</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.29771   5.873022  3.220582</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.5</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
-<span><span class="co">#&gt;                                                    mean          sd</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 727.86391588 8.243609488</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]   9.72330082 0.099598202</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.31336915 0.011619378</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           -0.04731766 0.006487732</span></span>
-<span><span class="co">#&gt;                                              0.025quant     0.5quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 709.04250946 728.85463481</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]   9.55954533   9.71500428</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.33060831  -0.31478640</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           -0.05993532  -0.04738113</span></span>
-<span><span class="co">#&gt;                                              0.975quant         mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 740.53803551 734.19711085</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]   9.94634214   9.67024231</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.28640230  -0.32256921</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           -0.03427747  -0.04769691</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                   mean          sd  0.025quant</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 747.9241000 1.362060492 745.5520752</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  10.2639515 0.085114568  10.0627431</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.2943152 0.003502259  -0.3026905</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           -0.3276414 0.003856414  -0.3332952</span></span>
+<span><span class="co">#&gt;                                               0.5quant  0.975quant        mode</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 748.0003703 751.0156916 747.4986886</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  10.2763170  10.3805239  10.3498859</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.2940803  -0.2896923  -0.2913505</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           -0.3278275  -0.3185264  -0.3306178</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
