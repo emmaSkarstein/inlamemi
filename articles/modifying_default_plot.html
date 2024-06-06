@@ -133,26 +133,26 @@ order to refer to them correctly. We can access the data frame like
 this:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_plot</span><span class="op">$</span><span class="va">data</span></span>
-<span><span class="co">#&gt;            coefficient_type        mean         sd quant_0.025    0.5quant</span></span>
-<span><span class="co">#&gt; beta.0             moi_coef  1.03795941 0.04981672   0.9403222  1.03782998</span></span>
-<span><span class="co">#&gt; beta.z1            moi_coef  2.00392421 0.03643616   1.9324679  2.00392175</span></span>
-<span><span class="co">#&gt; beta.z2            moi_coef  1.98528749 0.03637013   1.9139545  1.98528704</span></span>
-<span><span class="co">#&gt; beta.x           error_coef  1.95317422 0.03469107   1.8838938  1.95350868</span></span>
-<span><span class="co">#&gt; gamma.x          error_coef -0.03574894 0.08953041  -0.2119987 -0.03575139</span></span>
-<span><span class="co">#&gt; alpha.x.0          imp_coef  1.01052808 0.03222593   0.9473145  1.01053108</span></span>
-<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.29153972 0.03253781   0.2277208  0.29154047</span></span>
-<span><span class="co">#&gt; gamma.x.0          mis_coef -1.50924242 0.12221623  -1.7537221 -1.50778853</span></span>
-<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.42468369 0.08823729  -0.5977091 -0.42468346</span></span>
-<span><span class="co">#&gt;            quant_0.975       mode variable_raw        model_type</span></span>
-<span><span class="co">#&gt; beta.0       1.1361477  1.0377871       beta.0 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z1      2.0753941  2.0039216      beta.z1 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z2      2.0566231  1.9852871      beta.z2 Model of interest</span></span>
-<span><span class="co">#&gt; beta.x       2.0204823  1.9549236       beta.x Model of interest</span></span>
-<span><span class="co">#&gt; gamma.x      0.1405151 -0.0357615      gamma.x Missingness model</span></span>
-<span><span class="co">#&gt; alpha.x.0    1.0737245  1.0105311    alpha.x.0  Imputation model</span></span>
-<span><span class="co">#&gt; alpha.x.z1   0.3553544  0.2915405   alpha.x.z1  Imputation model</span></span>
-<span><span class="co">#&gt; gamma.x.0   -1.2736665 -1.5077623    gamma.x.0 Missingness model</span></span>
-<span><span class="co">#&gt; gamma.x.z2  -0.2516596 -0.4246835   gamma.x.z2 Missingness model</span></span>
+<span><span class="co">#&gt;            coefficient_type       mean         sd quant_0.025    0.5quant</span></span>
+<span><span class="co">#&gt; beta.0             moi_coef  1.0389411 0.04989055   0.9408771  1.03892380</span></span>
+<span><span class="co">#&gt; beta.z1            moi_coef  2.0042095 0.03643962   1.9327329  2.00421154</span></span>
+<span><span class="co">#&gt; beta.z2            moi_coef  1.9853081 0.03636517   1.9139849  1.98530756</span></span>
+<span><span class="co">#&gt; beta.x           error_coef  1.9533999 0.03466691   1.8850943  1.95341965</span></span>
+<span><span class="co">#&gt; gamma.x          error_coef -0.0356482 0.08898385  -0.2110456 -0.03557364</span></span>
+<span><span class="co">#&gt; alpha.x.0          imp_coef  1.0105268 0.03222422   0.9473165  1.01052985</span></span>
+<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.2915388 0.03253453   0.2277262  0.29153956</span></span>
+<span><span class="co">#&gt; gamma.x.0          mis_coef -1.5093000 0.12246881  -1.7547059 -1.50774537</span></span>
+<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.4246866 0.08823753  -0.5977125 -0.42468639</span></span>
+<span><span class="co">#&gt;            quant_0.975        mode variable_raw        model_type</span></span>
+<span><span class="co">#&gt; beta.0       1.1370274  1.03890882       beta.0 Model of interest</span></span>
+<span><span class="co">#&gt; beta.z1      2.0756742  2.00421146      beta.z1 Model of interest</span></span>
+<span><span class="co">#&gt; beta.z2      2.0566342  1.98530757      beta.z2 Model of interest</span></span>
+<span><span class="co">#&gt; beta.x       2.0215905  1.95350150       beta.x Model of interest</span></span>
+<span><span class="co">#&gt; gamma.x      0.1393162 -0.03526532      gamma.x Missingness model</span></span>
+<span><span class="co">#&gt; alpha.x.0    1.0737199  1.01052987    alpha.x.0  Imputation model</span></span>
+<span><span class="co">#&gt; alpha.x.z1   0.3553471  0.29153957   alpha.x.z1  Imputation model</span></span>
+<span><span class="co">#&gt; gamma.x.0   -1.2733138 -1.50770270    gamma.x.0 Missingness model</span></span>
+<span><span class="co">#&gt; gamma.x.z2  -0.2516621 -0.42468639   gamma.x.z2 Missingness model</span></span>
 <span><span class="co">#&gt;            error_indicator  var1 var2 variable_greek   variable</span></span>
 <span><span class="co">#&gt; beta.0                   0  beta    0        beta[0]     beta.0</span></span>
 <span><span class="co">#&gt; beta.z1                  0  beta   z1       beta[z1]    beta.z1</span></span>
