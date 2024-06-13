@@ -4,11 +4,6 @@
 
 # inlamemi <img src="man/figures/inlamemi_transparent.png" align="right" height="200" style="float:right; height:200px;">
 
-<!-- badges: start -->
-
-[![R-CMD-check](https://github.com/emmaSkarstein/inlamemi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/emmaSkarstein/inlamemi/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
-
 Fitting measurement error models and missing data imputation models in
 INLA is not trivial, and requires several workarounds in order to fit
 the model. At the same time, a Bayesian hierarchical framework is very
@@ -152,30 +147,30 @@ summary(simple_model)
 #> [1] "berkson"   "classical" "missing"  
 #> 
 #> Fixed effects for model of interest: 
-#>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.027956 0.2185053  0.6085896 1.025854   1.434766 1.021004
-#> beta.z 1.906813 0.3873275  1.2158176 1.894296   2.556740 1.904250
+#>            mean        sd 0.025quant 0.5quant 0.975quant      mode
+#> beta.0 1.024935 0.2190856  0.6041227 1.021642   1.434356 0.9833271
+#> beta.z 1.900442 0.3884423  1.2029455 1.885061   2.555375 1.8974729
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.972649 0.2029525   1.566473 1.974896   2.365541 1.984445
+#> beta.x 1.972587 0.2019939   1.566477 1.975449   2.361715 1.987722
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033078 0.05060148  0.9338064 1.033086   1.132303 1.033086
-#> alpha.x.z 2.024712 0.05226422  1.9222529 2.024694   2.127272 2.024694
+#> alpha.x.0 1.033080 0.05058461  0.9338413 1.033088   1.132272 1.033088
+#> alpha.x.z 2.024707 0.05224680  1.9222829 2.024690   2.127234 2.024690
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean        sd 0.025quant  0.5quant
-#> Precision for model of interest 1.1299995 0.3666955  0.5611600 1.0796224
-#> Precision for x berkson model   1.1269739 0.3461986  0.5882062 1.0799184
-#> Precision for x classical model 0.9253109 0.1088522  0.7317659 0.9182306
-#> Precision for x imp model       0.9779404 0.1256207  0.7521229 0.9706161
+#> Precision for model of interest 1.1302327 0.3649639  0.5601411 1.0813062
+#> Precision for x berkson model   1.1244840 0.3425051  0.5876939 1.0791086
+#> Precision for x classical model 0.9257455 0.1082419  0.7333387 0.9186871
+#> Precision for x imp model       0.9786186 0.1251109  0.7528646 0.9716111
 #>                                 0.975quant      mode
-#> Precision for model of interest   1.988328 0.9871190
-#> Precision for x berkson model     1.937381 0.9928605
-#> Precision for x classical model   1.159767 0.9028002
-#> Precision for x imp model         1.245850 0.9573579
+#> Precision for model of interest   1.980582 0.9918565
+#> Precision for x berkson model     1.922658 0.9955491
+#> Precision for x classical model   1.158950 0.9031961
+#> Precision for x imp model         1.244583 0.9594578
 ```
 
 And we can use the default plot function to see a plot of the fixed

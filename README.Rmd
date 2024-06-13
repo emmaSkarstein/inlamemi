@@ -19,13 +19,6 @@ knitr::opts_chunk$set(
 
 
 
-
-
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/emmaSkarstein/inlamemi/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/emmaSkarstein/inlamemi/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
-
-
 Fitting measurement error models and missing data imputation models in INLA is not trivial, and requires several workarounds in order to fit the model. At the same time, a Bayesian hierarchical framework is very attractive for modeling these types of data, since the hierarchical model structure allows us to describe how the data were collected, and any errors they may have, through the model specification. By supplying informative priors, we may be able to adjust for biases due to these errors, and propagate any uncertainty they cause. Until recently, it has been complicated to implement these kinds of models in R-INLA. This package provides a helpful interface that makes measurement error and missing data modelling in R-INLA much more feasible.
 
 ## Installation
