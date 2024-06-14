@@ -23,7 +23,7 @@ Suggests:
     tibble,
     rmarkdown,
     spelling
-Additional_repositories: https://inla.r-inla-download.org/R/stable/
+Additional_repositories: https://inla.r-inla-download.org/R/stable
 Config/testthat/edition: 3
 Imports: 
     dplyr,
