@@ -26,7 +26,6 @@ Suggests:
 Additional_repositories: https://inla.r-inla-download.org/R/stable/
 Config/testthat/edition: 3
 Imports: 
-    Matrix,
     dplyr,
     ggplot2,
     rlang,
@@ -34,6 +33,7 @@ Imports:
     methods,
     scales
 Depends: 
-    R (>= 2.10)
+    R (>= 2.10),
+    Matrix
 URL: https://emmaskarstein.github.io/inlamemi/, https://github.com/emmaSkarstein/inlamemi
 Language: en-US
