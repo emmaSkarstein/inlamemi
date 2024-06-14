@@ -17,6 +17,7 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
 Suggests: 
+    Matrix,
     INLA (>= 24.02.09),
     knitr,
     testthat (>= 3.0.0),
