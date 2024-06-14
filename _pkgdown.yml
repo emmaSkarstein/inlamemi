@@ -19,7 +19,7 @@ reference:
   - summary.inlamemi
   - plot.inlamemi
   - show_data_structure
-- title: Under-the-hood functions
+- title: Under the hood functions
   desc:  Functions called by the model fitting function and the summary/print functions. In some cases, they may be useful to call directly.
 - contents:
   - extract_random_effects

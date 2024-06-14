@@ -10,7 +10,7 @@ Authors@R: c(
          role = c("aut"),
          comment = c(ORCID = "0000-0002-8425-0757"))
   )
-Description: Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) <doi:10.1002/bimj.202300078>. See Skarstein and Muff (2024) <arXiv:2406.08172> for details on using the package.
+Description: Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) <doi:10.1002/bimj.202300078>. See Skarstein and Muff (2024) <doi:10.48550/arXiv.2406.08172> for details on using the package.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

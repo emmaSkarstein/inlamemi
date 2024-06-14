@@ -2,7 +2,7 @@
 % Please edit documentation in R/model_functions.R
 \name{make_inlamemi_scaling_vector}
 \alias{make_inlamemi_scaling_vector}
-\title{Construct scaling vector to scale the precision of non-mismeasured observations}
+\title{Construct scaling vector to scale the precision of correctly observed observations}
 \usage{
 make_inlamemi_scaling_vector(
   inlamemi_stack,
@@ -24,7 +24,7 @@ make_inlamemi_scaling_vector(
 A vector reflecting the scaling factor for the residual terms in each model level.
 }
 \description{
-Construct scaling vector to scale the precision of non-mismeasured observations
+Construct scaling vector to scale the precision of correctly observed observations
 }
 \examples{
 stacks <- make_inlamemi_stacks(data = simple_data,

@@ -665,7 +665,7 @@ make_inlamemi_families <- function(family_moi, inlamemi_stack){
   return(likelihood_names)
 }
 
-#' Construct scaling vector to scale the precision of non-mismeasured observations
+#' Construct scaling vector to scale the precision of correctly observed observations
 #'
 #' @inheritParams fit_inlamemi
 #' @inheritParams make_inlamemi_formula
@@ -892,8 +892,8 @@ make_inlamemi_control.family <- function(
 #' @param prior.prec.berkson a string containing the parameters for the prior for the precision of the error term for the Berkson error model.
 #' @param prior.prec.classical a string containing the parameters for the prior for the precision of the error term for the classical error model.
 #' @param prior.prec.imp a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.
-#' @param prior.beta.error parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?
-#' @param prior.gamma.error parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?
+#' @param prior.beta.error parameters for the Gaussian prior for the coefficient of the error prone variable.
+#' @param prior.gamma.error parameters for the Gaussian prior for the coefficient of the variable with missingness in the missingness model.
 #' @param initial.prec.moi the initial value for the precision of the residual term for the model of interest.
 #' @param initial.prec.berkson the initial value for the precision of the residual term for the Berkson error term.
 #' @param initial.prec.classical the initial value for the precision of the residual term for the classical error term.

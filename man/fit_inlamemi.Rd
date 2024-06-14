@@ -60,9 +60,9 @@ fit_inlamemi(
 
 \item{prior.prec.imp}{a string containing the parameters for the precision of the latent variable x, which is the variable being described in the imputation model.}
 
-\item{prior.beta.error}{parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?}
+\item{prior.beta.error}{parameters for the Gaussian prior for the coefficient of the error prone variable.}
 
-\item{prior.gamma.error}{parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?}
+\item{prior.gamma.error}{parameters for the Gaussian prior for the coefficient of the variable with missingness in the missingness model.}
 
 \item{initial.prec.moi}{the initial value for the precision of the residual term for the model of interest.}
 

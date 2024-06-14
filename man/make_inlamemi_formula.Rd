@@ -29,9 +29,9 @@ make_inlamemi_formula(
 
 \item{error_variable}{character vector with the name(s) of the variable(s) with error.}
 
-\item{prior.beta.error}{parameters for the prior for the coefficient of the error prone variable. TODO: Which distribution? Gamma?}
+\item{prior.beta.error}{parameters for the Gaussian prior for the coefficient of the error prone variable.}
 
-\item{prior.gamma.error}{parameters for the prior for the coefficient of the variable with missingness in the missingness model. TODO: Which distribution? Gamma?}
+\item{prior.gamma.error}{parameters for the Gaussian prior for the coefficient of the variable with missingness in the missingness model.}
 
 \item{vars}{Results from a call to "extract_variables_from_formula" function. If this is not passed as an argument, it is called inside the function.}
 }

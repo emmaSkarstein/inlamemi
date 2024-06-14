@@ -9,13 +9,13 @@
 A data frame with 641 rows and 4 columns:
 \describe{
   \item{disease}{A binary response, 1 if heart disease, 0 otherwise}
-  \item{sbp1}{log(SBP − 50) at examination 1 (centered)}
-  \item{sbp2}{log(SBP − 50) at examination 2 (centered)}
+  \item{sbp1}{log(SBP - 50) at examination 1 (centered)}
+  \item{sbp2}{log(SBP - 50) at examination 2 (centered)}
   \item{smoking}{Smoking status, 1 if smoking, 0 otherwise.}
 }
 }
 \source{
-Carrol book?
+MacMahon et al. (1990) <https://doi.org/10.1016/0140-6736(90)90878-9>
 }
 \usage{
 framingham

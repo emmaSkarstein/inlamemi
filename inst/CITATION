@@ -5,6 +5,6 @@ bibentry(
   title    = "inlamemi: Missing data imputation and measurment error adjustment with INLA",
   author   = "E. S. Skarstein and S. Muff",
   year     = "2023",
-  note     = "R package version 0.1.0",
+  note     = "R package version 1.0.0",
   url      = "https://github.com/emmaSkarstein/inlamemi"
 )
