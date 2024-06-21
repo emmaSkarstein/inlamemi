@@ -85,16 +85,14 @@
     
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emmaskarstein.github.io/inlamemi/">inlamemi</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; Loading required package: Matrix</span></span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <p>Once we have fitted an <code>inlamemi</code> model, we can use the
 <code>inlamemi</code> plot method to see a visual summary of the
 estimated coefficients and their 95% credible intervals.</p>
 <p>As an example, we use a data set with missingness in one variable.
 For the model, we will then have three levels: the model of interest,
 the imputation model, and the missingness model.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z1</span> <span class="op">+</span> <span class="va">z2</span>,</span>
 <span>                          formula_imp <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z1</span>,</span>
 <span>                          formula_mis <span class="op">=</span> <span class="va">m</span> <span class="op">~</span> <span class="va">z2</span> <span class="op">+</span> <span class="va">x</span>,</span>
@@ -108,19 +106,21 @@ the imputation model, and the missingness model.</p>
 <span>                          initial.prec.moi <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                          initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>This is the default plot:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-3-1.png" width="700">
-The <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function itself has some arguments that can be
-used to exclude sub-models, or to create a circle highlighting the
-coefficients of the variable with error or missingness. There is also an
-option to make the coefficient names into greek letters:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<p><img src="figure/unnamed-chunk-3-1.png" alt="plot of chunk unnamed-chunk-3"> The <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function
+itself has some arguments that can be used to exclude sub-models, or to
+create a circle highlighting the coefficients of the variable with error
+or missingness. There is also an option to make the coefficient names
+into greek letters:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span>, greek_coefficients <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-4-1.png" width="700"></p>
+<div class="float">
+<img src="figure/unnamed-chunk-4-1.png" alt="plot of chunk unnamed-chunk-4"><div class="figcaption">plot of chunk unnamed-chunk-4</div>
+</div>
 <p>But there are also some further modifications that can be made to the
 plot object, which is an object of class <code>ggplot</code>:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_plot</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">mis_plot</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "gg"     "ggplot"</span></span></code></pre></div>
@@ -133,28 +133,18 @@ above has also been created based on a data frame, and in order to
 modify the object further, we need to know the names of the columns, in
 order to refer to them correctly. We can access the data frame like
 this:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_plot</span><span class="op">$</span><span class="va">data</span></span>
-<span><span class="co">#&gt;            coefficient_type        mean         sd quant_0.025    0.5quant</span></span>
-<span><span class="co">#&gt; beta.0             moi_coef  1.04050180 0.04979897   0.9421581  1.04070605</span></span>
-<span><span class="co">#&gt; beta.z1            moi_coef  2.00466588 0.03646984   1.9331105  2.00467557</span></span>
-<span><span class="co">#&gt; beta.z2            moi_coef  1.98535005 0.03641008   1.9139389  1.98534958</span></span>
-<span><span class="co">#&gt; beta.x           error_coef  1.95366707 0.03480590   1.8864795  1.95321832</span></span>
-<span><span class="co">#&gt; gamma.x          error_coef -0.03561158 0.08924368  -0.2117738 -0.03545003</span></span>
-<span><span class="co">#&gt; alpha.x.0          imp_coef  1.01053932 0.03221361   0.9473501  1.01054231</span></span>
-<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.29154025 0.03252517   0.2277462  0.29154100</span></span>
-<span><span class="co">#&gt; gamma.x.0          mis_coef -1.50960390 0.12203638  -1.7536687 -1.50819278</span></span>
-<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.42468238 0.08823611  -0.5977055 -0.42468214</span></span>
-<span><span class="co">#&gt;            quant_0.975        mode variable_raw        model_type</span></span>
-<span><span class="co">#&gt; beta.0       1.1378594  1.04075312       beta.0 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z1      2.0761659  2.00467555      beta.z1 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z2      2.0567639  1.98534957      beta.z2 Model of interest</span></span>
-<span><span class="co">#&gt; beta.x       2.0235131  1.95130138       beta.x Model of interest</span></span>
-<span><span class="co">#&gt; gamma.x      0.1396109 -0.03478043      gamma.x Missingness model</span></span>
-<span><span class="co">#&gt; alpha.x.0    1.0737115  1.01054233    alpha.x.0  Imputation model</span></span>
-<span><span class="co">#&gt; alpha.x.z1   0.3553300  0.29154100   alpha.x.z1  Imputation model</span></span>
-<span><span class="co">#&gt; gamma.x.0   -1.2742708 -1.50819315    gamma.x.0 Missingness model</span></span>
-<span><span class="co">#&gt; gamma.x.z2  -0.2516606 -0.42468214   gamma.x.z2 Missingness model</span></span>
+<span><span class="co">#&gt;            coefficient_type        mean         sd quant_0.025    0.5quant quant_0.975        mode variable_raw        model_type</span></span>
+<span><span class="co">#&gt; beta.0             moi_coef  1.03972265 0.04998303   0.9411588  1.03983052   1.1377598  1.03985423       beta.0 Model of interest</span></span>
+<span><span class="co">#&gt; beta.z1            moi_coef  2.00443459 0.03646231   1.9329016  2.00444097   2.0759309  2.00444086      beta.z1 Model of interest</span></span>
+<span><span class="co">#&gt; beta.z2            moi_coef  1.98532334 0.03637896   1.9139728  1.98532291   2.0566763  1.98532290      beta.z2 Model of interest</span></span>
+<span><span class="co">#&gt; beta.x           error_coef  1.95348404 0.03469568   1.8857563  1.95328709   2.0223651  1.95246286       beta.x Model of interest</span></span>
+<span><span class="co">#&gt; gamma.x          error_coef -0.03594416 0.08911662  -0.2114785 -0.03591242   0.1394060 -0.03578129      gamma.x Missingness model</span></span>
+<span><span class="co">#&gt; alpha.x.0          imp_coef  1.01052405 0.03222237   0.9473174  1.01052704   1.0737137  1.01052707    alpha.x.0  Imputation model</span></span>
+<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.29153865 0.03253326   0.2277285  0.29153940   0.3553445  0.29153941   alpha.x.z1  Imputation model</span></span>
+<span><span class="co">#&gt; gamma.x.0          mis_coef -1.50922068 0.12208910  -1.7534713 -1.50784917  -1.2735610 -1.50785666    gamma.x.0 Missingness model</span></span>
+<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.42466592 0.08800230  -0.5972265 -0.42466734  -0.2520973 -0.42466737   gamma.x.z2 Missingness model</span></span>
 <span><span class="co">#&gt;            error_indicator  var1 var2 variable_greek   variable</span></span>
 <span><span class="co">#&gt; beta.0                   0  beta    0        beta[0]     beta.0</span></span>
 <span><span class="co">#&gt; beta.z1                  0  beta   z1       beta[z1]    beta.z1</span></span>
@@ -167,34 +157,38 @@ this:</p>
 <span><span class="co">#&gt; gamma.x.z2               0 gamma   z2      gamma[z2] gamma.x.z2</span></span></code></pre></div>
 <p>Now, let’s say we would like to have three separate plots, one for
 each sub-model. We could do this using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code>:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_plot</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">model_type</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<div class="float">
+<img src="figure/unnamed-chunk-7-1.png" alt="plot of chunk unnamed-chunk-7"><div class="figcaption">plot of chunk unnamed-chunk-7</div>
+</div>
 <p>We can make the same plot with the greek names:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span>, greek_coefficients <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">model_type</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-8-1.png" width="700"></p>
+<div class="float">
+<img src="figure/unnamed-chunk-8-1.png" alt="plot of chunk unnamed-chunk-8"><div class="figcaption">plot of chunk unnamed-chunk-8</div>
+</div>
 <p>We could also add a different theme:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span>, greek_coefficients <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">model_type</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggtheme.html" class="external-link">theme_minimal</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-9-1.png" width="700">
-Any other changes through the <code>theme</code> function could also be
-done, for instance we could remove the legend since this isn’t necessary
-when we have a faceted plot.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p><img src="figure/unnamed-chunk-9-1.png" alt="plot of chunk unnamed-chunk-9"> Any other changes through the
+<code>theme</code> function could also be done, for instance we could
+remove the legend since this isn’t necessary when we have a faceted
+plot.</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span>, greek_coefficients <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">model_type</span>, scales <span class="op">=</span> <span class="st">"free"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"none"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-10-1.png" width="700">
-You could also change the font and font size here, plus many other
-options. Here are some ways you could modify the font in the facet
-header and axis title, using the <code>showtext</code> package for
-selecting a different font from Google fonts:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<p><img src="figure/unnamed-chunk-10-1.png" alt="plot of chunk unnamed-chunk-10"> You could also change the font
+and font size here, plus many other options. Here are some ways you
+could modify the font in the facet header and axis title, using the
+<code>showtext</code> package for selecting a different font from Google
+fonts:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/yixuan/showtext" class="external-link">showtext</a></span><span class="op">)</span></span>
 <span><span class="fu">showtext_auto</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">js</span> <span class="op">&lt;-</span> <span class="st">"Josefin Sans"</span></span>
@@ -206,20 +200,19 @@ selecting a different font from Google fonts:</p>
 <span>        strip.text <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>family <span class="op">=</span> <span class="va">js</span>, size <span class="op">=</span> <span class="fl">13</span><span class="op">)</span>,</span>
 <span>        axis.title <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span><span class="va">js</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The plots can also be faceted by variable instead of model level:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span>, greek_coefficients <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap</a></span><span class="op">(</span><span class="op">~</span><span class="va">variable</span>, scales <span class="op">=</span> <span class="st">"free"</span>, labeller <span class="op">=</span> <span class="va">label_parsed</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-12-1.png" width="700">
-In this case, that isn’t terribly useful, but if you for instance have
-estimates from another model you would like to compare with inlamemi,
-you could join those results to <code>mis_plot$data</code> and then
-facet by variable (with method on the y-axis) to see the comparison
-clearly.</p>
+<p><img src="figure/unnamed-chunk-12-1.png" alt="plot of chunk unnamed-chunk-12"> In this case, that isn’t
+terribly useful, but if you for instance have estimates from another
+model you would like to compare with inlamemi, you could join those
+results to <code>mis_plot$data</code> and then facet by variable (with
+method on the y-axis) to see the comparison clearly.</p>
 <p>If you would like to add points or lines to the plot, this can also
 be done in an additional <code>geom</code> layer. For instance, since
 this data is simulated, I can add points at the numbers that were used
 for the simulation:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_truth</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html" class="external-link">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="st">"variable"</span>, <span class="op">~</span><span class="st">"value"</span>,</span>
 <span>  <span class="st">"beta.0"</span>,  <span class="fl">1</span>,</span>
@@ -235,12 +228,14 @@ for the simulation:</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html" class="external-link">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mis_truth</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">value</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-13-1.png" width="700">
-Or we could add a vertical line at zero:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<p><img src="figure/unnamed-chunk-13-1.png" alt="plot of chunk unnamed-chunk-13"> Or we could add a vertical line
+at zero:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html" class="external-link">geom_vline</a></span><span class="op">(</span>xintercept <span class="op">=</span> <span class="fl">0</span>, linetype <span class="op">=</span> <span class="st">"dotted"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="modifying_default_plot_files/figure-html/unnamed-chunk-14-1.png" width="700"></p>
+<div class="float">
+<img src="figure/unnamed-chunk-14-1.png" alt="plot of chunk unnamed-chunk-14"><div class="figcaption">plot of chunk unnamed-chunk-14</div>
+</div>
   </main>
 </div>
 

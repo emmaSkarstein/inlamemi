@@ -93,13 +93,10 @@
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">simple_moi</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span></span></span>
-<span class="r-in"><span><span class="va">simple_imp</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Fit the model</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Fit the model</span></span></span>
 <span class="r-in"><span><span class="va">simple_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simple_data</span>,</span></span>
-<span class="r-in"><span>                           formula_moi <span class="op">=</span> <span class="va">simple_moi</span>,</span></span>
-<span class="r-in"><span>                           formula_imp <span class="op">=</span> <span class="va">simple_imp</span>,</span></span>
+<span class="r-in"><span>                           formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span>,</span></span>
+<span class="r-in"><span>                           formula_imp <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z</span>,</span></span>
 <span class="r-in"><span>                           family_moi <span class="op">=</span> <span class="st">"gaussian"</span>,</span></span>
 <span class="r-in"><span>                           error_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"berkson"</span>, <span class="st">"classical"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                           prior.prec.moi <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">9</span><span class="op">)</span>,</span></span>
@@ -111,6 +108,7 @@
 <span class="r-in"><span>                           initial.prec.berkson <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                           initial.prec.classical <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                           initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>path[1]="/tmp/RtmpKERjxO/file1b2570d404a5": No such file or directory</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula for model of interest: </span>
@@ -124,29 +122,29 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for model of interest: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.028465 0.2186438  0.6107513 1.026472   1.430114 1.021922</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.907947 0.3877027  1.2230967 1.895729   2.553608 1.905370</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.032021 0.2199085  0.6147263 1.030716   1.450877 1.029267</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.914848 0.3899194  1.2290527 1.910356   2.595256 1.917837</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient for variable with measurement error and/or missingness: </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.97245 0.2091222   1.554258 1.974654   2.377623 1.984004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.974001 0.2022257   1.576939 1.973638   2.373175 1.972132</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for imputation model: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               mean         sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033082 0.05058977  0.9338337 1.033090   1.132284 1.033090</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024703 0.05225199  1.9222678 2.024686   2.127239 2.024686</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033086 0.05061528  0.9337856 1.033094   1.132337 1.033094</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024695 0.05227895  1.9222094 2.024676   2.127287 2.024676</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model hyperparameters (apart from beta.x): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                      mean        sd 0.025quant  0.5quant</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1303734 0.3628298  0.5673345 1.0805858</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1292225 0.3566701  0.5787895 1.0793183</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9262164 0.1111986  0.7285988 0.9189503</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9779085 0.1280735  0.7482141 0.9702633</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1220059 0.3491114  0.5701014 1.0772459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1239883 0.3505385  0.5912161 1.0723074</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9260160 0.1098689  0.7282890 0.9196768</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9761822 0.1261960  0.7524392 0.9677649</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 0.975quant      mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.979859 0.9890537</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.967956 0.9869954</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.165797 0.9033235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.251547 0.9563494</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.929865 0.9959800</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.956983 0.9757304</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.160241 0.9073466</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.248466 0.9504770</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

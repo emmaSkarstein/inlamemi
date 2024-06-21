@@ -183,10 +183,9 @@ effects on the left hand side: <span class="math display">\[
 <code>classical_summary$matrix_string</code>. If you want to display the
 matrices in an rmarkdown document, you can use the <code>cat</code>
 function, and just remember to set <code>results = 'asis'</code> as the
-chunk option:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode default"><code class="sourceCode default"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>```{r, results='asis'}</span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>cat(classical_summary$matrix_string)</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>```</span></code></pre></div>
+chunk option.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">classical_summary</span><span class="op">$</span><span class="va">matrix_string</span><span class="op">)</span></span></code></pre></div>
 <p><span class="math display">\[\underbrace{\begin{bmatrix}
 10.81 &amp; \texttt{NA} &amp; \texttt{NA}\\
 \vdots &amp; \vdots &amp; \vdots\\
