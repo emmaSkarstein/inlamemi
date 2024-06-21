@@ -672,7 +672,7 @@ make_inlamemi_families <- function(family_moi, inlamemi_stack){
 #' @return A vector reflecting the scaling factor for the residual terms in each model level.
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace('INLA')
 #' stacks <- make_inlamemi_stacks(data = simple_data,
 #'                              formula_moi = y ~ x + z,
 #'                              formula_imp = x ~ z,
@@ -745,7 +745,7 @@ make_inlamemi_scaling_vector <- function(inlamemi_stack,
 #' @return the "control.family" argument to be passed to inla, a list of "control.family" arguments for each model in the hierarchical measurement error model.
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace('INLA')
 #' make_inlamemi_control.family(
 #'   family_moi = "gaussian",
 #'   error_type = c("berkson", "classical"),

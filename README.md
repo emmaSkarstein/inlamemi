@@ -148,29 +148,29 @@ summary(simple_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.028495 0.2187125  0.6086967 1.026583   1.438411 1.021775
-#> beta.z 1.908026 0.3877423  1.2160053 1.896308   2.561888 1.905741
+#> beta.0 1.032389 0.2177000  0.6108145 1.032628   1.437021 1.026118
+#> beta.z 1.916272 0.3860412  1.2169144 1.906198   2.559336 1.911731
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
-#>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.972849 0.2006819   1.571949 1.974826   2.362089 1.983194
+#>            mean       sd 0.025quant 0.5quant 0.975quant     mode
+#> beta.x 1.973025 0.198868    1.57613 1.974856   2.359133 1.982591
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033084 0.05057240  0.9338698 1.033092   1.132252 1.033092
-#> alpha.x.z 2.024698 0.05223416  1.9222979 2.024681   2.127199 2.024681
+#> alpha.x.0 1.033067 0.05061128  0.9337774 1.033074   1.132312 1.033075
+#> alpha.x.z 2.024737 0.05227363  1.9222578 2.024721   2.127313 2.024721
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean        sd 0.025quant  0.5quant
-#> Precision for model of interest 1.1282034 0.3592325  0.5656105 1.0804974
-#> Precision for x berkson model   1.1247276 0.3414753  0.5927708 1.0784729
-#> Precision for x classical model 0.9262230 0.1084120  0.7324470 0.9195117
-#> Precision for x imp model       0.9788847 0.1250732  0.7539670 0.9716203
+#> Precision for model of interest 1.1324156 0.3673197  0.5626732 1.0819324
+#> Precision for x berkson model   1.1278492 0.3391049  0.5991666 1.0820368
+#> Precision for x classical model 0.9251226 0.1076384  0.7332180 0.9182943
+#> Precision for x imp model       0.9774281 0.1239492  0.7552130 0.9699965
 #>                                 0.975quant      mode
-#> Precision for model of interest   1.964214 0.9933306
-#> Precision for x berkson model     1.923874 0.9927213
-#> Precision for x classical model   1.158712 0.9054061
-#> Precision for x imp model         1.245552 0.9584504
+#> Precision for model of interest   1.992291 0.9892229
+#> Precision for x berkson model     1.921300 0.9969446
+#> Precision for x classical model   1.156456 0.9035748
+#> Precision for x imp model         1.242409 0.9559363
 ```
 
 And we can use the default plot function to see a plot of the fixed

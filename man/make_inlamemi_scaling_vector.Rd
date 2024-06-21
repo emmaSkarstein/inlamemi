@@ -27,6 +27,7 @@ A vector reflecting the scaling factor for the residual terms in each model leve
 Construct scaling vector to scale the precision of correctly observed observations
 }
 \examples{
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 stacks <- make_inlamemi_stacks(data = simple_data,
                              formula_moi = y ~ x + z,
                              formula_imp = x ~ z,
@@ -36,4 +37,5 @@ vars <- extract_variables_from_formula(formula_moi = y ~ x + z,
 make_inlamemi_scaling_vector(stacks,
                            error_type = c("classical", "berkson"),
                            vars = vars)
+\dontshow{\}) # examplesIf}
 }

@@ -63,6 +63,7 @@ the "control.family" argument to be passed to inla, a list of "control.family" a
 Make "control.family" argument for passing to the "inla" function
 }
 \examples{
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 make_inlamemi_control.family(
   family_moi = "gaussian",
   error_type = c("berkson", "classical"),
@@ -86,4 +87,5 @@ make_inlamemi_control.family(
   prior.prec.imp = c(0.5, 0.5),
   initial.prec.classical = 2.8,
   initial.prec.imp = 1)
+\dontshow{\}) # examplesIf}
 }
