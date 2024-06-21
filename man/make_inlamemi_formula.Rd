@@ -42,11 +42,11 @@ An object of class "formula".
 Make formula for measurement error and missing data model
 }
 \examples{
-f_moi <- y ~ x + z
-f_imp <- x ~ z
-make_inlamemi_formula(formula_moi = f_moi,
-                      formula_imp = f_imp,
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+make_inlamemi_formula(formula_moi = y ~ x + z,
+                      formula_imp = x ~ z,
                       error_type = "classical",
                       prior.beta.error = c(0, 1/1000)
                       )
+\dontshow{\}) # examplesIf}
 }

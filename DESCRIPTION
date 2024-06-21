@@ -17,13 +17,13 @@ LazyData: true
 VignetteBuilder: knitr
 RoxygenNote: 7.3.1
 Suggests: 
-    INLA (>= 24.02.09),
+    INLA,
     knitr,
     testthat (>= 3.0.0),
     tibble,
     rmarkdown,
     spelling
-Additional_repositories: https://inla.r-inla-download.org/R/stable
+Additional_repositories: https://inla.r-inla-download.org/R/stable/
 Config/testthat/edition: 3
 Imports: 
     dplyr,
@@ -33,7 +33,6 @@ Imports:
     methods,
     scales
 Depends: 
-    R (>= 2.10),
-    Matrix
+    R (>= 2.10)
 URL: https://emmaskarstein.github.io/inlamemi/, https://github.com/emmaSkarstein/inlamemi
 Language: en-US

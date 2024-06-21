@@ -7,27 +7,23 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 In this tutorial, we re-do the analysis from two previous publications that use the same data set. The data set contains the heart disease status for a number of patients, along with repeated measurements of their systolic blood pressure and their smoking status. The data is also included in the package, simply type `?framingham` for more details.
 
-
-```r
+```{r, message = FALSE, warning = FALSE}
 library(inlamemi)
 library(INLA)
 library(ggplot2)
 ```
 
-
-```r
+```{r}
 head(framingham)
-#>   disease         sbp1        sbp2 smoking         sbp
-#> 1       0  0.043556319 -0.24144440       0 -0.09894404
-#> 2       0 -0.088249125 -0.03871185       1 -0.06348049
-#> 3       0  0.063634980  0.02971774       1  0.04667636
-#> 4       0 -0.331791943 -0.44704230       1 -0.38941712
-#> 5       0  0.006502333 -0.09760337       1 -0.04555052
-#> 6       0  0.124884993  0.09793482       0  0.11140991
 ```
 
 The two publications are [Bayesian analysis of measurement error models using INLA, Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Reverse attenuation in interaction terms due to covariate measurement error, Muff & Keller (2015)](https://doi.org/10.1002/bimj.201400157).
@@ -64,8 +60,7 @@ where $u_i^{1}, u_i^{2} \sim N(0, \tau_u)$ are the measurement error terms.
 
 We can then call the `fit_inlamemi` function directly with the above formulas for the model of interest and imputation model. Also note the repeated measurements argument, which must be set to `TRUE` to ensure that the model is specified correctly. We give the precision for the error term of the measurement error model a \texttt{Gamma(100, 1)} prior, and the error term for the imputation model a \texttt{Gamma(10, 1)} prior. By default in R-INLA, the fixed effects are given Gaussian priors with mean $0$ and precision $0.001$. We re-assign the precisions to be $0.01$, but keep the means at 0 (therefore they are not specified in the `control.fixed` argument).
 
-
-```r
+```{r}
 framingham_model <- fit_inlamemi(formula_moi = disease ~ sbp + smoking,
                                formula_imp = sbp ~ smoking,
                                family_moi = "binomial", 
@@ -86,63 +81,26 @@ framingham_model <- fit_inlamemi(formula_moi = disease ~ sbp + smoking,
 
 Once the model is fit we can look at the summary.
 
-
-```r
+```{r}
 summary(framingham_model)
-#> Formula for model of interest: 
-#> disease ~ sbp + smoking
-#> 
-#> Formula for imputation model: 
-#> sbp ~ smoking
-#> 
-#> Error types: 
-#> [1] "classical"
-#> 
-#> Fixed effects for model of interest: 
-#>                    mean        sd 0.025quant   0.5quant 0.975quant       mode
-#> beta.0       -2.3607112 0.2687679 -2.8893566 -2.3601356  -1.835308 -2.3601232
-#> beta.smoking  0.3989493 0.2976650 -0.1843516  0.3988021   0.983082  0.3987996
-#> 
-#> Coefficient for variable with measurement error and/or missingness: 
-#>              mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.sbp 1.904282 0.5619162  0.8468405 1.888489   3.057103 1.817615
-#> 
-#> Fixed effects for imputation model: 
-#>                          mean         sd  0.025quant    0.5quant 0.975quant        mode
-#> alpha.sbp.0        0.01454299 0.01858129 -0.02190450  0.01454299 0.05099049  0.01454299
-#> alpha.sbp.smoking -0.01958477 0.02156261 -0.06188018 -0.01958477 0.02271064 -0.01958477
-#> 
-#> Model hyperparameters (apart from beta.sbp): 
-#>                                       mean       sd 0.025quant 0.5quant 0.975quant     mode
-#> Precision for sbp classical model 75.90183 3.690471   68.89250 75.81344   83.41963 75.63979
-#> Precision for sbp imp model       19.89457 1.234048   17.55069 19.86502   22.40737 19.82449
 ```
 
-
-```r
+```{r}
 plot(framingham_model)
 ```
 
-![plot of chunk unnamed-chunk-6](figure/unnamed-chunk-6-1.png)
-
 For a comparison, we can also fit a "naive" model, that is, a model that ignores the measurement error in SBP. For this model, we will take an average of the two SBP measurements and use that as the SBP variable.
 
-
-```r
+```{r}
 framingham$sbp <- (framingham$sbp1 + framingham$sbp2)/2
 naive_model <- inla(formula = disease ~ sbp + smoking,
                     family = "binomial", 
                     data = framingham)
 naive_model$summary.fixed
-#>                   mean        sd 0.025quant   0.5quant 0.975quant       mode kld
-#> (Intercept) -2.3547258 0.2692636 -2.8824728 -2.3547258 -1.8269788 -2.3547258   0
-#> sbp          1.6686897 0.4937443  0.7009686  1.6686897  2.6364107  1.6686897   0
-#> smoking      0.3972557 0.2992211 -0.1892069  0.3972557  0.9837183  0.3972557   0
 ```
 Then we can compare the estimated coefficients from both models.
 
-
-```r
+```{r}
 naive_result <- naive_model$summary.fixed
 rownames(naive_result) <- c("beta.0", "beta.sbp", "beta.smoking")
 naive_result$variable <- rownames(naive_result)
@@ -158,8 +116,6 @@ ggplot(results, aes(x = mean, y = model, color = variable)) +
   theme_bw()
 ```
 
-![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
-
 ## Second example: Heteroscedastic measurement error and interaction between error variable and error free variable
 
 |Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
@@ -169,8 +125,7 @@ ggplot(results, aes(x = mean, y = model, color = variable)) +
 
 In this example, we artificially increase the measurement error for the smoking group in order to study a model with homoscedastic measurement error. The model in this example is identical to that in [Muff & Keller (2015)](https://doi.org/10.1002/bimj.201400157)
 
-
-```r
+```{r}
 framingham2 <- framingham
 n <- nrow(framingham2)
 
@@ -187,13 +142,11 @@ framingham2$sbp2 <- framingham$sbp2 +
 #framingham2$sbp <- (framingham2$sbp1 + framingham2$sbp2)/2
 ```
 
-
-```r
+```{r}
 error_scaling <- c(1/(1+9*framingham2$smoking), 1/(1+9*framingham2$smoking))
 ```
 
-
-```r
+```{r}
 # Homoscedastic ME modeled as homoscedastic ME (correct)
 framingham_model2.1 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
                                formula_imp = sbp ~ smoking,
@@ -268,55 +221,15 @@ framingham_model2.5 <- fit_inlamemi(formula_moi = disease ~ sbp:smoking,
                                              alpha.smoking = 0.01)))
 
 plot(framingham_model2.1)
-```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-1.png)
-
-```r
 plot(framingham_model2.2)
-```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-2.png)
-
-```r
 plot(framingham_model2.3)
-```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-3.png)
-
-```r
 plot(framingham_model2.5)
-```
-
-![plot of chunk unnamed-chunk-11](figure/unnamed-chunk-11-4.png)
-
-```r
 
 
 framingham_model2.1$summary.hyperpar
-#>                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for the Gaussian observations[2] 75.924697 3.691755 68.9231297 75.832746  83.455384 75.644635
-#> Precision for the Gaussian observations[3] 19.898609 1.235568 17.5745308 19.861274  22.437435 19.788861
-#> Beta for beta.smokingsbp                   -1.581615 1.360291 -4.1917069 -1.604255   1.163213 -1.702103
-#> Beta for beta.sbp                           3.044022 1.187946  0.6632897  3.058256   5.340477  3.118959
 framingham_model2.2$summary.hyperpar
-#>                                                  mean       sd 0.025quant   0.5quant 0.975quant         mode
-#> Precision for the Gaussian observations[2] 157.116140 7.218347 143.230428 157.003324 171.644168 156.89258604
-#> Precision for the Gaussian observations[3]  22.110110 1.647325  19.055748  22.045219  25.538246  21.90841768
-#> Beta for beta.smokingsbp                    -1.579268 1.872695  -5.994113  -1.309470   1.023051  -0.01175282
-#> Beta for beta.sbp                            3.445319 1.421107   1.447729   3.245299   6.784787   2.06839603
 framingham_model2.3$summary.hyperpar
-#>                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for the Gaussian observations[2] 45.168891 2.194701 41.0375093 45.103655  49.676929 44.947917
-#> Precision for the Gaussian observations[3] 19.176318 1.276858 16.7852215 19.134095  21.810352 19.050388
-#> Beta for beta.smokingsbp                   -1.613992 1.410432 -4.1837629 -1.677446   1.350463 -1.977202
-#> Beta for beta.sbp                           3.277247 1.263836  0.6311494  3.330524   5.593007  3.580511
 framingham_model2.5$summary.hyperpar
-#>                                                    mean         sd  0.025quant     0.5quant  0.975quant         mode
-#> Precision for the Gaussian observations[2] 7.411261e+02 27.2248319 688.7987773 7.406866e+02 795.9767592 7.399389e+02
-#> Precision for the Gaussian observations[3] 1.012029e+01  3.2274084   5.0628791 9.692601e+00  17.6274785 8.911691e+00
-#> Beta for beta.smokingsbp                   4.336929e-04  0.2996034  -0.5895143 4.765140e-04   0.5901333 6.533428e-04
-#> Beta for beta.sbp                          4.231469e-04  0.2821837  -0.5552294 4.654132e-04   0.5558305 6.399530e-04
 ```
 
 

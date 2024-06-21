@@ -19,8 +19,6 @@ simplify_inlamemi_model_summary <- function(inlamemi_model){
   error_var_name <- sub(".*Beta for ", "", rownames(error_coef))
   rownames(error_coef) <- error_var_name
 
-
-
   other_model_hyperpar <- dplyr::filter(hyper, !grepl("Beta for ", rownames(hyper)))
 
   # Set better names for the hyperparameter precisions
@@ -71,14 +69,11 @@ simplify_inlamemi_model_summary <- function(inlamemi_model){
 #' @rdname summary
 #' @export
 #'
-#' @examples
-#' simple_moi <- y ~ x + z
-#' simple_imp <- x ~ z
-#'
+#' @examplesIf requireNamespace('INLA')
 #' # Fit the model
 #' simple_model <- fit_inlamemi(data = simple_data,
-#'                            formula_moi = simple_moi,
-#'                            formula_imp = simple_imp,
+#'                            formula_moi = y ~ x + z,
+#'                            formula_imp = x ~ z,
 #'                            family_moi = "gaussian",
 #'                            error_type = c("berkson", "classical"),
 #'                            prior.prec.moi = c(10, 9),
@@ -165,12 +160,10 @@ print.summary.inlamemi <- function(x, ...){
 #' @return A list containing data frames with the left hand side (response_df) and right hand side (effects_df), along with the latex code needed to visualize the matrices (matrix_string).
 #' @export
 #'
-#' @examples
-#' f_moi <- y ~ x + z
-#' f_imp <- x ~ z
+#' @examplesIf requireNamespace('INLA')
 #' stack <- make_inlamemi_stacks(data = simple_data,
-#'                    formula_moi = f_moi,
-#'                    formula_imp = f_imp,
+#'                    formula_moi = y ~ x + z,
+#'                    formula_imp = x ~ z,
 #'                    error_type = "classical")
 #' show_data_structure(stack)
 show_data_structure <- function(stack){

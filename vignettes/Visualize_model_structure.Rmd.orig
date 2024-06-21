@@ -7,21 +7,25 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  message = FALSE,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 The measurement error models in `inlamemi` are hierarchical models with three or more sub-models. To construct these kinds of models in R-INLA, the structure of the data plays an important role (see for instance [chapter 6.4 in "Bayesian Inference with INLA by Virgilio Gómez-Rubio](https://becarioprecario.bitbucket.io/inla-gitbook/ch-INLAfeatures.html#sec:sevlik)).
 
 The data for each of the models is organized and stacked together in a specific way, which together with the formula tells R-INLA how to construct the model. For you as a user, it is not necessary to understand these structures, but I have included this vignette nonetheless to give some more insight for those that are interested.
 
-
-```r
+```{r}
 library(inlamemi)
 ```
 
 ## Defining the model: formula + structured data stacks
 
-
-```r
+```{r}
 f_moi <- y ~ x + z
 f_imp <- x ~ z
 ```
@@ -61,8 +65,7 @@ $$
 $$
 We can construct the necessary stacks for this model using the `make_inlamemi_stacks` function:
 
-
-```r
+```{r}
 classical_stack <- make_inlamemi_stacks(data = simple_data,
                                       formula_moi = f_moi,
                                       formula_imp = f_imp,
@@ -71,91 +74,15 @@ classical_stack <- make_inlamemi_stacks(data = simple_data,
 
 and then we can visualize the data in these stacks with the `show_data_structure` function:
 
-
-```r
+```{r, message = FALSE}
 classical_summary <- show_data_structure(classical_stack)
 ```
 
 The LaTeX code is stored in `classical_summary$matrix_string`. If you want to display the matrices in an rmarkdown document, you can use the `cat` function, and just remember to set `results = 'asis'` as the chunk option.
 
-
-```r
+```{r, results='asis'}
 cat(classical_summary$matrix_string)
 ```
-
-$$\underbrace{\begin{bmatrix} 
-10.81 & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots\\
-6.18 & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & 4.98 & \texttt{NA}\\
-\vdots & \vdots & \vdots\\
-\texttt{NA} & 1.46 & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & 0\\
-\vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & 0\\
-\end{bmatrix}}_{\texttt{Y}}
- = 
-\beta_{0}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
-0.98\\
-\vdots\\
-0.77\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1000\\
--1\\
-\vdots\\
--1000\\
-\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-0.98\\
-\vdots\\
-0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}$$
 
 
 ## Structure for Berkson and classical measurement error model
@@ -191,8 +118,7 @@ $$
 \end{align}
 $$
 Just like above, we construct the stacks:
-
-```r
+```{r}
 berkson_stack <- make_inlamemi_stacks(data = simple_data,
               formula_moi = f_moi,
               formula_imp = f_imp,
@@ -200,119 +126,14 @@ berkson_stack <- make_inlamemi_stacks(data = simple_data,
 ```
 
 and then visualize the resulting matrices:
-
-```r
+```{r, message = FALSE}
 berkson_summary <- show_data_structure(berkson_stack)
 ```
 
 
-$$\underbrace{\begin{bmatrix} 
-10.81 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-6.18 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & 0 & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & 0 & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & 4.98 & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & 1.46 & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 0\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 0\\
-\end{bmatrix}}_{\texttt{Y}}
- = 
-\beta_{0}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
-0.98\\
-\vdots\\
-0.77\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
--1\\
-\vdots\\
--1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1000\\
-1\\
-\vdots\\
-1000\\
--1\\
-\vdots\\
--1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-0.98\\
-\vdots\\
-0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}$$
+```{r, echo = FALSE, results='asis'}
+cat(berkson_summary$matrix_string)
+```
 
 
 As you see, the only things that change is that there is added another model level, which leads to another column in the response matrix, and we additionally have a new column for the latent effect $\boldsymbol{r}$.
@@ -321,8 +142,7 @@ As you see, the only things that change is that there is added another model lev
 
 The data stacks that are generated by `make_inlamemi_stacks` inside `fit_inlamemi` is also returned with the `inlamemi` model object, so you don't need to run `make_inlamemi_stacks` yourself. This is how to access the stacks from the model object:
 
-
-```r
+```{r, results='asis'}
 inlamemi_model <- fit_inlamemi(data = simple_data,
                            formula_moi = f_moi,
                            formula_imp = f_imp,
@@ -340,118 +160,9 @@ inlamemi_model <- fit_inlamemi(data = simple_data,
 cat(show_data_structure(inlamemi_model$stack_data)$matrix_string)
 ```
 
-$$\underbrace{\begin{bmatrix} 
-10.81 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-6.18 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & 0 & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & 0 & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & 4.98 & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & 1.46 & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 0\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 0\\
-\end{bmatrix}}_{\texttt{Y}}
- = 
-\beta_{0}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
-0.98\\
-\vdots\\
-0.77\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
--1\\
-\vdots\\
--1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1000\\
-1\\
-\vdots\\
-1000\\
--1\\
-\vdots\\
--1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-0.98\\
-\vdots\\
-0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}$$
 
 
-
-
-```r
+```{r, results = 'asis'}
 mis_mod <- fit_inlamemi(formula_moi = y ~ x + z1 + z2,
                           formula_imp = x ~ z1,
                           formula_mis = m ~ z2 + x,
@@ -466,151 +177,4 @@ mis_mod <- fit_inlamemi(formula_moi = y ~ x + z1 + z2,
                           initial.prec.imp = 1)
 cat(show_data_structure(mis_mod$stack_data)$matrix_string)
 ```
-
-$$\underbrace{\begin{bmatrix} 
-7.9 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-2.58 & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & 2.31 & \texttt{NA} & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & 0 & \texttt{NA}\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & 0 & \texttt{NA}\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 0\\
-\vdots & \vdots & \vdots & \vdots\\
-\texttt{NA} & \texttt{NA} & \texttt{NA} & 1\\
-\end{bmatrix}}_{\texttt{Y}}
- = 
-\beta_{0}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
-1\\
-\vdots\\
-1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z1}\underbrace{\begin{bmatrix} 
-0.98\\
-\vdots\\
-0.77\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z1}} + \beta_{z2}\underbrace{\begin{bmatrix} 
--0.05\\
-\vdots\\
--0.72\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z2}} + \underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1000\\
--1\\
-\vdots\\
--1000\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z1}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-0.98\\
-\vdots\\
-0.77\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\end{bmatrix}}_{\texttt{alpha.x.z1}} + \gamma_{x,0}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1\\
-\end{bmatrix}}_{\texttt{gamma.x.0}} + \gamma_{x,z2}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
--0.05\\
-\vdots\\
--0.72\\
-\end{bmatrix}}_{\texttt{gamma.x.z2}} + \gamma_{x}\underbrace{\begin{bmatrix} 
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-\texttt{NA}\\
-\vdots\\
-\texttt{NA}\\
-1\\
-\vdots\\
-1000\\
-\end{bmatrix}}_{\texttt{gamma.x}}$$
 

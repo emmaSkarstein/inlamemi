@@ -7,15 +7,19 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
 
 |Error types | Likelihood | Response | Covariate with error | Other covariate(s) |
 |:-----------|:----------|:--------|:----------|:------------|
 |Classical, missing values | Weibull survival | survival time | `sbp1`, `sbp2` | `smoke`, `age`, `diabetes`, `sex` |
 
 
-
-```r
+```{r, message = FALSE}
 library(inlamemi)
 library(INLA)
 library(ggplot2)
@@ -42,8 +46,7 @@ $$
 $$
 We begin by specifying the necessary priors: 
 
-
-```r
+```{r}
 # Priors for measurement error variance and true x-value
 prior.prec.u <- c(0.5, 0.5) # Gamma(0.5, 0.5) (same as Keogh&Bartlett)
 prior.prec.x <- c(0.5, 0.5) # Gamma(0.5, 0.5) (same as K&B)
@@ -61,8 +64,7 @@ And then we fit the model itself. Let me point out some of the things that are s
 - **`control.family`:** Another thing to note is that since the `fit_inlamemi` function does not have arguments for passing the prior for the shape parameter of the Weibull survival model to `inla`, we instead need to write out the whole `control.family` argument and pass this to `fit_inlamemi`. If you are not used to R-INLA this may look a bit strange, but this is simply how the priors for the three different levels of the model are passed to `inla`. So as you can see it is a list of three lists, and each of these layers corresponds to one model layer, so the first one is for the main model of interest, the second one is for the error model, and the third layer is for the imputation model.
 - **`repeated_observations`:** Since we have repeated measurements for SBP, we need to set this argument to `TRUE`. 
 
-
-```r
+```{r}
 survival_model <- fit_inlamemi(
   formula_moi = inla.surv(t, d) ~ sbp + age + smoke + sex + diabetes,
   formula_imp = sbp ~ age + smoke + sex + diabetes,
@@ -87,47 +89,10 @@ survival_model <- fit_inlamemi(
   control.predictor=list(link=3)) # To specify that for the missing values, we use the third link function ("gaussian", from the imputation model) to predict them.
 ```
 
-
-```r
+```{r}
 summary(survival_model)
-#> Formula for model of interest: 
-#> inla.surv(t, d) ~ sbp + age + smoke + sex + diabetes
-#> 
-#> Formula for imputation model: 
-#> sbp ~ age + smoke + sex + diabetes
-#> 
-#> Error types: 
-#> [1] "classical" "missing"  
-#> 
-#> Fixed effects for model of interest: 
-#>                     mean         sd 0.025quant   0.5quant 0.975quant       mode
-#> beta.0        -5.4540938 0.13791214 -5.7178638 -5.4543016 -5.1898494 -5.4543046
-#> beta.age       0.9054675 0.04986843  0.8076100  0.9055121  1.0030731  0.9055131
-#> beta.smoke     0.2700320 0.08453202  0.1042709  0.2700324  0.4357911  0.2700324
-#> beta.sex       0.4454314 0.07880388  0.2909171  0.4454266  0.5999728  0.4454266
-#> beta.diabetes  0.5919710 0.09293525  0.4096883  0.5919869  0.7741637  0.5919871
-#> 
-#> Coefficient for variable with measurement error and/or missingness: 
-#>               mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> beta.sbp 0.1132246 0.04863355 0.01739928 0.1132526  0.2088873 0.1133684
-#> 
-#> Fixed effects for imputation model: 
-#>                            mean         sd  0.025quant     0.5quant 0.975quant         mode
-#> alpha.sbp.0         0.006414738 0.04311842 -0.07814269  0.006414675 0.09097253  0.006414675
-#> alpha.sbp.age       0.322557254 0.02956392  0.26458304  0.322556469 0.38053594  0.322556467
-#> alpha.sbp.smoke     0.004837677 0.05062415 -0.09443964  0.004837878 0.10411385  0.004837878
-#> alpha.sbp.sex      -0.061813667 0.04701748 -0.15401659 -0.061814003 0.03039117 -0.061814004
-#> alpha.sbp.diabetes  0.137938583 0.06224094  0.01588378  0.137937484 0.25999966  0.137937482
-#> 
-#> Model hyperparameters (apart from beta.sbp): 
-#>                                       mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> Precision for sbp classical model 1.376960 0.04080456  1.2978097 1.376549   1.458454 1.376149
-#> Precision for sbp imp model       2.838733 0.25689460  2.3577082 2.830223   3.368168 2.819663
-#> alpha parameter for weibullsurv   1.027331 0.04959684  0.9343127 1.025741   1.129552 1.021715
 plot(survival_model, plot_intercepts = FALSE, plot_imp = FALSE)
 ```
-
-![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png)
 
 
 

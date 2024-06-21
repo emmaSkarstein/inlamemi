@@ -6,11 +6,9 @@
 #' @return An object of class "formula".
 #' @export
 #'
-#' @examples
-#' f_moi <- y ~ x + z
-#' f_imp <- x ~ z
-#' make_inlamemi_formula(formula_moi = f_moi,
-#'                       formula_imp = f_imp,
+#' @examplesIf requireNamespace('INLA')
+#' make_inlamemi_formula(formula_moi = y ~ x + z,
+#'                       formula_imp = x ~ z,
 #'                       error_type = "classical",
 #'                       prior.beta.error = c(0, 1/1000)
 #'                       )
@@ -223,7 +221,7 @@ make_inlamemi_formula <- function(formula_moi,
 #' @return An object of class inla.stack with data structured according to specified formulas and error models.
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace('INLA')
 #' make_inlamemi_stacks(formula_moi = y ~ x + z,
 #'                    formula_imp = x ~ z,
 #'                    data = simple_data,
@@ -640,7 +638,7 @@ make_inlamemi_stacks <- function(formula_moi,
 #' @export
 #'
 #' @return A vector specifying the likelihood family for each model level.
-#' @examples
+#' @examplesIf requireNamespace('INLA')
 #' simple_stack <- make_inlamemi_stacks(formula_moi = y ~ x + z,
 #'                                      formula_imp = x ~ z,
 #'                                      data = simple_data,
@@ -909,7 +907,7 @@ make_inlamemi_control.family <- function(
 #' @return An object of class \code{inlamemi}.
 #' @export
 #'
-#' @examples
+#' @examplesIf requireNamespace('INLA')
 #' # Fit the model
 #' simple_model <- fit_inlamemi(data = simple_data,
 #'                            formula_moi = y ~ x + z,

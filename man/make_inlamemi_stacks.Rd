@@ -42,8 +42,10 @@ An object of class inla.stack with data structured according to specified formul
 Make data stacks for joint model specification in INLA
 }
 \examples{
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 make_inlamemi_stacks(formula_moi = y ~ x + z,
                    formula_imp = x ~ z,
                    data = simple_data,
                    error_type = "classical")
+\dontshow{\}) # examplesIf}
 }

@@ -93,6 +93,7 @@ test_that("extract_variables_from_formula works", {
 })
 
 test_that("make_inlamemi_formula works", {
+  skip_on_cran()
 
   # Multiple error variables
   formula1 <- make_inlamemi_formula(formula_moi = y ~ x1 + x2 + z,
@@ -129,6 +130,8 @@ test_that("make_inlamemi_formula works", {
 })
 
 test_that("make_inlamemi_stacks works", {
+  skip_on_cran()
+
   # Stacks ----
   # Simulated data, stacks with berkson level
   simple_stacks_cb <- make_inlamemi_stacks(formula_moi = y ~ x + z,
@@ -217,6 +220,8 @@ test_that("make_inlamemi_stacks works", {
 })
 
 test_that("make_inlamemi_families works", {
+  skip_on_cran()
+
   #Testing survival model and missingness model
   surv_stack <- make_inlamemi_stacks(
     formula_moi = inla.surv(t, d) ~ sbp + age + smoke + sex + diabetes,
@@ -250,6 +255,8 @@ test_that("make_inlamemi_scaling_vector works", {
 })
 
 test_that("make_inlamemi_control.family works", {
+  skip_on_cran()
+
   cont.fam <- make_inlamemi_control.family(
     family_moi = "gaussian",
     error_type = c("berkson", "classical"),
@@ -285,6 +292,7 @@ test_that("make_inlamemi_control.family works", {
 })
 
 test_that("fit_inlamemi works", {
+  skip_on_cran()
 
   # Fit the model
   simple_model <- fit_inlamemi(data = simple_data,

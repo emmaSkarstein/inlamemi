@@ -18,14 +18,11 @@
 #' @importFrom ggplot2 ggplot aes vars
 #' @importFrom rlang .data
 #' @importFrom scales parse_format
-#' @examples
-#' simple_moi <- y ~ x + z
-#' simple_imp <- x ~ z
-#'
+#' @examplesIf requireNamespace('INLA')
 #' # Fit the model
 #' simple_model <- fit_inlamemi(data = simple_data,
-#'                            formula_moi = simple_moi,
-#'                            formula_imp = simple_imp,
+#'                            formula_moi = y ~ x + z,
+#'                            formula_imp = x ~ z,
 #'                            family_moi = "gaussian",
 #'                            error_type = c("berkson", "classical"),
 #'                            prior.prec.moi = c(10, 9),

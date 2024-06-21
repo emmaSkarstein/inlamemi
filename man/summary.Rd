@@ -24,13 +24,11 @@ Takes a fitted `inlamemi` object produced by
 `fit_inlamemi` and produces a summary from it.
 }
 \examples{
-simple_moi <- y ~ x + z
-simple_imp <- x ~ z
-
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Fit the model
 simple_model <- fit_inlamemi(data = simple_data,
-                           formula_moi = simple_moi,
-                           formula_imp = simple_imp,
+                           formula_moi = y ~ x + z,
+                           formula_imp = x ~ z,
                            family_moi = "gaussian",
                            error_type = c("berkson", "classical"),
                            prior.prec.moi = c(10, 9),
@@ -44,4 +42,5 @@ simple_model <- fit_inlamemi(data = simple_data,
                            initial.prec.imp = 1)
 
 summary(simple_model)
+\dontshow{\}) # examplesIf}
 }

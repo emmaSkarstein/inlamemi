@@ -93,6 +93,7 @@ An object of class \code{inlamemi}.
 A wrapper function around "INLA::inla()", providing the necessary structure to fit the hierarchical measurement error model that adjusts coefficient estimates to account for biases due to measurement error and missing data.
 }
 \examples{
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 # Fit the model
 simple_model <- fit_inlamemi(data = simple_data,
                            formula_moi = y ~ x + z,
@@ -109,4 +110,5 @@ simple_model <- fit_inlamemi(data = simple_data,
                            initial.prec.berkson = 1,
                            initial.prec.classical = 1,
                            initial.prec.imp = 1)
+\dontshow{\}) # examplesIf}
 }

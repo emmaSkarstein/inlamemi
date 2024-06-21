@@ -16,11 +16,11 @@ A list containing data frames with the left hand side (response_df) and right ha
 Visualize the model data structure as matrices
 }
 \examples{
-f_moi <- y ~ x + z
-f_imp <- x ~ z
+\dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 stack <- make_inlamemi_stacks(data = simple_data,
-                   formula_moi = f_moi,
-                   formula_imp = f_imp,
+                   formula_moi = y ~ x + z,
+                   formula_imp = x ~ z,
                    error_type = "classical")
 show_data_structure(stack)
+\dontshow{\}) # examplesIf}
 }
