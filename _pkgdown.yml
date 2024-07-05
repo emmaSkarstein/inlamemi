@@ -17,6 +17,7 @@ reference:
 - title: Summary, plot, etc.
 - contents:
   - ends_with(".inlamemi")
+  - -fit_inlamemi
   - starts_with("get_")
   - show_data_structure
 template:
