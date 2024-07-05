@@ -49,3 +49,4 @@ make_inlamemi_stacks(formula_moi = y ~ x + z,
                    error_type = "classical")
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

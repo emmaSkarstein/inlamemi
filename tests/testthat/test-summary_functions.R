@@ -1,4 +1,4 @@
-test_that("symmary.inlamemi works", {
+test_that("summary.inlamemi works", {
   skip_on_cran()
 
   # Fit the model

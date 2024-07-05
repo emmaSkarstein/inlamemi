@@ -39,3 +39,4 @@ make_inlamemi_scaling_vector(stacks,
                            vars = vars)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

@@ -10,7 +10,7 @@ vignette: >
 
 
 
-```r
+``` r
 library(inlamemi)
 ```
 
@@ -26,7 +26,7 @@ Many of the arguments to `fit_inlamemi` are specific to one of the error variabl
 In this example, we have a simple case with three covariates (`x1`, `x2` and `z`), where two of these have classical measurement error (`x1` and `x2`). We believe that `x1` is correlated with the error free covariate `z`, but that `x2` is independent of the other covariates. Here is our data:
 
 
-```r
+``` r
 head(two_error_data)
 #>           y         x1         x2    x1_true   x2_true          z
 #> 1 11.479199  3.9241547  2.0065523  2.9122427 1.0015263  0.9819694
@@ -41,7 +41,7 @@ head(two_error_data)
 In this case, we will need to specify the entire `control.family` argument manually. This is done like this:
 
 
-```r
+``` r
 # Multiple error variables
 control.family <- list(
   # Model of interest
@@ -70,7 +70,7 @@ control.family <- list(
 If you are uncertain about the order of the model levels, look at the order in the data stack. `fit_inlamemi` calls the function `make_inlamemi_stacks` to create the data stack, so we can view it like this:
 
 
-```r
+``` r
 stack_two_error <- make_inlamemi_stacks(
   formula_moi = y ~ x1 + x2 + z,
   formula_imp = list(x1 ~ z, x2 ~ 1),
@@ -82,7 +82,7 @@ stack_two_error <- make_inlamemi_stacks(
 And then we can see the order of the models by looking at 
 
 
-```r
+``` r
 stack_two_error$data$names
 #> $y_moi
 #> [1] "y_moi"
@@ -102,7 +102,7 @@ stack_two_error$data$names
 Then we go on to fit the model:
 
 
-```r
+``` r
 two_error_model <- fit_inlamemi(formula_moi = y ~ x1 + x2 + z,
                              formula_imp = list(x1 ~ z, x2 ~ 1),
                              family_moi = "gaussian",
@@ -117,7 +117,7 @@ two_error_model <- fit_inlamemi(formula_moi = y ~ x1 + x2 + z,
 The summary and plot can be viewed as normal:
 
 
-```r
+``` r
 summary(two_error_model)
 #> Formula for model of interest: 
 #> y ~ x1 + x2 + z
@@ -140,31 +140,31 @@ summary(two_error_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.032206 0.2117097  0.6092825 1.035605   1.438392 1.035590
-#> beta.z 2.026115 0.6650804  0.9289027 2.065058   3.045674 2.042773
+#> beta.0 1.020804 0.1986248  0.6063179 1.024636   1.422182 1.025269
+#> beta.z 1.990712 0.6688158  0.9287334 2.048389   3.054814 2.023638
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>             mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x1 1.937259 0.3629647   1.231761 1.934183   2.660865 1.921210
-#> beta.x2 2.066859 0.3202801   1.428971 2.069365   2.690016 2.079914
+#> beta.x1 1.940786 0.3748941   1.212850 1.937358   2.688920 1.922876
+#> beta.x2 2.069001 0.3279780   1.414429 2.072021   2.705775 2.084783
 #> 
 #> Fixed effects for imputation model: 
 #>                 mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> alpha.x1.0 1.0361515 0.04400913  0.9498399 1.0361515   1.122463 1.0361515
-#> alpha.x1.z 1.9748164 0.04480513  1.8869437 1.9748164   2.062689 1.9748164
-#> alpha.x2.0 0.9734143 0.04552568  0.8841303 0.9734143   1.062698 0.9734143
+#> alpha.x1.0 1.0361516 0.04403584  0.9497859 1.0361516   1.122517 1.0361516
+#> alpha.x1.z 1.9748164 0.04483232  1.8868887 1.9748164   2.062744 1.9748164
+#> alpha.x2.0 0.9734143 0.04557269  0.8840351 0.9734143   1.062793 0.9734143
 #> 
 #> Model hyperparameters (apart from beta.x1, beta.x2): 
 #>                                       mean        sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for model of interest  1.1414627 0.3655011  0.5876136 1.0871141   2.010812 0.9861135
-#> Precision for x1 classical model 1.0738557 0.2155365  0.7072146 1.0544437   1.552142 1.0189594
-#> Precision for x1 imp model       1.0384566 0.2045764  0.6983236 1.0173976   1.500597 0.9745010
-#> Precision for x2 classical model 1.0325493 0.1780454  0.7298622 1.0163835   1.428761 0.9829946
-#> Precision for x2 imp model       0.9356804 0.1549813  0.6652513 0.9239377   1.273659 0.9022791
+#> Precision for model of interest  1.1386304 0.3533423  0.5897718 1.0902918   1.966482 1.0009300
+#> Precision for x1 classical model 1.0726433 0.2217652  0.6969859 1.0521600   1.566093 1.0147927
+#> Precision for x1 imp model       1.0417792 0.2107746  0.6932599 1.0194637   1.519657 0.9740596
+#> Precision for x2 classical model 1.0309524 0.1805627  0.7254236 1.0140872   1.434144 0.9789813
+#> Precision for x2 imp model       0.9372658 0.1577471  0.6620837 0.9252927   1.281278 0.9035044
 ```
 
 
-```r
+``` r
 plot(two_error_model)
 ```
 

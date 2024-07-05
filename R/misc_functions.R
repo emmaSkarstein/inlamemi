@@ -1,6 +1,7 @@
 #' List the survival likelihoods in INLA
 #'
 #' @return List of survival models in INLA
+#' @keywords internal
 inla_survival_families <- function(){
   inla_families <- names(INLA::inla.models()$likelihood)
   surv_families <- inla_families[grepl("surv", inla_families)]

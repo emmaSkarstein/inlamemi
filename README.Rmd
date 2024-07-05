@@ -44,12 +44,12 @@ Examples of how to use the package can be found in the vignettes.
 
 |Vignette name | Likelihood for MOI | Error type | Other features |
 |:-----------|:----------|:--------|:----------|
-|[Influence of systolic blood pressure on coronary heart disease](https://emmaskarstein.github.io/inlamemi/articles/Framingham_heart_study.html) | Binomial | Classical | Repeated measurements of error prone variable, interaction effect with error variable |
-|[Survival data with repeated systolic blood pressure measurements](https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival.html) | Weibull survival | Classical, missing | Repeated measurements of error prone variable|
+|[Influence of systolic blood pressure on coronary heart disease](https://emmaskarstein.github.io/inlamemi/articles/framingham_heart_study.html) | Binomial | Classical | Repeated measurements of error prone variable, interaction effect with error variable |
+|[Survival model with repeated systolic blood pressure measurements](https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival_model.html) | Weibull survival | Classical, missing | Repeated measurements of error prone variable|
 | [Simulated examples (multiple examples)](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html) | Gaussian, Binomial, Poisson | Berkson, classical, missing | Random effect(s) in the model of interest, interaction effects |
 | [Multiple variables with measurement error and missingness](https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html) | Gaussian | Classical |  Multiple mismeasured covariates |
-|[How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html) ||| A deep dive into how the data is structured in order to correctly fit the model. |
-|[How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/how_to_not_use_inlamemi.html) ||| An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured.|
+|[How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/visualize_model_structure.html) ||| A deep dive into how the data is structured in order to correctly fit the model. |
+|[How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html) ||| An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured.|
 
 
 ## Quick guide: How can I use this package?

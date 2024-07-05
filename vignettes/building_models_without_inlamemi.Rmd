@@ -10,7 +10,7 @@ vignette: >
 
 
 
-```r
+``` r
 library(inlamemi)
 library(INLA)
 ```
@@ -54,14 +54,14 @@ $$
 We begin by loading the data and defining the number of observations.
 
 
-```r
+``` r
 data <- simple_data
 n <- nrow(data)
 ```
 
 Next, we define all the priors and initial values.
 
-```r
+``` r
 # Prior for beta.x
 prior.beta <- c(0, 1/1000) # N(0, 10^3)
 
@@ -80,7 +80,7 @@ initial.prec.r <- 1
 
 In `inlamemi`, we could then fit the model like this:
 
-```r
+``` r
 # Fit the model
 simple_model <- fit_inlamemi(data = data,
                            formula_moi = y ~ x + z,
@@ -105,7 +105,7 @@ $$
 $$
 which is defined in a stack like this:
 
-```r
+``` r
 stk_moi <- inla.stack(data = list(y_moi = data$y),
                       A = list(1),
                       effects = list(
@@ -121,7 +121,7 @@ $$
 $$
 and the corresponding stack is:
 
-```r
+``` r
 stk_b <- inla.stack(data = list(y_berkson = rep(0, n)),
                     A = list(1),
                     effects = list(
@@ -139,7 +139,7 @@ $$
 
 and the stack is:
 
-```r
+``` r
 stk_c <- inla.stack(data = list(y_classical = data$x),
                     A = list(1),
                     effects = list(
@@ -154,7 +154,7 @@ $$
 $$
 and the corresponding stack is
 
-```r
+``` r
 stk_imp <- inla.stack(data = list(y_imp = rep(0, n)),
                       A = list(1),
                       effects = list(
@@ -168,14 +168,14 @@ stk_imp <- inla.stack(data = list(y_imp = rep(0, n)),
 We then stack these together, which will give us the matrix formulation that we also could have specified manually.
 
 
-```r
+``` r
 stk_full <- inla.stack(stk_moi, stk_b, stk_c, stk_imp)
 ```
 
 For this model, we have two latent effects, `x` and `r`, which are both specified in the formula. For further details on the formula, see the supplementary material of [Skarstein et al (2023)](https://doi.org/10.1002/bimj.202300078), which can be found online here: https://emmaskarstein.github.io/Missing-data-and-measurement-error/simulation_example.html 
 
 
-```r
+``` r
 formula <- list(y_moi, y_berkson, y_classical, y_imp) ~ - 1 + beta.0 + beta.z +
   f(beta.x, copy = "id.x",
     hyper = list(beta = list(param = c(0, 1/1000), fixed = FALSE))) +
@@ -188,7 +188,7 @@ formula <- list(y_moi, y_berkson, y_classical, y_imp) ~ - 1 + beta.0 + beta.z +
 
 Finally, we call the `inla()` function. This model consists of four Gaussian sub-models, and in the `control.family` argument we give the priors for each of these.
 
-```r
+``` r
 model_sim <- inla(formula, data = inla.stack.data(stk_full),
                   family = c("gaussian", "gaussian", "gaussian", "gaussian"),
                   control.family = list(
@@ -209,23 +209,12 @@ model_sim <- inla(formula, data = inla.stack.data(stk_full),
 )
 
 summary(model_sim)
-#> 
-#> Call:
-#>    c("inla.core(formula = formula, family = family, contrasts = contrasts, ", " data = data, quantiles = quantiles, E = E, 
-#>    offset = offset, ", " scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, ", " lp.scale = lp.scale, 
-#>    link.covariates = link.covariates, verbose = verbose, ", " lincomb = lincomb, selection = selection, control.compute = 
-#>    control.compute, ", " control.predictor = control.predictor, control.family = control.family, ", " control.inla = 
-#>    control.inla, control.fixed = control.fixed, ", " control.mode = control.mode, control.expert = control.expert, ", " 
-#>    control.hazard = control.hazard, control.lincomb = control.lincomb, ", " control.update = control.update, control.lp.scale 
-#>    = control.lp.scale, ", " control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, ", " inla.call = inla.call, 
-#>    inla.arg = inla.arg, num.threads = num.threads, ", " keep = keep, working.directory = working.directory, silent = silent, 
-#>    ", " inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = .parent.frame)" ) 
 #> Time used:
-#>     Pre = 1.8, Running = 1.78, Post = 0.244, Total = 3.82 
+#>     Pre = 2.06, Running = 2.61, Post = 0.191, Total = 4.86 
 #> Fixed effects:
 #>          mean    sd 0.025quant 0.5quant 0.975quant  mode kld
-#> beta.0  1.046 0.221      0.628    1.050      1.468 1.050   0
-#> beta.z  1.945 0.392      1.256    1.955      2.658 1.951   0
+#> beta.0  1.044 0.218      0.623    1.046      1.454 1.040   0
+#> beta.z  1.940 0.387      1.242    1.933      2.610 1.934   0
 #> alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0
 #> alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0
 #> 
@@ -237,13 +226,13 @@ summary(model_sim)
 #> 
 #> Model hyperparameters:
 #>                                             mean    sd 0.025quant 0.5quant 0.975quant  mode
-#> Precision for the Gaussian observations    1.113 0.356      0.540    1.071       1.92 0.995
-#> Precision for the Gaussian observations[2] 1.125 0.359      0.597    1.066       2.00 0.955
-#> Precision for the Gaussian observations[3] 0.928 0.112      0.722    0.923       1.16 0.916
-#> Precision for the Gaussian observations[4] 0.977 0.126      0.757    0.968       1.25 0.946
-#> Beta for beta.x                            1.974 0.202      1.587    1.970       2.38 1.954
+#> Precision for the Gaussian observations    1.134 0.393      0.559    1.070       2.08 0.951
+#> Precision for the Gaussian observations[2] 1.141 0.352      0.606    1.089       1.98 0.991
+#> Precision for the Gaussian observations[3] 0.927 0.111      0.726    0.921       1.16 0.911
+#> Precision for the Gaussian observations[4] 0.978 0.127      0.755    0.969       1.25 0.950
+#> Beta for beta.x                            1.979 0.202      1.584    1.977       2.38 1.972
 #> 
-#> Marginal log-Likelihood:  -20700.01 
+#> Marginal log-Likelihood:  -20699.95 
 #>  is computed 
 #> Posterior summaries for the linear predictor and the fitted values are computed
 #> (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')
@@ -257,7 +246,7 @@ In the dataset, simulated below, we let the value of the covariate `x` with miss
 
 
 
-```r
+``` r
 set.seed(2024)
 n <- 1000
 
@@ -276,6 +265,9 @@ x_obs[m] <- NA
 
 sum(is.na(x_obs))/length(x_obs)
 #> [1] 0.183
+```
+
+``` r
 
 beta.0 <- 1; beta.x <- 2; beta.z1 <- 2; beta.z2 <- 2
 y <- beta.0 + beta.x*x + beta.z1*z1 + beta.z2*z2 + rnorm(n)
@@ -289,7 +281,7 @@ y_i = \beta_0 + \beta_x x_{true,i} + \beta_{z_1} z_{1,i} + \beta_{z_2} z_{2,i} +
 $$
 and the stack is:
 
-```r
+``` r
 stk_moi <- inla.stack(data = list(y_moi = missing_data$y),
                       A = list(1),
                       effects = list(
@@ -306,7 +298,7 @@ $$
 $$
 where the precision of $u_{c,i}$ is set to be very high for those $i$ where $x_{obs,i}$ is observed. The stack for this level is:
 
-```r
+``` r
 stk_c <- inla.stack(data = list(y_classical = missing_data$x),
                     A = list(1),
                     effects = list(
@@ -322,7 +314,7 @@ $$
 and the stack is
 
 
-```r
+``` r
 stk_imp <- inla.stack(data = list(y_imp = rep(0, n)),
                       A = list(1),
                       effects = list(
@@ -339,7 +331,7 @@ $$
 $$
 and the stack is:
 
-```r
+``` r
 stk_mis <- inla.stack(data = list(y_mis = as.numeric(is.na(missing_data$x))),
                       A = list(1),
                       effects = list(
@@ -351,13 +343,13 @@ stk_mis <- inla.stack(data = list(y_mis = as.numeric(is.na(missing_data$x))),
 
 We join the stacks together:
 
-```r
+``` r
 stk_full <- inla.stack(stk_moi, stk_c, stk_imp, stk_mis)
 ```
 
 In defining the formula, we now need to define the hyperparameter `gamma.x`, the same way as we define `beta.x`. This is a scaled copy of `id.x`.
 
-```r
+``` r
 formula <- list(y_moi, y_classical, y_imp, y_mis) ~ - 1 +
   beta.0 + beta.z1 + beta.z2 +
   f(beta.x, copy = "id.x",
@@ -371,7 +363,7 @@ formula <- list(y_moi, y_classical, y_imp, y_mis) ~ - 1 +
 
 Since we don't have any measurement error in this case, we set the precision to be very high for the classical error model in the argument `scale`. 
 
-```r
+``` r
 model_mnar <- inla(formula, data = inla.stack.data(stk_full),
                   family = c("gaussian", "gaussian", "gaussian", "binomial"),
                   scale = c(rep(1, n), rep(10^8, n), rep(1, n), rep(1, n)),
@@ -390,27 +382,16 @@ model_mnar <- inla(formula, data = inla.stack.data(stk_full),
 )
 
 summary(model_mnar)
-#> 
-#> Call:
-#>    c("inla.core(formula = formula, family = family, contrasts = contrasts, ", " data = data, quantiles = quantiles, E = E, 
-#>    offset = offset, ", " scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, ", " lp.scale = lp.scale, 
-#>    link.covariates = link.covariates, verbose = verbose, ", " lincomb = lincomb, selection = selection, control.compute = 
-#>    control.compute, ", " control.predictor = control.predictor, control.family = control.family, ", " control.inla = 
-#>    control.inla, control.fixed = control.fixed, ", " control.mode = control.mode, control.expert = control.expert, ", " 
-#>    control.hazard = control.hazard, control.lincomb = control.lincomb, ", " control.update = control.update, control.lp.scale 
-#>    = control.lp.scale, ", " control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, ", " inla.call = inla.call, 
-#>    inla.arg = inla.arg, num.threads = num.threads, ", " keep = keep, working.directory = working.directory, silent = silent, 
-#>    ", " inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = .parent.frame)" ) 
 #> Time used:
-#>     Pre = 1.81, Running = 2.59, Post = 0.652, Total = 5.05 
+#>     Pre = 2.05, Running = 3.59, Post = 0.18, Total = 5.81 
 #> Fixed effects:
 #>            mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-#> beta.0    1.040 0.050      0.942    1.040      1.138  1.040   0
-#> beta.z1   2.005 0.036      1.933    2.005      2.076  2.005   0
+#> beta.0    1.038 0.050      0.940    1.038      1.137  1.038   0
+#> beta.z1   2.004 0.036      1.932    2.004      2.075  2.004   0
 #> beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0
 #> alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0
 #> alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0
-#> gamma.0  -1.510 0.122     -1.754   -1.509     -1.275 -1.509   0
+#> gamma.0  -1.509 0.122     -1.755   -1.508     -1.273 -1.508   0
 #> gamma.z2 -0.425 0.088     -0.597   -0.425     -0.252 -0.425   0
 #> 
 #> Random effects:
@@ -421,13 +402,13 @@ summary(model_mnar)
 #> 
 #> Model hyperparameters:
 #>                                              mean    sd 0.025quant 0.5quant 0.975quant   mode
-#> Precision for the Gaussian observations     0.984 0.048      0.891    0.983       1.08  0.982
-#> Precision for the Gaussian observations[2]  1.127 0.358      0.574    1.077       1.97  0.984
-#> Precision for the Gaussian observations[3]  1.023 0.047      0.933    1.023       1.12  1.021
-#> Beta for beta.x                             1.954 0.035      1.886    1.953       2.02  1.952
-#> Beta for gamma.x                           -0.035 0.089     -0.212   -0.035       0.14 -0.035
+#> Precision for the Gaussian observations     0.983 0.048      0.892    0.982      1.081  0.980
+#> Precision for the Gaussian observations[2]  1.139 0.387      0.581    1.073      2.083  0.950
+#> Precision for the Gaussian observations[3]  1.023 0.048      0.934    1.022      1.121  1.018
+#> Beta for beta.x                             1.953 0.035      1.883    1.953      2.020  1.955
+#> Beta for gamma.x                           -0.036 0.089     -0.211   -0.036      0.139 -0.036
 #> 
-#> Marginal log-Likelihood:  -11663.16 
+#> Marginal log-Likelihood:  -11663.15 
 #>  is computed 
 #> Posterior summaries for the linear predictor and the fitted values are computed
 #> (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')

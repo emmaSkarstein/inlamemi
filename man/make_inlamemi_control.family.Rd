@@ -89,3 +89,4 @@ make_inlamemi_control.family(
   initial.prec.imp = 1)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

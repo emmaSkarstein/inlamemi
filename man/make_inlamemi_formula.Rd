@@ -50,3 +50,4 @@ make_inlamemi_formula(formula_moi = y ~ x + z,
                       )
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

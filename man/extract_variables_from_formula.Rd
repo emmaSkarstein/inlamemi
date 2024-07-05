@@ -28,7 +28,4 @@ Helper function that takes in the formulas for the model of interest and the
 imputation model, and groups them into responses, covariates, covariate with
 error and covariate(s) without error, for both sub-models.
 }
-\examples{
-extract_variables_from_formula(formula_moi = y ~ x + z,
-                               formula_imp = x ~ z)
-}
+\keyword{internal}

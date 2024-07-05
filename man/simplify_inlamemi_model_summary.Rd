@@ -15,3 +15,4 @@ A list of four data frames, containing the summaries for different components of
 \description{
 Simplify the "raw" model summary for printing and plotting
 }
+\keyword{internal}

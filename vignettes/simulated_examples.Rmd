@@ -11,7 +11,7 @@ vignette: >
 
 
 
-```r
+``` r
 library(INLA)
 library(ggplot2)
 library(inlamemi)
@@ -31,7 +31,7 @@ This is a simple simulation with Berkson and classical error as well as missing 
 ### Generating the data
 
 
-```r
+``` r
 set.seed(2024)
 n <- 1000
 
@@ -66,7 +66,7 @@ simple_data <- data.frame(y = y, x = x_obs, z = z)
 ### Fitting the model
 
 
-```r
+``` r
 # Fit the model
 simple_model <- fit_inlamemi(data = simple_data, 
                          formula_moi = y ~ x + z, 
@@ -94,29 +94,29 @@ summary(simple_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.033298 0.2179847  0.6149367 1.033448   1.439182 1.028936
-#> beta.z 1.918095 0.3864149  1.2320486 1.911048   2.564599 1.916255
+#> beta.0 1.038367 0.2188315  0.6194553 1.038938   1.453129 1.035553
+#> beta.z 1.928720 0.3880856  1.2432347 1.924118   2.597072 1.927316
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.973451 0.2021624   1.572865 1.974339    2.36885 1.978043
+#> beta.x 1.974098 0.2000806   1.581592 1.973621   2.369381 1.971641
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033078 0.05059793  0.9338142 1.033086   1.132297 1.033086
-#> alpha.x.z 2.024712 0.05226033  1.9222594 2.024694   2.127263 2.024694
+#> alpha.x.0 1.033079 0.05057932  0.9338512 1.033087   1.132261 1.033087
+#> alpha.x.z 2.024710 0.05224108  1.9222957 2.024693   2.127224 2.024692
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean        sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for model of interest 1.1282039 0.3610639  0.5673544 1.0788282   1.973095 0.9880770
-#> Precision for x berkson model   1.1283327 0.3464080  0.5947152 1.0795115   1.944788 0.9885253
-#> Precision for x classical model 0.9256935 0.1092025  0.7301264 0.9190625   1.159482 0.9054505
-#> Precision for x imp model       0.9777885 0.1259149  0.7530336 0.9699057   1.247940 0.9545509
+#> Precision for model of interest 1.1259893 0.3674036  0.5572310 1.0751508   1.986992 0.9817414
+#> Precision for x berkson model   1.1273265 0.3463917  0.5993735 1.0766969   1.949423 0.9817974
+#> Precision for x classical model 0.9272704 0.1097689  0.7287398 0.9212726   1.160285 0.9102319
+#> Precision for x imp model       0.9773233 0.1253106  0.7551711 0.9689568   1.247736 0.9516362
 ```
 
 
 
-```r
+``` r
 simple.truth <- tibble::tribble(
   ~"variable", ~"value",
   "beta.x",  beta.x, 
@@ -146,7 +146,7 @@ In this example, we have missingness in one covariate, but no other measurement 
 ### Generating the data
 
 
-```r
+``` r
 set.seed(2024)
 n <- 1000
 
@@ -175,21 +175,24 @@ missing_data <- data.frame(y = y, x = x_obs, z = z)
 
 ### Model without imputation
 
-```r
+``` r
 naive_model <- inla(formula = y ~ x + z, family = "gaussian", data = missing_data)
 
 naive_model$summary.fixed
 #>                 mean         sd 0.025quant 0.5quant 0.975quant     mode          kld
-#> (Intercept) 2.059952 0.07312437  1.9165320 2.059952   2.203371 2.059952 1.021533e-11
-#> x           1.060038 0.04847065  0.9649723 1.060038   1.155104 1.060038 1.018360e-11
-#> z           4.242952 0.09764620  4.0514375 4.242952   4.434467 4.242952 1.033984e-11
+#> (Intercept) 2.059952 0.07313492  1.9165113 2.059952   2.203392 2.059952 1.012936e-11
+#> x           1.060038 0.04847764  0.9649586 1.060038   1.155118 1.060038 1.020428e-11
+#> z           4.242952 0.09766027  4.0514099 4.242952   4.434494 4.242952 9.964362e-12
+```
+
+``` r
 naive_model$summary.hyperpar
-#>                                              mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for the Gaussian observations 0.3082828 0.01379367  0.2818476 0.3080781  0.3359001 0.3076698
+#>                                              mean         sd 0.025quant 0.5quant 0.975quant      mode
+#> Precision for the Gaussian observations 0.3082829 0.01379352  0.2818484 0.308078  0.3359021 0.3076677
 ```
 ### Model with imputation
 
-```r
+``` r
 missing_model <- fit_inlamemi(formula_moi = y ~ x + z,
                             formula_imp = x ~ z,
                             family_moi = "gaussian",
@@ -212,27 +215,27 @@ summary(missing_model)
 #> [1] "missing"
 #> 
 #> Fixed effects for model of interest: 
-#>             mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> beta.0 0.9738457 0.04853280  0.8797317 0.9737786   1.068299 0.9737591
-#> beta.z 1.9439154 0.07630237  1.7986467 1.9435537   2.090058 1.9432547
+#>            mean         sd 0.025quant  0.5quant 0.975quant     mode
+#> beta.0 0.973503 0.04846928  0.8797655 0.9733355   1.067906 0.973237
+#> beta.z 1.943237 0.07613999  1.7991292 1.9423503   2.088858 1.941701
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 2.024611 0.03438061   1.956372   2.0248    2.09174 2.025593
+#> beta.x 2.024608 0.03441343   1.955974 2.024909    2.09147 2.026179
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.031093 0.03138257  0.9695517 1.031090   1.092654 1.031090
-#> alpha.x.z 1.983403 0.03208449  1.9204733 1.983403   2.046329 1.983403
+#> alpha.x.0 1.031089 0.03137387  0.9695648 1.031086   1.092633 1.031086
+#> alpha.x.z 1.983403 0.03207566  1.9204914 1.983404   2.046312 1.983404
 #> 
 #> Model hyperparameters (apart from beta.x): 
-#>                                     mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> Precision for model of interest 1.055879 0.05245398  0.9566566 1.054484   1.163136 1.051504
-#> Precision for x classical model 1.110965 0.33580113  0.5440299 1.078883   1.845706 1.027808
-#> Precision for x imp model       1.066205 0.04985415  0.9717543 1.064929   1.168006 1.062149
+#>                                     mean         sd 0.025quant 0.5quant 0.975quant      mode
+#> Precision for model of interest 1.056206 0.05227668  0.9576852 1.054691   1.163469 1.0511931
+#> Precision for x classical model 1.141023 0.35772335  0.6283785 1.079405   2.018753 0.9573468
+#> Precision for x imp model       1.066437 0.04970986  0.9717735 1.065332   1.167454 1.0632390
 ```
 
-```r
+``` r
 missing_truth <- tibble::tribble(
   ~"variable", ~"value",
   "beta.0", beta.0,
@@ -263,7 +266,7 @@ In this example, we simulate data that is grouped in such a way that it should b
 ### Generating the data
 
 
-```r
+``` r
 m <- 10 # number of groups
 n <- 100 # number of observations per group
 N <- m*n # total number of observations
@@ -295,27 +298,16 @@ reff_data <- data.frame(y = y, id = rep(1:m, each = n), x = x_obs, z = z)
 Firstly, if we ignored the measurement error, we might fit a model like this:
 
 
-```r
+``` r
 naive_model <- inla(y ~ x + z + f(id, model = "iid"),
                     data = reff_data,
                     family = "gaussian")
 summary(naive_model)
-#> 
-#> Call:
-#>    c("inla.core(formula = formula, family = family, contrasts = contrasts, ", " data = data, quantiles = quantiles, E = E, 
-#>    offset = offset, ", " scale = scale, weights = weights, Ntrials = Ntrials, strata = strata, ", " lp.scale = lp.scale, 
-#>    link.covariates = link.covariates, verbose = verbose, ", " lincomb = lincomb, selection = selection, control.compute = 
-#>    control.compute, ", " control.predictor = control.predictor, control.family = control.family, ", " control.inla = 
-#>    control.inla, control.fixed = control.fixed, ", " control.mode = control.mode, control.expert = control.expert, ", " 
-#>    control.hazard = control.hazard, control.lincomb = control.lincomb, ", " control.update = control.update, control.lp.scale 
-#>    = control.lp.scale, ", " control.pardiso = control.pardiso, only.hyperparam = only.hyperparam, ", " inla.call = inla.call, 
-#>    inla.arg = inla.arg, num.threads = num.threads, ", " keep = keep, working.directory = working.directory, silent = silent, 
-#>    ", " inla.mode = inla.mode, safe = FALSE, debug = debug, .parent.frame = .parent.frame)" ) 
 #> Time used:
-#>     Pre = 1.78, Running = 0.569, Post = 0.0353, Total = 2.39 
+#>     Pre = 1.63, Running = 0.753, Post = 0.0302, Total = 2.41 
 #> Fixed effects:
 #>               mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-#> (Intercept) -0.316 0.561     -1.431   -0.316      0.798 -0.316   0
+#> (Intercept) -0.316 0.560     -1.429   -0.316      0.796 -0.316   0
 #> x            1.682 0.051      1.582    1.682      1.782  1.682   0
 #> z            2.022 0.058      1.908    2.022      2.136  2.022   0
 #> 
@@ -326,7 +318,7 @@ summary(naive_model)
 #> Model hyperparameters:
 #>                                          mean    sd 0.025quant 0.5quant 0.975quant  mode
 #> Precision for the Gaussian observations 0.077 0.003      0.070    0.077      0.084 0.077
-#> Precision for id                        0.402 0.185      0.145    0.367      0.856 0.304
+#> Precision for id                        0.401 0.184      0.145    0.367      0.852 0.305
 #> 
 #> Marginal log-Likelihood:  -2756.06 
 #>  is computed 
@@ -335,7 +327,7 @@ summary(naive_model)
 ```
 
 
-```r
+``` r
 # curve(dgamma(x, shape = 1.5, rate = 2), to = 2)
 
 reff_model <- fit_inlamemi(formula_moi = y ~ x + z + 
@@ -365,23 +357,26 @@ summary(reff_model)
 #> 
 #> Fixed effects for model of interest: 
 #>              mean         sd 0.025quant   0.5quant 0.975quant       mode
-#> beta.0 -0.3654658 0.54099872  -1.442753 -0.3655729  0.7122681 -0.3655812
-#> beta.z  2.0222091 0.05799369   1.908457  2.0222124  2.1359427  2.0222124
+#> beta.0 -0.3672884 0.53978793  -1.440816 -0.3675593  0.7078623 -0.3675271
+#> beta.z  2.0223168 0.05797559   1.908603  2.0223201  2.1360120  2.0223201
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 2.135726 0.1933915   1.762287 2.133274   2.523689 2.122805
+#> beta.x 2.154564 0.2170726   1.730389  2.15348    2.58508 2.148951
 #> 
 #> Fixed effects for imputation model: 
 #>                mean         sd  0.025quant  0.5quant 0.975quant      mode
-#> alpha.x.0 0.1022765 0.07116924 -0.03730514 0.1022765   0.241858 0.1022765
+#> alpha.x.0 0.1022764 0.07115944 -0.03728399 0.1022764  0.2418368 0.1022764
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for model of interest 0.1107281 0.02005615 0.07717868 0.1087293  0.1558824 0.1044915
-#> Precision for x classical model 0.9855458 0.32673955 0.48467682 0.9388165  1.7557921 0.8527067
-#> Precision for x imp model       0.2524987 0.02583589 0.20618260 0.2509454  0.3078048 0.2473811
-#> Precision for id                0.4130612 0.16813712 0.16405049 0.3862682  0.8139083 0.3357995
+#> Precision for model of interest 0.1132594 0.02348445 0.07435727 0.1107971  0.1664097 0.1058989
+#> Precision for x classical model 0.9607242 0.33903509 0.45749111 0.9072227  1.7743618 0.8090164
+#> Precision for x imp model       0.2552421 0.02842044 0.20413553 0.2535861  0.3158959 0.2501341
+#> Precision for id                0.4114624 0.16995927 0.16008511 0.3842442  0.8165514 0.3326511
+```
+
+``` r
 
 reff.truth <- tibble::tribble(
   ~"variable", ~"value",
@@ -414,7 +409,7 @@ Interaction effects between the error prone variable and an (assumed) error-free
 ### Generating the data
 
 
-```r
+``` r
 set.seed(2024)
 n <- 1000
 
@@ -436,7 +431,7 @@ interact_data <- data.frame(y = y, x = x_obs, z = z, s = s)
 ### Fitting the model
 
 
-```r
+``` r
 interact_model <- fit_inlamemi(formula_moi = y ~ x:s,
                              formula_imp = x ~ 1,
                              family_moi = "gaussian",
@@ -452,7 +447,7 @@ interact_model <- fit_inlamemi(formula_moi = y ~ x:s,
 ```
 
 
-```r
+``` r
 summary(interact_model)
 #> Formula for model of interest: 
 #> y ~ x:s
@@ -464,24 +459,27 @@ summary(interact_model)
 #> [1] "classical"
 #> 
 #> Fixed effects for model of interest: 
-#>              mean         sd 0.025quant    0.5quant 0.975quant        mode
-#> beta.0  1.0081320 0.07959036  0.8520092  1.00813505  1.1642376  1.00813515
-#> beta.s -0.0860376 0.13376390 -0.3484059 -0.08603286  0.1763038 -0.08603285
+#>               mean         sd 0.025quant    0.5quant 0.975quant        mode
+#> beta.0  1.00808321 0.07959729  0.8519468  1.00808629  1.1642024  1.00808641
+#> beta.s -0.08599863 0.13378884 -0.3484160 -0.08599385  0.1763915 -0.08599385
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>             mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.sx 2.055685 0.06319152   1.931406 2.055642   2.180214 2.055465
-#> beta.x  1.709263 0.04043440   1.629983 1.709152   1.789188 1.708691
+#> beta.sx 2.055727 0.06323594   1.931629 2.055591   2.180612 2.055030
+#> beta.x  1.709473 0.04042264   1.629998 1.709437   1.789156 1.709289
 #> 
 #> Fixed effects for imputation model: 
 #>                 mean         sd 0.025quant   0.5quant 0.975quant       mode
-#> alpha.x.0 0.03481148 0.06850681 -0.0995513 0.03481148  0.1691743 0.03481148
+#> alpha.x.0 0.03481148 0.06851461 -0.0995666 0.03481148  0.1691896 0.03481148
 #> 
 #> Model hyperparameters (apart from beta.sx, beta.x): 
 #>                                      mean         sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for model of interest 0.4106343 0.03324269  0.3493282 0.4092127   0.480130 0.4062196
-#> Precision for x classical model 4.0998178 0.44079619  3.2916129 4.0794275   5.024943 4.0451641
-#> Precision for x imp model       0.2252613 0.01058527  0.2050650 0.2250392   0.246733 0.2246524
+#> Precision for model of interest 0.4106093 0.03320783  0.3492889 0.4092161  0.4799530 0.4063318
+#> Precision for x classical model 4.0998047 0.44010802  3.2958477 4.0784353  5.0265322 4.0401171
+#> Precision for x imp model       0.2252679 0.01059211  0.2050960 0.2250328  0.2467911 0.2245931
+```
+
+``` r
 plot(interact_model)
 ```
 
@@ -502,7 +500,7 @@ plot(interact_model)
 Here we show how to fit a logistic regression model.
 
 
-```r
+``` r
 set.seed(1)
 nn <- 1000
 
@@ -520,6 +518,9 @@ missing_index <- rbinom(nn, 1, prob_missing)
 # Proportion missing:
 sum(missing_index)/nn
 #> [1] 0.393
+```
+
+``` r
 
 # Replace the values in w by missing in case the index for missingness is =1:
 w <- ifelse(missing_index==1, NA, w)
@@ -535,7 +536,7 @@ data_binom <- data.frame(x = x, z = z, y = y, w = w)
 Modeling error and missing data:
 
 
-```r
+``` r
 model_binom <- fit_inlamemi(data = data_binom,
                        formula_moi = y ~ w + z,
                        formula_imp = w ~ z,
@@ -561,7 +562,7 @@ plot(model_binom)
 Here we show how to fit a Poisson regression model, where the model of interest has a random intercept term.
 
 
-```r
+``` r
 set.seed(1)
 nn <- 1000
 
@@ -579,6 +580,9 @@ missing_index <- rbinom(nn, 1, prob_missing)
 # Proportion missing:
 sum(missing_index)/nn
 #> [1] 0.393
+```
+
+``` r
 
 # Replace the values in w by missing in case the index for missingness is =1:
 w <- ifelse(missing_index==1, NA, w)
@@ -598,7 +602,7 @@ data_pois <- data.frame(x = x, z = z, y = y, w = w, id = rep(seq(1:50), each = 2
 Simple regression models with correct and error-prone variables to check the effect:
 
 
-```r
+``` r
 library(lme4)
 summary(glmer(y ~ x + z + (1|id), data = data_pois, family="poisson"))$coef
 
@@ -609,7 +613,7 @@ summary(glmer(y ~ w + z + (1|id), data = data_pois, family="poisson"))$coef
 Modeling error and missing data:
 
 
-```r
+``` r
 model_pois <- fit_inlamemi(data = data_pois,
                        formula_moi = y ~ w + z + f(id,model="iid"),
                        formula_imp = w ~ z,

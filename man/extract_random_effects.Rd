@@ -15,3 +15,4 @@ A list containing "reff_vars", the random effect variables, and "reff", the enti
 \description{
 Extract random effects from formula
 }
+\keyword{internal}

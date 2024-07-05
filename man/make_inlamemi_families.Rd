@@ -27,3 +27,4 @@ make_inlamemi_families(family_moi = "gaussian",
                        inlamemi_stack = simple_stack)
 \dontshow{\}) # examplesIf}
 }
+\keyword{internal}

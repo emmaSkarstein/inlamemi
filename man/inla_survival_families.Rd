@@ -12,3 +12,4 @@ List of survival models in INLA
 \description{
 List the survival likelihoods in INLA
 }
+\keyword{internal}

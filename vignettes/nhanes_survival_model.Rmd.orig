@@ -1,8 +1,8 @@
 ---
-title: "Survival data with repeated systolic blood pressure measurements"
+title: "Survival model with repeated systolic blood pressure measurements"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Survival data with repeated systolic blood pressure measurements}
+  %\VignetteIndexEntry{Survival model with repeated systolic blood pressure measurements}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -25,11 +25,11 @@ library(INLA)
 library(ggplot2)
 ```
 
-This example shows how to fit a Weibull survival model to describe the influence systolic blood pressure (SBP) has on survival. The model is the same as in [Skarstein et al. (2023)](https://emmaskarstein.github.io/Missing-data-and-measurement-error/missing_and_mismeasured_covariate.html), but just using `inlamemi` rather than plain INLA. 
+This example shows how to fit a Weibull survival model to describe the influence systolic blood pressure (SBP) has on survival. The model is the same as in [Skarstein et al. (2023)](https://emmaskarstein.github.io/Missing-data-and-measurement-error/missing_and_mismeasured_covariate.html), but just using `inlamemi` rather than plain INLA.
 
 We assume there to be some measurement error in the SBP measurements. For some of the patients we have repeated measurements, but not for all, and for some patients both of the measurements are even missing. Therefore we are dealing with both classical measurement error and missing data in this case.
 
-For the main model of interest, we have the formula 
+For the main model of interest, we have the formula
 $$
 \eta_i = \beta_0 + \beta_{\texttt{sbp}} \texttt{sbp}_i + \beta_{\texttt{sex}} \texttt{sex}_i + \beta_{\texttt{age}} \texttt{age}_i + \beta_{\texttt{smoke}} \texttt{smoke}_i + \beta_{\texttt{diabetes}} \texttt{diabetes}_i.
 $$
@@ -37,14 +37,14 @@ The error models for the repeated SBP measurement are
 $$
 \begin{align}
 \texttt{sbp}^1_i = \texttt{sbp}_i + u_i^{1}, \\
-\texttt{sbp}^2_i = \texttt{sbp}_i + u_i^{2}, 
+\texttt{sbp}^2_i = \texttt{sbp}_i + u_i^{2},
 \end{align}
 $$
 and the imputation model for `sbp` is
 $$
 \texttt{sbp}_i = \alpha_0 + \alpha_{\texttt{sex}} \texttt{sex}_i + \alpha_{\texttt{age}} \texttt{age}_i + \alpha_{\texttt{smoke}} \texttt{smoke}_i + \alpha_{\texttt{diabetes}} \texttt{diabetes}_i.
 $$
-We begin by specifying the necessary priors: 
+We begin by specifying the necessary priors:
 
 ```{r}
 # Priors for measurement error variance and true x-value
@@ -60,9 +60,9 @@ exp.init <- 1.4
 
 And then we fit the model itself. Let me point out some of the things that are special for this model:
 
-- **`inla.surv()`:** Since we have a survival model, the response of the model is `inla.surv(t, d)`. In this case, `t` is the survival time, and `d` is the censoring indicator, indicating whether the patient was still alive at the end of the study period, or whether the patient had actually passed away. 
+- **`inla.surv()`:** Since we have a survival model, the response of the model is `inla.surv(t, d)`. In this case, `t` is the survival time, and `d` is the censoring indicator, indicating whether the patient was still alive at the end of the study period, or whether the patient had actually passed away.
 - **`control.family`:** Another thing to note is that since the `fit_inlamemi` function does not have arguments for passing the prior for the shape parameter of the Weibull survival model to `inla`, we instead need to write out the whole `control.family` argument and pass this to `fit_inlamemi`. If you are not used to R-INLA this may look a bit strange, but this is simply how the priors for the three different levels of the model are passed to `inla`. So as you can see it is a list of three lists, and each of these layers corresponds to one model layer, so the first one is for the main model of interest, the second one is for the error model, and the third layer is for the imputation model.
-- **`repeated_observations`:** Since we have repeated measurements for SBP, we need to set this argument to `TRUE`. 
+- **`repeated_observations`:** Since we have repeated measurements for SBP, we need to set this argument to `TRUE`.
 
 ```{r}
 survival_model <- fit_inlamemi(

@@ -3,7 +3,7 @@
 #' @param inlamemi_model the model returned from the fit_inlamemi function.
 #'
 #' @return A list of four data frames, containing the summaries for different components of the model. These are the coefficients of the model of interest, the coefficient of the variable with error, the coefficients of the imputation model, and the hyperparameters.
-#'
+#' @keywords internal
 simplify_inlamemi_model_summary <- function(inlamemi_model){
   # Extract the fixed effects and the hyperparameters from the inla summary
   fixed <- inlamemi_model$summary.fixed
@@ -153,7 +153,38 @@ print.summary.inlamemi <- function(x, ...){
   cat("\n")
 }
 
-#' Visualize the model data structure as matrices
+#' Print method for inlamemi
+#'
+#' @param x object of class `inlamemi`.
+#' @param ... other arguments.
+#'
+#' @method print inlamemi
+#' @rdname print
+#' @export
+#'
+print.inlamemi <- function(x, ...){
+  cat("Formula for model of interest: \n")
+  print(x$.args$formula_moi, showEnv = FALSE)
+  cat("\n")
+
+  cat("Formula for imputation model: \n")
+  print(x$.args$formula_imp, showEnv = FALSE)
+  cat("\n")
+
+  if(!is.null(x$.args$formula_mis)){
+    cat("Formula for missingness model: \n")
+    print(x$.args$formula_mis, showEnv = FALSE)
+    cat("\n")
+  }
+
+  cat("Error types: \n")
+  print(x$.args$error_type)
+  cat("\n")
+
+  print(coef(x), ...)
+}
+
+#' Visualize the model data structure as matrices in LaTeX
 #'
 #' @param stack an object of class inla.stack returned from the function make_inlamemi_stacks, which describes the structure of the data for the measurement error and imputation model.
 #'
