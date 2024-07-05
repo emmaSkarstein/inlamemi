@@ -16,16 +16,8 @@ reference:
   - mar_data
 - title: Summary, plot, etc.
 - contents:
-  - summary.inlamemi
-  - plot.inlamemi
+  - ends_with(".inlamemi")
+  - starts_with("get_")
   - show_data_structure
-- title: Under the hood functions
-  desc:  Functions called by the model fitting function and the summary/print functions. In some cases, they may be useful to call directly.
-- contents:
-  - extract_random_effects
-  - extract_variables_from_formula
-  - starts_with("make_")
-  - inla_survival_families
-  - simplify_inlamemi_model_summary
 template:
   bootstrap: 5
