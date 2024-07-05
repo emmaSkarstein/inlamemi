@@ -21,11 +21,11 @@
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
+    <a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
     <a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a>
   </div>
@@ -117,9 +117,14 @@
 
       <dl><dt>
           
-          <code><a href="summary.html">summary(<i>&lt;inlamemi&gt;</i>)</a></code> <code><a href="summary.html">print(<i>&lt;summary.inlamemi&gt;</i>)</a></code> 
+          <code><a href="coef.html">coef(<i>&lt;inlamemi&gt;</i>)</a></code> 
         </dt>
-        <dd>Summary method for inlamemi</dd>
+        <dd>Extract model coefficients</dd>
+      </dl><dl><dt>
+          
+          <code><a href="fit_inlamemi.html">fit_inlamemi()</a></code> 
+        </dt>
+        <dd>Fit model for measurement error and missing data in INLA</dd>
       </dl><dl><dt>
           
           <code><a href="plot.inlamemi.html">plot(<i>&lt;inlamemi&gt;</i>)</a></code> 
@@ -127,65 +132,39 @@
         <dd>Plot model summary</dd>
       </dl><dl><dt>
           
+          <code><a href="print.html">print(<i>&lt;inlamemi&gt;</i>)</a></code> 
+        </dt>
+        <dd>Print method for inlamemi</dd>
+      </dl><dl><dt>
+          
+          <code><a href="summary.html">summary(<i>&lt;inlamemi&gt;</i>)</a></code> <code><a href="summary.html">print(<i>&lt;summary.inlamemi&gt;</i>)</a></code> 
+        </dt>
+        <dd>Summary method for inlamemi</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_coef_imp.html">get_coef_imp()</a></code> 
+        </dt>
+        <dd>Extract coefficients for the imputation model (IMP)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_coef_mis.html">get_coef_mis()</a></code> 
+        </dt>
+        <dd>Extract coefficients for the missingness model (MIS)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_coef_moi.html">get_coef_moi()</a></code> 
+        </dt>
+        <dd>Extract coefficients for the model of interest (MOI)</dd>
+      </dl><dl><dt>
+          
+          <code><a href="get_imputed.html">get_imputed()</a></code> 
+        </dt>
+        <dd>Extract imputed values</dd>
+      </dl><dl><dt>
+          
           <code><a href="show_data_structure.html">show_data_structure()</a></code> 
         </dt>
         <dd>Visualize the model data structure as matrices</dd>
-      </dl></div><div class="section level2">
-      <h2 id="under-the-hood-functions">Under the hood functions<a class="anchor" aria-label="anchor" href="#under-the-hood-functions"></a></h2>
-      
-      <div class="section-desc"><p>Functions called by the model fitting function and the summary/print functions. In some cases, they may be useful to call directly.</p></div>
-
-      
-    </div><div id="" class="section level2">
-      
-      
-      
-
-      <dl><dt>
-          
-          <code><a href="extract_random_effects.html">extract_random_effects()</a></code> 
-        </dt>
-        <dd>Extract random effects from formula</dd>
-      </dl><dl><dt>
-          
-          <code><a href="extract_variables_from_formula.html">extract_variables_from_formula()</a></code> 
-        </dt>
-        <dd>Extract and group variables from formulas</dd>
-      </dl><dl><dt>
-          
-          <code><a href="make_inlamemi_control.family.html">make_inlamemi_control.family()</a></code> 
-        </dt>
-        <dd>Make "control.family" argument for passing to the "inla" function</dd>
-      </dl><dl><dt>
-          
-          <code><a href="make_inlamemi_families.html">make_inlamemi_families()</a></code> 
-        </dt>
-        <dd>Make vector of likelihood families</dd>
-      </dl><dl><dt>
-          
-          <code><a href="make_inlamemi_formula.html">make_inlamemi_formula()</a></code> 
-        </dt>
-        <dd>Make formula for measurement error and missing data model</dd>
-      </dl><dl><dt>
-          
-          <code><a href="make_inlamemi_scaling_vector.html">make_inlamemi_scaling_vector()</a></code> 
-        </dt>
-        <dd>Construct scaling vector to scale the precision of correctly observed observations</dd>
-      </dl><dl><dt>
-          
-          <code><a href="make_inlamemi_stacks.html">make_inlamemi_stacks()</a></code> 
-        </dt>
-        <dd>Make data stacks for joint model specification in INLA</dd>
-      </dl><dl><dt>
-          
-          <code><a href="inla_survival_families.html">inla_survival_families()</a></code> 
-        </dt>
-        <dd>List the survival likelihoods in INLA</dd>
-      </dl><dl><dt>
-          
-          <code><a href="simplify_inlamemi_model_summary.html">simplify_inlamemi_model_summary()</a></code> 
-        </dt>
-        <dd>Simplify the "raw" model summary for printing and plotting</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>

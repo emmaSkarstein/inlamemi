@@ -38,11 +38,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
+    <a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
     <a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a>
   </div>
@@ -235,27 +235,27 @@ view it like this:</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.032206 0.2117097  0.6092825 1.035605   1.438392 1.035590</span></span>
-<span><span class="co">#&gt; beta.z 2.026115 0.6650804  0.9289027 2.065058   3.045674 2.042773</span></span>
+<span><span class="co">#&gt; beta.0 1.020804 0.1986248  0.6063179 1.024636   1.422182 1.025269</span></span>
+<span><span class="co">#&gt; beta.z 1.990712 0.6688158  0.9287334 2.048389   3.054814 2.023638</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;             mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x1 1.937259 0.3629647   1.231761 1.934183   2.660865 1.921210</span></span>
-<span><span class="co">#&gt; beta.x2 2.066859 0.3202801   1.428971 2.069365   2.690016 2.079914</span></span>
+<span><span class="co">#&gt; beta.x1 1.940786 0.3748941   1.212850 1.937358   2.688920 1.922876</span></span>
+<span><span class="co">#&gt; beta.x2 2.069001 0.3279780   1.414429 2.072021   2.705775 2.084783</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                 mean         sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; alpha.x1.0 1.0361515 0.04400913  0.9498399 1.0361515   1.122463 1.0361515</span></span>
-<span><span class="co">#&gt; alpha.x1.z 1.9748164 0.04480513  1.8869437 1.9748164   2.062689 1.9748164</span></span>
-<span><span class="co">#&gt; alpha.x2.0 0.9734143 0.04552568  0.8841303 0.9734143   1.062698 0.9734143</span></span>
+<span><span class="co">#&gt; alpha.x1.0 1.0361516 0.04403584  0.9497859 1.0361516   1.122517 1.0361516</span></span>
+<span><span class="co">#&gt; alpha.x1.z 1.9748164 0.04483232  1.8868887 1.9748164   2.062744 1.9748164</span></span>
+<span><span class="co">#&gt; alpha.x2.0 0.9734143 0.04557269  0.8840351 0.9734143   1.062793 0.9734143</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x1, beta.x2): </span></span>
 <span><span class="co">#&gt;                                       mean        sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest  1.1414627 0.3655011  0.5876136 1.0871141   2.010812 0.9861135</span></span>
-<span><span class="co">#&gt; Precision for x1 classical model 1.0738557 0.2155365  0.7072146 1.0544437   1.552142 1.0189594</span></span>
-<span><span class="co">#&gt; Precision for x1 imp model       1.0384566 0.2045764  0.6983236 1.0173976   1.500597 0.9745010</span></span>
-<span><span class="co">#&gt; Precision for x2 classical model 1.0325493 0.1780454  0.7298622 1.0163835   1.428761 0.9829946</span></span>
-<span><span class="co">#&gt; Precision for x2 imp model       0.9356804 0.1549813  0.6652513 0.9239377   1.273659 0.9022791</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest  1.1386304 0.3533423  0.5897718 1.0902918   1.966482 1.0009300</span></span>
+<span><span class="co">#&gt; Precision for x1 classical model 1.0726433 0.2217652  0.6969859 1.0521600   1.566093 1.0147927</span></span>
+<span><span class="co">#&gt; Precision for x1 imp model       1.0417792 0.2107746  0.6932599 1.0194637   1.519657 0.9740596</span></span>
+<span><span class="co">#&gt; Precision for x2 classical model 1.0309524 0.1805627  0.7254236 1.0140872   1.434144 0.9789813</span></span>
+<span><span class="co">#&gt; Precision for x2 imp model       0.9372658 0.1577471  0.6620837 0.9252927   1.281278 0.9035044</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">two_error_model</span><span class="op">)</span></span></code></pre></div>
 <div class="float">

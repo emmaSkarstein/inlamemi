@@ -38,11 +38,11 @@
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
+    <a class="dropdown-item" href="articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="articles/simulated_examples.html">Simulated examples</a>
     <a class="dropdown-item" href="articles/Visualize_model_structure.html">How are the models structured?</a>
   </div>
@@ -106,13 +106,13 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></td>
 <td align="left">Binomial</td>
 <td align="left">Classical</td>
 <td align="left">Repeated measurements of error prone variable, interaction effect with error variable</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a></td>
 <td align="left">Weibull survival</td>
 <td align="left">Classical, missing</td>
 <td align="left">Repeated measurements of error prone variable</td>
@@ -130,13 +130,13 @@
 <td align="left">Multiple mismeasured covariates</td>
 </tr>
 <tr class="odd">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html">How are the models structured?</a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/visualize_model_structure.html">How are the models structured?</a></td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left">A deep dive into how the data is structured in order to correctly fit the model.</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/how_to_not_use_inlamemi.html">How to not use <code>inlamemi</code></a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html">How to not use <code>inlamemi</code></a></td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left">An illustration of how the models can be fit without using <code>inlamemi</code>, in case you would like to extend the model in a way beyond what <code>inlamemi</code> will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured.</td>
@@ -193,29 +193,29 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.032389 0.2177000  0.6108145 1.032628   1.437021 1.026118</span></span>
-<span><span class="co">#&gt; beta.z 1.916272 0.3860412  1.2169144 1.906198   2.559336 1.911731</span></span>
+<span><span class="co">#&gt; beta.0 1.027717 0.2184872  0.6069139 1.025596   1.435443 0.985928</span></span>
+<span><span class="co">#&gt; beta.z 1.906503 0.3874348  1.2098316 1.891747   2.555251 1.901931</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
-<span><span class="co">#&gt;            mean       sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973025 0.198868    1.57613 1.974856   2.359133 1.982591</span></span>
+<span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.x 1.973527 0.1997225   1.573013  1.97601   2.359344 1.986598</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033067 0.05061128  0.9337774 1.033074   1.132312 1.033075</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024737 0.05227363  1.9222578 2.024721   2.127313 2.024721</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033077 0.05060139  0.9338065 1.033085   1.132303 1.033085</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024714 0.05226368  1.9222550 2.024697   2.127271 2.024697</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1324156 0.3673197  0.5626732 1.0819324</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1278492 0.3391049  0.5991666 1.0820368</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9251226 0.1076384  0.7332180 0.9182943</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9774281 0.1239492  0.7552130 0.9699965</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1316556 0.3623018  0.5709097 1.0814815</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1271145 0.3386565  0.5960700 1.0823296</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9252548 0.1078315  0.7334221 0.9182750</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9777604 0.1243289  0.7539687 0.9706106</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.992291 0.9892229</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.921300 0.9969446</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.156456 0.9035748</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.242409 0.9559363</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.981515 0.9890411</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.916427 0.9996081</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.157423 0.9030051</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.242635 0.9577273</span></span></code></pre></div>
 <p>And we can use the default plot function to see a plot of the fixed effects and estimated coefficient for the variable with error:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></code></pre></div>
@@ -225,6 +225,7 @@
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
+<li><a href="https://cloud.r-project.org/package=inlamemi" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/emmaSkarstein/inlamemi/" class="external-link">Browse source code</a></li>
 </ul>
 </div>

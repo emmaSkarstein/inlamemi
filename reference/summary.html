@@ -23,11 +23,11 @@
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
+    <a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
     <a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a>
   </div>
@@ -108,7 +108,6 @@
 <span class="r-in"><span>                           initial.prec.berkson <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                           initial.prec.classical <span class="op">=</span> <span class="fl">1</span>,</span></span>
 <span class="r-in"><span>                           initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>path[1]="/tmp/RtmpfGZ0tD/file1a294d693a2f": No such file or directory</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Formula for model of interest: </span>
@@ -122,29 +121,29 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for model of interest: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.037233 0.2178900  0.6163623 1.039218   1.442705 1.033686</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.926489 0.3865504  1.2319446 1.921502   2.573445 1.923057</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.035685 0.2192487  0.6175773 1.035271   1.451115 1.032095</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.923023 0.3887541  1.2397033 1.917077   2.591022 1.922431</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient for variable with measurement error and/or missingness: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.973498 0.1996157   1.579061 1.973999   2.365019 1.976077</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.974355 0.2006415   1.580067  1.97411   2.370066 1.973097</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for imputation model: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               mean         sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033073 0.05060061  0.9338056 1.033081   1.132298 1.033081</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024722 0.05226241  1.9222640 2.024706   2.127275 2.024706</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033085 0.05058546  0.9338448 1.033093   1.132279 1.033093</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024697 0.05224763  1.9222700 2.024679   2.127224 2.024679</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model hyperparameters (apart from beta.x): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                      mean        sd 0.025quant  0.5quant</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1295083 0.3585771  0.5652767 1.0827087</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1243435 0.3401535  0.6008026 1.0762271</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9261130 0.1088443  0.7306479 0.9196877</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9769957 0.1244896  0.7552162 0.9690517</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1247018 0.3584054  0.5619048 1.0775658</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1239440 0.3453321  0.5968364 1.0737145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9268223 0.1096898  0.7288311 0.9206938</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9774078 0.1258316  0.7539360 0.9691416</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 0.975quant      mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.961303 0.9975389</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.926933 0.9861566</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.158593 0.9067846</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.244549 0.9531505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.957179 0.9916533</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.942749 0.9796485</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.160073 0.9091306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.248534 0.9523227</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>

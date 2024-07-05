@@ -38,11 +38,11 @@
 <li class="active nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="../articles/how_to_not_use_inlamemi.html">How to not use inlamemi</a>
     <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
     <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="../articles/nhanes_survival.html">Survival data with repeated systolic blood pressure measurements</a>
+    <a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
     <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
     <a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a>
   </div>
@@ -135,26 +135,26 @@ order to refer to them correctly. We can access the data frame like
 this:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_plot</span><span class="op">$</span><span class="va">data</span></span>
-<span><span class="co">#&gt;            coefficient_type        mean         sd quant_0.025    0.5quant quant_0.975        mode variable_raw        model_type</span></span>
-<span><span class="co">#&gt; beta.0             moi_coef  1.03972265 0.04998303   0.9411588  1.03983052   1.1377598  1.03985423       beta.0 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z1            moi_coef  2.00443459 0.03646231   1.9329016  2.00444097   2.0759309  2.00444086      beta.z1 Model of interest</span></span>
-<span><span class="co">#&gt; beta.z2            moi_coef  1.98532334 0.03637896   1.9139728  1.98532291   2.0566763  1.98532290      beta.z2 Model of interest</span></span>
-<span><span class="co">#&gt; beta.x           error_coef  1.95348404 0.03469568   1.8857563  1.95328709   2.0223651  1.95246286       beta.x Model of interest</span></span>
-<span><span class="co">#&gt; gamma.x          error_coef -0.03594416 0.08911662  -0.2114785 -0.03591242   0.1394060 -0.03578129      gamma.x Missingness model</span></span>
-<span><span class="co">#&gt; alpha.x.0          imp_coef  1.01052405 0.03222237   0.9473174  1.01052704   1.0737137  1.01052707    alpha.x.0  Imputation model</span></span>
-<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.29153865 0.03253326   0.2277285  0.29153940   0.3553445  0.29153941   alpha.x.z1  Imputation model</span></span>
-<span><span class="co">#&gt; gamma.x.0          mis_coef -1.50922068 0.12208910  -1.7534713 -1.50784917  -1.2735610 -1.50785666    gamma.x.0 Missingness model</span></span>
-<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.42466592 0.08800230  -0.5972265 -0.42466734  -0.2520973 -0.42466737   gamma.x.z2 Missingness model</span></span>
-<span><span class="co">#&gt;            error_indicator  var1 var2 variable_greek   variable</span></span>
-<span><span class="co">#&gt; beta.0                   0  beta    0        beta[0]     beta.0</span></span>
-<span><span class="co">#&gt; beta.z1                  0  beta   z1       beta[z1]    beta.z1</span></span>
-<span><span class="co">#&gt; beta.z2                  0  beta   z2       beta[z2]    beta.z2</span></span>
-<span><span class="co">#&gt; beta.x                   1  beta    x        beta[x]     beta.x</span></span>
-<span><span class="co">#&gt; gamma.x                  1 gamma    x       gamma[x]    gamma.x</span></span>
-<span><span class="co">#&gt; alpha.x.0                0 alpha    0       alpha[0]  alpha.x.0</span></span>
-<span><span class="co">#&gt; alpha.x.z1               0 alpha   z1      alpha[z1] alpha.x.z1</span></span>
-<span><span class="co">#&gt; gamma.x.0                0 gamma    0       gamma[0]  gamma.x.0</span></span>
-<span><span class="co">#&gt; gamma.x.z2               0 gamma   z2      gamma[z2] gamma.x.z2</span></span></code></pre></div>
+<span><span class="co">#&gt;            coefficient_type        mean         sd quant_0.025    0.5quant quant_0.975        mode variable_raw</span></span>
+<span><span class="co">#&gt; beta.0             moi_coef  1.03922790 0.04995733   0.9408389  1.03930759   1.1373987  1.03935602       beta.0</span></span>
+<span><span class="co">#&gt; beta.z1            moi_coef  2.00424951 0.03642787   1.9327912  2.00425271   2.0756896  2.00425271      beta.z1</span></span>
+<span><span class="co">#&gt; beta.z2            moi_coef  1.98525144 0.03634388   1.9139699  1.98525088   2.0565362  1.98525089      beta.z2</span></span>
+<span><span class="co">#&gt; beta.x           error_coef  1.95316560 0.03462607   1.8848986  1.95319979   2.0212340  1.95334122       beta.x</span></span>
+<span><span class="co">#&gt; gamma.x          error_coef -0.03561449 0.08921616  -0.2091096 -0.03634247   0.1421624 -0.03940939      gamma.x</span></span>
+<span><span class="co">#&gt; alpha.x.0          imp_coef  1.01042965 0.03224293   0.9471833  1.01043245   1.0736602  1.01043249    alpha.x.0</span></span>
+<span><span class="co">#&gt; alpha.x.z1         imp_coef  0.29153212 0.03255287   0.2276834  0.29153288   0.3553765  0.29153289   alpha.x.z1</span></span>
+<span><span class="co">#&gt; gamma.x.0          mis_coef -1.50688996 0.12250364  -1.7534639 -1.50489198  -1.2717722 -1.50468056    gamma.x.0</span></span>
+<span><span class="co">#&gt; gamma.x.z2         mis_coef -0.42466835 0.08806027  -0.5973460 -0.42466838  -0.2519905 -0.42466839   gamma.x.z2</span></span>
+<span><span class="co">#&gt;                   model_type error_indicator  var1 var2 variable_greek   variable</span></span>
+<span><span class="co">#&gt; beta.0     Model of interest               0  beta    0        beta[0]     beta.0</span></span>
+<span><span class="co">#&gt; beta.z1    Model of interest               0  beta   z1       beta[z1]    beta.z1</span></span>
+<span><span class="co">#&gt; beta.z2    Model of interest               0  beta   z2       beta[z2]    beta.z2</span></span>
+<span><span class="co">#&gt; beta.x     Model of interest               1  beta    x        beta[x]     beta.x</span></span>
+<span><span class="co">#&gt; gamma.x    Missingness model               1 gamma    x       gamma[x]    gamma.x</span></span>
+<span><span class="co">#&gt; alpha.x.0   Imputation model               0 alpha    0       alpha[0]  alpha.x.0</span></span>
+<span><span class="co">#&gt; alpha.x.z1  Imputation model               0 alpha   z1      alpha[z1] alpha.x.z1</span></span>
+<span><span class="co">#&gt; gamma.x.0  Missingness model               0 gamma    0       gamma[0]  gamma.x.0</span></span>
+<span><span class="co">#&gt; gamma.x.z2 Missingness model               0 gamma   z2      gamma[z2] gamma.x.z2</span></span></code></pre></div>
 <p>Now, let’s say we would like to have three separate plots, one for
 each sub-model. We could do this using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html" class="external-link">facet_wrap()</a></code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
