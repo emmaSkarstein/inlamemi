@@ -16,8 +16,7 @@ reference:
   - mar_data
 - title: Summary, plot, etc.
 - contents:
-  - ends_with(".inlamemi")
-  - -fit_inlamemi
+  - ends_with("'.inlamemi'")
   - starts_with("get_")
   - show_data_structure
 template:
