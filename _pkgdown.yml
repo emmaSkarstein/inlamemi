@@ -16,7 +16,10 @@ reference:
   - mar_data
 - title: Summary, plot, etc.
 - contents:
-  - ends_with("'.inlamemi'")
+  - summary.inlamemi
+  - plot.inlamemi
+  - print.inlamemi
+  - coef.inlamemi
   - starts_with("get_")
   - show_data_structure
 template:
