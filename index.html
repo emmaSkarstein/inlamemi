@@ -65,7 +65,8 @@
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the package directly from CRAN with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"inlamemi)</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"inlamemi"</span><span class="op">)</span></span></code></pre></div>
 <p>Alternatively, you can install the development version of inlamemi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
@@ -187,29 +188,29 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.043089 0.2182433  0.6263696 1.045710   1.453109 1.043113</span></span>
-<span><span class="co">#&gt; beta.z 1.937915 0.3871866  1.2554001 1.939415   2.595717 1.938674</span></span>
+<span><span class="co">#&gt; beta.0 1.029230 0.2199524  0.6108564 1.026969   1.447384 1.025073</span></span>
+<span><span class="co">#&gt; beta.z 1.909103 0.3900812  1.2197600 1.901527   2.586637 1.911069</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.974116 0.2042589    1.57718 1.972357    2.38141 1.964934</span></span>
+<span><span class="co">#&gt; beta.x 1.973203 0.2030897   1.571571 1.973825   2.371208 1.976411</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033076 0.05059015  0.9338265 1.033084   1.132279 1.033084</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024718 0.05225222  1.9222813 2.024700   2.127253 2.024700</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033091 0.05058853  0.9338437 1.033100    1.13229 1.033100</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024682 0.05225147  1.9222503 2.024663    2.12722 2.024663</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
-<span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1267858 0.3735353  0.5633981 1.0704972</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1345684 0.3576183  0.5974388 1.0798565</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9275802 0.1121391  0.7241594 0.9216585</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9763580 0.1273814  0.7526279 0.9671530</span></span>
+<span><span class="co">#&gt;                                      mean        sd 0.025quant 0.5quant</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1240935 0.3559116  0.5677369 1.076509</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1247575 0.3507436  0.5874788 1.074393</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9266052 0.1097382  0.7295794 0.920113</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9773413 0.1260382  0.7524216 0.969432</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   2.016658 0.9664441</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.990504 0.9772337</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.164976 0.9114524</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.253325 0.9471440</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.953670 0.9893504</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.954002 0.9806116</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.161028 0.9071415</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.247810 0.9540123</span></span></code></pre></div>
 <p>And we can use the default plot function to see a plot of the fixed effects and estimated coefficient for the variable with error:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></code></pre></div>
