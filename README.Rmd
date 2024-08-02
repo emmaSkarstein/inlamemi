@@ -25,7 +25,7 @@ Fitting measurement error models and missing data imputation models in INLA is n
 
 You can install the package directly from CRAN with:
 ``` r
-install.packages("inlamemi)
+install.packages("inlamemi")
 ```
 
 Alternatively, you can install the development version of inlamemi from
