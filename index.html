@@ -5,30 +5,26 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) &lt;doi:10.1002/bimj.202300078&gt;. See Skarstein and Muff (2024) &lt;doi:10.48550/arXiv.2406.08172&gt; for details on using the package.">
 <title>Missing Data and Measurement Error Modelling in INLA • inlamemi</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Missing Data and Measurement Error Modelling in INLA">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Missing Data and Measurement Error Modelling in INLA">
+<meta name="description" content="Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) &lt;doi:10.1002/bimj.202300078&gt;. See Skarstein and Muff (2024) &lt;doi:10.48550/arXiv.2406.08172&gt; for details on using the package.">
 <meta property="og:description" content="Facilitates fitting measurement error and missing data imputation models using integrated nested Laplace approximations, according to the method described in Skarstein, Martino and Muff (2023) &lt;doi:10.1002/bimj.202300078&gt;. See Skarstein and Muff (2024) &lt;doi:10.48550/arXiv.2406.08172&gt; for details on using the package.">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="index.html">inlamemi</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,36 +32,28 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
-    <a class="dropdown-item" href="articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="articles/modifying_default_plot.html">Modifying the default plot</a>
-    <a class="dropdown-item" href="articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
-    <a class="dropdown-item" href="articles/simulated_examples.html">Simulated examples</a>
-    <a class="dropdown-item" href="articles/Visualize_model_structure.html">How are the models structured?</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="articles/building_models_without_inlamemi.html">How to not use inlamemi</a></li>
+    <li><a class="dropdown-item" href="articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></li>
+    <li><a class="dropdown-item" href="articles/modifying_default_plot.html">Modifying the default plot</a></li>
+    <li><a class="dropdown-item" href="articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a></li>
+    <li><a class="dropdown-item" href="articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a></li>
+    <li><a class="dropdown-item" href="articles/simulated_examples.html">Simulated examples</a></li>
+    <li><a class="dropdown-item" href="articles/Visualize_model_structure.html">How are the models structured?</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="reference/index.html">Reference</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/emmaSkarstein/inlamemi/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/emmaSkarstein/inlamemi/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-home">
 <div class="row">
@@ -76,8 +64,10 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of inlamemi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<p>You can install the package directly from CRAN with:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"inlamemi)</span></span></code></pre></div>
+<p>Alternatively, you can install the development version of inlamemi from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
 <span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"emmaSkarstein/inlamemi"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -147,24 +137,28 @@
 <div class="section level2">
 <h2 id="quick-guide-how-can-i-use-this-package">Quick guide: How can I use this package?<a class="anchor" aria-label="anchor" href="#quick-guide-how-can-i-use-this-package"></a>
 </h2>
-<p>The dataset <code>simple_data</code> is included in the package, and is a very simple simulated data set, used to illustrate the package. In this data set, we have a response variable <span class="math inline"><em>y</em></span>, an error free covariate <span class="math inline"><em>z</em></span>, and a covariate that is observed with classical error, Berkson error and missingness, called <span class="math inline"><em>x</em></span>. We wish to fit the model</p>
-<p><span class="math display"><em>y</em> = <em>β</em><sub>0</sub> + <em>β</em><sub><em>x</em></sub><em>x</em> + <em>β</em><sub><em>z</em></sub><em>z</em> + <em>ε</em> ,</span></p>
-<p>but adjusting for all the errors in <span class="math inline"><em>x</em></span>.</p>
+<p>The dataset <code>simple_data</code> is included in the package, and is a very simple simulated data set, used to illustrate the package. In this data set, we have a response variable <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>, an error free covariate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>, and a covariate that is observed with classical error, Berkson error and missingness, called <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>. We wish to fit the model</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><mi>x</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mi>z</mi><mo>+</mo><mi>ε</mi><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+ y = \beta_0 + \beta_x x + \beta_z z + \varepsilon \ ,
+</annotation></semantics></math></p>
+<p>but adjusting for all the errors in <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>.</p>
 <p>First load the package:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://emmaskarstein.github.io/inlamemi/">inlamemi</a></span><span class="op">)</span></span></code></pre></div>
 <p>Next, we need to specify the formula for the main model and the formula for the imputation model. This is done in the standard way in <em>R</em>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">main_formula</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span></span></code></pre></div>
-<p>For the imputation model, we take advantage of any correlation between <span class="math inline"><em>x</em></span> and the error free covariate <span class="math inline"><em>z</em></span>, so the imputation model will be</p>
-<p><span class="math display"><em>x</em> = <em>α</em><sub>0</sub> + <em>α</em><sub><em>z</em></sub><em>z</em> + <em>ε</em><sub><em>x</em></sub> .</span></p>
-<p>We write that as</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">main_formula</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z</span></span></code></pre></div>
+<p>For the imputation model, we take advantage of any correlation between <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math> and the error free covariate <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>, so the imputation model will be</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><msub><mi>α</mi><mi>z</mi></msub><mi>z</mi><mo>+</mo><msub><mi>ε</mi><mi>x</mi></msub><mspace width="0.222em"></mspace><mi>.</mi></mrow><annotation encoding="application/x-tex">
+ x = \alpha_0 + \alpha_z z + \varepsilon_x \ .
+</annotation></semantics></math></p>
+<p>We write that as</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imputation_formula</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z</span></span></code></pre></div>
-<p>When adjusting for measurement error, we are completely dependent on having some information about the measurement error variances <span class="math inline"><em>σ</em><sub><em>u</em><sub><em>c</em></sub></sub><sup>2</sup></span> (for the classical error) and <span class="math inline"><em>σ</em><sub><em>u</em><sub><em>b</em></sub></sub><sup>2</sup></span> (for the Berkson error), since the size of this variance will affect how the estimates are biased. We can gain information about these variances in a few different ways, if repeated measurements have been made then these can be put directly into the model to estimate the error variance, or if we have some expert knowledge about the error size, then that can be used to specify an informative prior for the variance (or precision, since in INLA the precision is used, rather than the variance).</p>
+<p>When adjusting for measurement error, we are completely dependent on having some information about the measurement error variances <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>u</mi><mi>c</mi></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{u_c}^2</annotation></semantics></math> (for the classical error) and <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>σ</mi><msub><mi>u</mi><mi>b</mi></msub><mn>2</mn></msubsup><annotation encoding="application/x-tex">\sigma_{u_b}^2</annotation></semantics></math> (for the Berkson error), since the size of this variance will affect how the estimates are biased. We can gain information about these variances in a few different ways, if repeated measurements have been made then these can be put directly into the model to estimate the error variance, or if we have some expert knowledge about the error size, then that can be used to specify an informative prior for the variance (or precision, since in INLA the precision is used, rather than the variance).</p>
 <p>In this case, since we have in fact simulated the data ourselves, we know that the error variances are in both cases close to 1, so we specify priors that have modes at 1.</p>
 <p>In the <code>fit_inlamemi</code> function we also need to specify the likelihood for the model of interest, which in this case is Gaussian.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">simple_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simple_data</span>, </span>
 <span>                           formula_moi <span class="op">=</span> <span class="va">main_formula</span>, </span>
 <span>                           formula_imp <span class="op">=</span> <span class="va">imputation_formula</span>, </span>
@@ -180,7 +174,7 @@
 <span>                           initial.prec.classical <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                           initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
 <p>Once we have fit the model, we can view the summary:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Formula for model of interest: </span></span>
 <span><span class="co">#&gt; y ~ x + z</span></span>
@@ -193,31 +187,31 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.027717 0.2184872  0.6069139 1.025596   1.435443 0.985928</span></span>
-<span><span class="co">#&gt; beta.z 1.906503 0.3874348  1.2098316 1.891747   2.555251 1.901931</span></span>
+<span><span class="co">#&gt; beta.0 1.043089 0.2182433  0.6263696 1.045710   1.453109 1.043113</span></span>
+<span><span class="co">#&gt; beta.z 1.937915 0.3871866  1.2554001 1.939415   2.595717 1.938674</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973527 0.1997225   1.573013  1.97601   2.359344 1.986598</span></span>
+<span><span class="co">#&gt; beta.x 1.974116 0.2042589    1.57718 1.972357    2.38141 1.964934</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033077 0.05060139  0.9338065 1.033085   1.132303 1.033085</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024714 0.05226368  1.9222550 2.024697   2.127271 2.024697</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033076 0.05059015  0.9338265 1.033084   1.132279 1.033084</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024718 0.05225222  1.9222813 2.024700   2.127253 2.024700</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1316556 0.3623018  0.5709097 1.0814815</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1271145 0.3386565  0.5960700 1.0823296</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9252548 0.1078315  0.7334221 0.9182750</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9777604 0.1243289  0.7539687 0.9706106</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1267858 0.3735353  0.5633981 1.0704972</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1345684 0.3576183  0.5974388 1.0798565</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9275802 0.1121391  0.7241594 0.9216585</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9763580 0.1273814  0.7526279 0.9671530</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.981515 0.9890411</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.916427 0.9996081</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.157423 0.9030051</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.242635 0.9577273</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   2.016658 0.9664441</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.990504 0.9772337</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.164976 0.9114524</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.253325 0.9471440</span></span></code></pre></div>
 <p>And we can use the default plot function to see a plot of the fixed effects and estimated coefficient for the variable with error:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
 </div>
@@ -265,15 +259,15 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>

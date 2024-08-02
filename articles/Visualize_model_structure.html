@@ -5,30 +5,24 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="inlamemi">
 <title>How are the models structured? • inlamemi</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.11/clipboard.min.js" integrity="sha512-7O5pXpc0oCRrxk8RUfDYFgn0nO1t+jLuIOQdOMRp4APB7uZ4vSjspzp5y6YDtDs4VzUSTbWzBFZ/LKJhnyFOKw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How are the models structured?">
-<meta property="og:description" content="inlamemi">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How are the models structured?">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
-    
 
-    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light" data-bs-theme="light"><div class="container">
-    
+
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
     <a class="navbar-brand me-2" href="../index.html">inlamemi</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
-    
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -36,36 +30,28 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="active nav-item dropdown">
-  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
-  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a>
-    <a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a>
-    <a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a>
-    <a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a>
-    <a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a>
-    <a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a>
-    <a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a>
-  </div>
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a></li>
+    <li><a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></li>
+    <li><a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a></li>
+    <li><a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a></li>
+    <li><a class="dropdown-item" href="../articles/nhanes_survival_model.html">Survival model with repeated systolic blood pressure measurements</a></li>
+    <li><a class="dropdown-item" href="../articles/simulated_examples.html">Simulated examples</a></li>
+    <li><a class="dropdown-item" href="../articles/Visualize_model_structure.html">How are the models structured?</a></li>
+  </ul>
 </li>
-<li class="nav-item">
-  <a class="nav-link" href="../reference/index.html">Reference</a>
-</li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
       </ul>
-<form class="form-inline my-2 my-lg-0" role="search">
-        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
-</form>
-
-      <ul class="navbar-nav">
-<li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/emmaSkarstein/inlamemi/" aria-label="github">
-    <span class="fab fa fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/emmaSkarstein/inlamemi/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
-    
+
   </div>
 </nav><div class="container template-article">
 
@@ -74,10 +60,11 @@
 
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
-      <img src="" class="logo" alt=""><h1>How are the models structured?</h1>
+
+      <h1>How are the models structured?</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/emmaSkarstein/inlamemi/blob/HEAD/vignettes/Visualize_model_structure.Rmd" class="external-link"><code>vignettes/Visualize_model_structure.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/emmaSkarstein/inlamemi/blob/main/vignettes/Visualize_model_structure.Rmd" class="external-link"><code>vignettes/Visualize_model_structure.Rmd</code></a></small>
       <div class="d-none name"><code>Visualize_model_structure.Rmd</code></div>
     </div>
 
@@ -140,36 +127,26 @@ scale the classical error precision to be very large, thus effectively
 “turning off” the error adjustment while keeping the imputation
 model.</p>
 <p>In this example, our hierarchical model consists of the main model of
-interest: <span class="math display">\[
-\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z
-\boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad
-\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \
-,
-\]</span> the classical error model: <span class="math display">\[
-  \boldsymbol{w} = \boldsymbol{x} + \boldsymbol{u}_c \ , \quad
-\boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
-\]</span> and the imputation model: <span class="math display">\[
-\boldsymbol{x} = \alpha_0 + \alpha_z \boldsymbol{z} +
-\boldsymbol{\varepsilon}_x \ , \quad \boldsymbol{\varepsilon}_x \sim
-N(\boldsymbol{0}, \tau_x\boldsymbol{I}) \ .
-\]</span></p>
+interest:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐲</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><mi>𝐱</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><mi>𝛆</mi><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi>𝛆</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>y</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ ,
+</annotation></semantics></math> the classical error model:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐰</mi><mo>=</mo><mi>𝐱</mi><mo>+</mo><msub><mi>𝐮</mi><mi>c</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>𝐮</mi><mi>c</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>c</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+  \boldsymbol{w} = \boldsymbol{x} + \boldsymbol{u}_c \ , \quad \boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
+</annotation></semantics></math> and the imputation model:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><msub><mi>α</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><msub><mi>𝛆</mi><mi>x</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>𝛆</mi><mi>x</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>x</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\boldsymbol{x} = \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_x \ , \quad \boldsymbol{\varepsilon}_x \sim N(\boldsymbol{0}, \tau_x\boldsymbol{I}) \ .
+</annotation></semantics></math></p>
 <p>These need to be rewritten for R-INLA such that there are no latent
-effects on the left hand side: <span class="math display">\[
+effects on the left hand side:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>𝐲</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><mi>𝐱</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><mi>𝛆</mi><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><mi>𝛆</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>y</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>𝐰</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>𝐱</mi><mo>+</mo><msub><mi>𝐮</mi><mi>c</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><msub><mi>𝐮</mi><mi>c</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>c</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mn>𝟎</mn></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mo>−</mo><mi>𝐱</mi><mo>+</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><msub><mi>α</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><msub><mi>𝛆</mi><mi>x</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><msub><mi>𝛆</mi><mi>x</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>x</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{align}
-  \boldsymbol{y} &amp;= \beta_0 + \beta_x \boldsymbol{x} + \beta_z
-\boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad
-&amp;\boldsymbol{\varepsilon} \sim N(\boldsymbol{0},
-\tau_y\boldsymbol{I}) \ , \\
-  \boldsymbol{w} &amp;= \boldsymbol{x} + \boldsymbol{u}_c \ , \quad
-&amp;\boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \
-, \\
-  \boldsymbol{0} &amp;= -\boldsymbol{x} + \alpha_0 + \alpha_z
-\boldsymbol{z} + \boldsymbol{\varepsilon}_x \ , \quad
-&amp;\boldsymbol{\varepsilon}_x \sim N(\boldsymbol{0},
-\tau_x\boldsymbol{I}) \ .
+  \boldsymbol{y} &amp;= \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad &amp;\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ , \\
+  \boldsymbol{w} &amp;= \boldsymbol{x} + \boldsymbol{u}_c \ , \quad &amp;\boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &amp;= -\boldsymbol{x} + \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_x \ , \quad &amp;\boldsymbol{\varepsilon}_x \sim N(\boldsymbol{0}, \tau_x\boldsymbol{I}) \ .
 \end{align}
-\]</span> We can construct the necessary stacks for this model using the
-<code>make_inlamemi_stacks</code> function:</p>
+</annotation></semantics></math> We can construct the necessary stacks
+for this model using the <code>make_inlamemi_stacks</code> function:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">classical_stack</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_inlamemi_stacks.html">make_inlamemi_stacks</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simple_data</span>,</span>
 <span>                                      formula_moi <span class="op">=</span> <span class="va">f_moi</span>,</span>
@@ -186,7 +163,7 @@ function, and just remember to set <code>results = 'asis'</code> as the
 chunk option.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="va">classical_summary</span><span class="op">$</span><span class="va">matrix_string</span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">\[\underbrace{\begin{bmatrix}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>10.81</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6.18</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>4.98</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>1.46</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚈</mtext></munder><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝟶</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚡</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚣</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚡</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mn>0</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝟶</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mi>z</mi></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝚣</mtext></munder></mrow><annotation encoding="application/x-tex">\underbrace{\begin{bmatrix} 
 10.81 &amp; \texttt{NA} &amp; \texttt{NA}\\
 \vdots &amp; \vdots &amp; \vdots\\
 6.18 &amp; \texttt{NA} &amp; \texttt{NA}\\
@@ -197,8 +174,8 @@ chunk option.</p>
 \vdots &amp; \vdots &amp; \vdots\\
 \texttt{NA} &amp; \texttt{NA} &amp; 0\\
 \end{bmatrix}}_{\texttt{Y}}
-=
-\beta_{0}\underbrace{\begin{bmatrix}
+ = 
+\beta_{0}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1\\
@@ -208,7 +185,7 @@ chunk option.</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1000\\
@@ -218,7 +195,7 @@ chunk option.</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
 0.98\\
 \vdots\\
 0.77\\
@@ -228,7 +205,7 @@ chunk option.</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -238,7 +215,7 @@ chunk option.</p>
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -248,8 +225,7 @@ chunk option.</p>
 1\\
 \vdots\\
 1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x,z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -259,7 +235,7 @@ chunk option.</p>
 0.98\\
 \vdots\\
 0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}\]</span></p>
+\end{bmatrix}}_{\texttt{alpha.x.z}}</annotation></semantics></math></p>
 </div>
 <div class="section level2">
 <h2 id="structure-for-berkson-and-classical-measurement-error-model">Structure for Berkson and classical measurement error model<a class="anchor" aria-label="anchor" href="#structure-for-berkson-and-classical-measurement-error-model"></a>
@@ -270,45 +246,34 @@ covariate (whether it is classical ME, missingness or both makes no
 difference for this example, as that only affects the scaling of the
 measurement error precision).</p>
 <p>In this example, our hierarchical model consists of four levels; the
-main model of interest: <span class="math display">\[
-\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z
-\boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad
-\boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \
-,
-\]</span> the Berkson error model: <span class="math display">\[
-  \boldsymbol{x} = \boldsymbol{r} + \boldsymbol{u}_b \ , \quad
-\boldsymbol{u}_b \sim N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ ,
-\]</span> the classical error model: <span class="math display">\[
-  \boldsymbol{w} = \boldsymbol{r} + \boldsymbol{u}_c \ , \quad
-\boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
-\]</span> and the imputation model: <span class="math display">\[
-\boldsymbol{r} = \alpha_0 + \alpha_z \boldsymbol{z} +
-\boldsymbol{\varepsilon}_r \ , \quad \boldsymbol{\varepsilon}_r \sim
-N(\boldsymbol{0}, \tau_r\boldsymbol{I}) \ .
-\]</span></p>
-<p>Notice that we now have a new latent variable <span class="math inline">\(\boldsymbol{r}\)</span>, which serves as a link
-between the sub-models and corresponds to the variable that is subject
-to Berkson error but that does not yet have the classical error
-added.</p>
+main model of interest:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐲</mi><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><mi>𝐱</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><mi>𝛆</mi><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><mi>𝛆</mi><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>y</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+\boldsymbol{y} = \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad \boldsymbol{\varepsilon} \sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ ,
+</annotation></semantics></math> the Berkson error model:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐱</mi><mo>=</mo><mi>𝐫</mi><mo>+</mo><msub><mi>𝐮</mi><mi>b</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>𝐮</mi><mi>b</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>b</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+  \boldsymbol{x} = \boldsymbol{r} + \boldsymbol{u}_b \ , \quad \boldsymbol{u}_b \sim N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ ,
+</annotation></semantics></math> the classical error model:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐰</mi><mo>=</mo><mi>𝐫</mi><mo>+</mo><msub><mi>𝐮</mi><mi>c</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>𝐮</mi><mi>c</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>c</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mrow><annotation encoding="application/x-tex">
+  \boldsymbol{w} = \boldsymbol{r} + \boldsymbol{u}_c \ , \quad \boldsymbol{u}_c \sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ ,
+</annotation></semantics></math> and the imputation model:
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐫</mi><mo>=</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><msub><mi>α</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><msub><mi>𝛆</mi><mi>r</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace><msub><mi>𝛆</mi><mi>r</mi></msub><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>r</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mi>.</mi></mrow><annotation encoding="application/x-tex">
+\boldsymbol{r} = \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_r \ , \quad \boldsymbol{\varepsilon}_r \sim N(\boldsymbol{0}, \tau_r\boldsymbol{I}) \ .
+</annotation></semantics></math></p>
+<p>Notice that we now have a new latent variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐫</mi><annotation encoding="application/x-tex">\boldsymbol{r}</annotation></semantics></math>,
+which serves as a link between the sub-models and corresponds to the
+variable that is subject to Berkson error but that does not yet have the
+classical error added.</p>
 <p>Rewritten for R-INLA:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mi>𝐲</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><mi>𝐱</mi><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><mi>𝛆</mi><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><mi>𝛆</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>y</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mn>𝟎</mn></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mo>−</mo><mi>𝐱</mi><mo>+</mo><mi>𝐫</mi><mo>+</mo><msub><mi>𝐮</mi><mi>b</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><msub><mi>𝐮</mi><mi>b</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>b</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mi>𝐰</mi></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mi>𝐫</mi><mo>+</mo><msub><mi>𝐮</mi><mi>c</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><msub><mi>𝐮</mi><mi>c</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><msub><mi>u</mi><mi>c</mi></msub></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><mn>𝟎</mn></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mo>−</mo><mi>𝐫</mi><mo>+</mo><msub><mi>α</mi><mn>0</mn></msub><mo>+</mo><msub><mi>α</mi><mi>z</mi></msub><mi>𝐳</mi><mo>+</mo><msub><mi>𝛆</mi><mi>r</mi></msub><mspace width="0.222em"></mspace><mo>,</mo><mspace width="1.0em"></mspace></mtd><mtd columnalign="right" style="text-align: right"><msub><mi>𝛆</mi><mi>r</mi></msub></mtd><mtd columnalign="left" style="text-align: left"><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>𝟎</mn><mo>,</mo><msub><mi>τ</mi><mi>r</mi></msub><mi>𝐈</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.222em"></mspace><mi>.</mi></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{align}
-  \boldsymbol{y} &amp;= \beta_0 + \beta_x \boldsymbol{x} + \beta_z
-\boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad
-&amp;\boldsymbol{\varepsilon} &amp;\sim N(\boldsymbol{0},
-\tau_y\boldsymbol{I}) \ , \\
-  \boldsymbol{0} &amp;= -\boldsymbol{x} + \boldsymbol{r} +
-\boldsymbol{u}_b \ , \quad &amp; \boldsymbol{u}_b &amp;\sim
-N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
-  \boldsymbol{w} &amp;= \boldsymbol{r} + \boldsymbol{u}_c \ , \quad
-&amp;\boldsymbol{u}_c &amp;\sim N(\boldsymbol{0},
-\tau_{u_c}\boldsymbol{I}) \ , \\
-  \boldsymbol{0} &amp;= -\boldsymbol{r} + \alpha_0 + \alpha_z
-\boldsymbol{z} + \boldsymbol{\varepsilon}_r \ , \quad
-&amp;\boldsymbol{\varepsilon}_r &amp;\sim N(\boldsymbol{0},
-\tau_r\boldsymbol{I}) \ .
+  \boldsymbol{y} &amp;= \beta_0 + \beta_x \boldsymbol{x} + \beta_z \boldsymbol{z} + \boldsymbol{\varepsilon} \ , \quad &amp;\boldsymbol{\varepsilon} &amp;\sim N(\boldsymbol{0}, \tau_y\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &amp;= -\boldsymbol{x} + \boldsymbol{r} + \boldsymbol{u}_b \ , \quad &amp; \boldsymbol{u}_b &amp;\sim N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
+  \boldsymbol{w} &amp;= \boldsymbol{r} + \boldsymbol{u}_c \ , \quad &amp;\boldsymbol{u}_c &amp;\sim N(\boldsymbol{0}, \tau_{u_c}\boldsymbol{I}) \ , \\
+  \boldsymbol{0} &amp;= -\boldsymbol{r} + \alpha_0 + \alpha_z \boldsymbol{z} + \boldsymbol{\varepsilon}_r \ , \quad &amp;\boldsymbol{\varepsilon}_r &amp;\sim N(\boldsymbol{0}, \tau_r\boldsymbol{I}) \ .
 \end{align}
-\]</span> Just like above, we construct the stacks:</p>
+</annotation></semantics></math> Just like above, we construct the
+stacks:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">berkson_stack</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/make_inlamemi_stacks.html">make_inlamemi_stacks</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">simple_data</span>,</span>
 <span>              formula_moi <span class="op">=</span> <span class="va">f_moi</span>,</span>
@@ -317,7 +282,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 <p>and then visualize the resulting matrices:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">berkson_summary</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/show_data_structure.html">show_data_structure</a></span><span class="op">(</span><span class="va">berkson_stack</span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">\[\underbrace{\begin{bmatrix}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>10.81</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6.18</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>4.98</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>1.46</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚈</mtext></munder><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝟶</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚡</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚣</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚡</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚛</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mn>0</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝟶</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mi>z</mi></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝚣</mtext></munder></mrow><annotation encoding="application/x-tex">\underbrace{\begin{bmatrix} 
 10.81 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 6.18 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
@@ -331,8 +296,8 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; 0\\
 \end{bmatrix}}_{\texttt{Y}}
-=
-\beta_{0}\underbrace{\begin{bmatrix}
+ = 
+\beta_{0}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1\\
@@ -345,7 +310,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1000\\
@@ -358,7 +323,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
 0.98\\
 \vdots\\
 0.77\\
@@ -371,7 +336,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -384,7 +349,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -397,7 +362,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -410,8 +375,7 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 1\\
 \vdots\\
 1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x,z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -424,11 +388,11 @@ N(\boldsymbol{0}, \tau_{u_b}\boldsymbol{I}) \ , \\
 0.98\\
 \vdots\\
 0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}\]</span></p>
+\end{bmatrix}}_{\texttt{alpha.x.z}}</annotation></semantics></math></p>
 <p>As you see, the only things that change is that there is added
 another model level, which leads to another column in the response
 matrix, and we additionally have a new column for the latent effect
-<span class="math inline">\(\boldsymbol{r}\)</span>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐫</mi><annotation encoding="application/x-tex">\boldsymbol{r}</annotation></semantics></math>.</p>
 </div>
 <div class="section level2">
 <h2 id="accessing-the-stacks-from-the-model-object">Accessing the stacks from the model object<a class="anchor" aria-label="anchor" href="#accessing-the-stacks-from-the-model-object"></a>
@@ -454,7 +418,7 @@ access the stacks from the model object:</p>
 <span>                           initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/show_data_structure.html">show_data_structure</a></span><span class="op">(</span><span class="va">inlamemi_model</span><span class="op">$</span><span class="va">stack_data</span><span class="op">)</span><span class="op">$</span><span class="va">matrix_string</span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">\[\underbrace{\begin{bmatrix}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>10.81</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>6.18</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>4.98</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>1.46</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚈</mtext></munder><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝟶</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚡</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>z</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚣</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚡</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚛</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mn>0</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝟶</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mi>z</mi></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝚣</mtext></munder></mrow><annotation encoding="application/x-tex">\underbrace{\begin{bmatrix} 
 10.81 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 6.18 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
@@ -468,8 +432,8 @@ access the stacks from the model object:</p>
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; 0\\
 \end{bmatrix}}_{\texttt{Y}}
-=
-\beta_{0}\underbrace{\begin{bmatrix}
+ = 
+\beta_{0}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1\\
@@ -482,7 +446,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1000\\
@@ -495,7 +459,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z}\underbrace{\begin{bmatrix} 
 0.98\\
 \vdots\\
 0.77\\
@@ -508,7 +472,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.z}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -521,7 +485,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.x}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -534,7 +498,7 @@ access the stacks from the model object:</p>
 -1\\
 \vdots\\
 -1000\\
-\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.r}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -547,8 +511,7 @@ access the stacks from the model object:</p>
 1\\
 \vdots\\
 1\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x,z}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -561,7 +524,7 @@ access the stacks from the model object:</p>
 0.98\\
 \vdots\\
 0.77\\
-\end{bmatrix}}_{\texttt{alpha.x.z}}\]</span></p>
+\end{bmatrix}}_{\texttt{alpha.x.z}}</annotation></semantics></math></p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mis_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">y</span> <span class="op">~</span> <span class="va">x</span> <span class="op">+</span> <span class="va">z1</span> <span class="op">+</span> <span class="va">z2</span>,</span>
 <span>                          formula_imp <span class="op">=</span> <span class="va">x</span> <span class="op">~</span> <span class="va">z1</span>,</span>
@@ -576,7 +539,7 @@ access the stacks from the model object:</p>
 <span>                          initial.prec.moi <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>                          initial.prec.imp <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat</a></span><span class="op">(</span><span class="fu"><a href="../reference/show_data_structure.html">show_data_structure</a></span><span class="op">(</span><span class="va">mis_mod</span><span class="op">$</span><span class="va">stack_data</span><span class="op">)</span><span class="op">$</span><span class="va">matrix_string</span><span class="op">)</span></span></code></pre></div>
-<p><span class="math display">\[\underbrace{\begin{bmatrix}
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>7.9</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>2.58</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>2.31</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>0</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚈</mtext></munder><mo>=</mo><msub><mi>β</mi><mn>0</mn></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝟶</mtext></munder><mo>+</mo><msub><mi>β</mi><mi>x</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚡</mtext></munder><mo>+</mo><msub><mi>β</mi><mrow><mi>z</mi><mn>1</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚣𝟷</mtext></munder><mo>+</mo><msub><mi>β</mi><mrow><mi>z</mi><mn>2</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>0.05</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>0.72</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚋𝚎𝚝𝚊.𝚣𝟸</mtext></munder><mo>+</mo><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚒𝚍.𝚡</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mn>0</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝟶</mtext></munder><mo>+</mo><msub><mi>α</mi><mrow><mi>x</mi><mo>,</mo><mi>z</mi><mn>1</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.98</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>0.77</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚊𝚕𝚙𝚑𝚊.𝚡.𝚣𝟷</mtext></munder><mo>+</mo><msub><mi>γ</mi><mrow><mi>x</mi><mo>,</mo><mn>0</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚐𝚊𝚖𝚖𝚊.𝚡.𝟶</mtext></munder><mo>+</mo><msub><mi>γ</mi><mrow><mi>x</mi><mo>,</mo><mi>z</mi><mn>2</mn></mrow></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>0.05</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mo>−</mo><mn>0.72</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚐𝚊𝚖𝚖𝚊.𝚡.𝚣𝟸</mtext></munder><mo>+</mo><msub><mi>γ</mi><mi>x</mi></msub><munder><munder><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mtext mathvariant="monospace">𝙽𝙰</mtext></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mi>⋮</mi></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>1000</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow><mo accent="true">⏟</mo></munder><mtext mathvariant="monospace">𝚐𝚊𝚖𝚖𝚊.𝚡</mtext></munder></mrow><annotation encoding="application/x-tex">\underbrace{\begin{bmatrix} 
 7.9 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 2.58 &amp; \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA}\\
@@ -590,8 +553,8 @@ access the stacks from the model object:</p>
 \vdots &amp; \vdots &amp; \vdots &amp; \vdots\\
 \texttt{NA} &amp; \texttt{NA} &amp; \texttt{NA} &amp; 1\\
 \end{bmatrix}}_{\texttt{Y}}
-=
-\beta_{0}\underbrace{\begin{bmatrix}
+ = 
+\beta_{0}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1\\
@@ -604,7 +567,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.0}} + \beta_{x}\underbrace{\begin{bmatrix} 
 1\\
 \vdots\\
 1000\\
@@ -617,7 +580,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z1}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.x}} + \beta_{z1}\underbrace{\begin{bmatrix} 
 0.98\\
 \vdots\\
 0.77\\
@@ -630,8 +593,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z1}} +
-\beta_{z2}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.z1}} + \beta_{z2}\underbrace{\begin{bmatrix} 
 -0.05\\
 \vdots\\
 -0.72\\
@@ -644,7 +606,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{beta.z2}} + \underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{beta.z2}} + \underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -657,7 +619,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{id.x}} + \alpha_{x,0}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -670,8 +632,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{alpha.x.0}} +
-\alpha_{x,z1}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{alpha.x.0}} + \alpha_{x,z1}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -684,8 +645,7 @@ access the stacks from the model object:</p>
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
-\end{bmatrix}}_{\texttt{alpha.x.z1}} +
-\gamma_{x,0}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{alpha.x.z1}} + \gamma_{x,0}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -698,8 +658,7 @@ access the stacks from the model object:</p>
 1\\
 \vdots\\
 1\\
-\end{bmatrix}}_{\texttt{gamma.x.0}} +
-\gamma_{x,z2}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{gamma.x.0}} + \gamma_{x,z2}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -712,8 +671,7 @@ access the stacks from the model object:</p>
 -0.05\\
 \vdots\\
 -0.72\\
-\end{bmatrix}}_{\texttt{gamma.x.z2}} +
-\gamma_{x}\underbrace{\begin{bmatrix}
+\end{bmatrix}}_{\texttt{gamma.x.z2}} + \gamma_{x}\underbrace{\begin{bmatrix} 
 \texttt{NA}\\
 \vdots\\
 \texttt{NA}\\
@@ -726,9 +684,9 @@ access the stacks from the model object:</p>
 1\\
 \vdots\\
 1000\\
-\end{bmatrix}}_{\texttt{gamma.x}}\]</span></p>
+\end{bmatrix}}_{\texttt{gamma.x}}</annotation></semantics></math></p>
 </div>
-  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
 
@@ -739,15 +697,15 @@ access the stacks from the model object:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
 </div>
 
     </footer>
 </div>
 
-  
 
-  
+
+
 
   </body>
 </html>
