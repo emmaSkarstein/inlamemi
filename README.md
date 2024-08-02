@@ -18,7 +18,13 @@ missing data modelling in R-INLA much more feasible.
 
 ## Installation
 
-You can install the development version of inlamemi from
+You can install the package directly from CRAN with:
+
+``` r
+install.packages("inlamemi)
+```
+
+Alternatively, you can install the development version of inlamemi from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -148,29 +154,29 @@ summary(simple_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.027717 0.2184872  0.6069139 1.025596   1.435443 0.985928
-#> beta.z 1.906503 0.3874348  1.2098316 1.891747   2.555251 1.901931
+#> beta.0 1.043089 0.2182433  0.6263696 1.045710   1.453109 1.043113
+#> beta.z 1.937915 0.3871866  1.2554001 1.939415   2.595717 1.938674
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.973527 0.1997225   1.573013  1.97601   2.359344 1.986598
+#> beta.x 1.974116 0.2042589    1.57718 1.972357    2.38141 1.964934
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033077 0.05060139  0.9338065 1.033085   1.132303 1.033085
-#> alpha.x.z 2.024714 0.05226368  1.9222550 2.024697   2.127271 2.024697
+#> alpha.x.0 1.033076 0.05059015  0.9338265 1.033084   1.132279 1.033084
+#> alpha.x.z 2.024718 0.05225222  1.9222813 2.024700   2.127253 2.024700
 #> 
 #> Model hyperparameters (apart from beta.x): 
 #>                                      mean        sd 0.025quant  0.5quant
-#> Precision for model of interest 1.1316556 0.3623018  0.5709097 1.0814815
-#> Precision for x berkson model   1.1271145 0.3386565  0.5960700 1.0823296
-#> Precision for x classical model 0.9252548 0.1078315  0.7334221 0.9182750
-#> Precision for x imp model       0.9777604 0.1243289  0.7539687 0.9706106
+#> Precision for model of interest 1.1267858 0.3735353  0.5633981 1.0704972
+#> Precision for x berkson model   1.1345684 0.3576183  0.5974388 1.0798565
+#> Precision for x classical model 0.9275802 0.1121391  0.7241594 0.9216585
+#> Precision for x imp model       0.9763580 0.1273814  0.7526279 0.9671530
 #>                                 0.975quant      mode
-#> Precision for model of interest   1.981515 0.9890411
-#> Precision for x berkson model     1.916427 0.9996081
-#> Precision for x classical model   1.157423 0.9030051
-#> Precision for x imp model         1.242635 0.9577273
+#> Precision for model of interest   2.016658 0.9664441
+#> Precision for x berkson model     1.990504 0.9772337
+#> Precision for x classical model   1.164976 0.9114524
+#> Precision for x imp model         1.253325 0.9471440
 ```
 
 And we can use the default plot function to see a plot of the fixed
