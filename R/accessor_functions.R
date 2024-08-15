@@ -7,10 +7,10 @@
 #' @export
 #'
 get_imputed <- function(inlamemi_model, error_variable){
-  posterior_marginals <- inlamemi_model$marginals.random[[paste0("id.", error_variable)]]
+  imputed_marginals <- inlamemi_model$marginals.random[[paste0("id.", error_variable)]]
   imputed_summary <- inlamemi_model$summary.random[[paste0("id.", error_variable)]]
 
-  return(list(imputed_marginals, imputed_summary))
+  return(list(imputed_marginals = imputed_marginals, imputed_summary = imputed_summary))
 }
 
 #' Extract model coefficients
