@@ -181,7 +181,7 @@ print.inlamemi <- function(x, ...){
   print(x$.args$error_type)
   cat("\n")
 
-  print(coef(x), ...)
+  print(coef.inlamemi(x), ...)
 }
 
 #' Visualize the model data structure as matrices in LaTeX

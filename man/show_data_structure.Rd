@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary_functions.R
 \name{show_data_structure}
 \alias{show_data_structure}
-\title{Visualize the model data structure as matrices}
+\title{Visualize the model data structure as matrices in LaTeX}
 \usage{
 show_data_structure(stack)
 }
@@ -13,7 +13,7 @@ show_data_structure(stack)
 A list containing data frames with the left hand side (response_df) and right hand side (effects_df), along with the latex code needed to visualize the matrices (matrix_string).
 }
 \description{
-Visualize the model data structure as matrices
+Visualize the model data structure as matrices in LaTeX
 }
 \examples{
 \dontshow{if (requireNamespace('INLA')) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
