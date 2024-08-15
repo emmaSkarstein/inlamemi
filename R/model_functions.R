@@ -43,7 +43,11 @@ make_inlamemi_formula <- function(formula_moi,
 
   # Define covariates in output formula as all variables in moi formula
   #  except the response and error prone covariate:
-  covariates_error_free_string <- paste0("beta.", vars$covariates_error_free)
+  if(length(vars$covariates_error_free > 0)){
+    covariates_error_free_string <- paste0("beta.", vars$covariates_error_free)
+  }else{
+    covariates_error_free_string <- ""
+  }
 
   # Check the prior for beta.x
   # If only one prior is given, put it in a list so the indexation turns out correctly

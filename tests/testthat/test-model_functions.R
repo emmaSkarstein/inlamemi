@@ -127,6 +127,13 @@ test_that("make_inlamemi_formula works", {
                         prior.gamma.error = c(0, 1/1000))
   terms4 <- labels(terms(formula4))
   expect_equal(length(terms4), 9)
+
+  # Simple linear regression
+  formula_slr <- make_inlamemi_formula(formula_moi = y ~ x,
+                                       formula_imp = x ~ 1,
+                                       prior.beta.error = c(0, 1/1000))
+  terms_slr <- labels(terms(formula_slr))
+  expect_equal(length(terms_slr), 4)
 })
 
 test_that("make_inlamemi_stacks works", {
@@ -184,6 +191,12 @@ test_that("make_inlamemi_stacks works", {
                                                   formula_imp = x ~ z,
                                                   formula_mis = m ~ z + x,
                                                   error_type = "missing")
+
+  # Simple linear regression
+  # Simple linear regression
+  stacks_slr <- make_inlamemi_stacks(formula_moi = y ~ x,
+                                     formula_imp = x ~ 1,
+                                     data = simple_data)
 
 
   # Catching errors -----------------------------------------------------------
@@ -373,6 +386,19 @@ test_that("fit_inlamemi works", {
   summary(mis_mod)
 
   labels(terms(mis_mod$.args$formula))
+
+  # Simple linear regression
+  inlamemi_model <- fit_inlamemi(formula_moi = y ~ x,
+                                 formula_imp = x ~ 1,
+                                 family_moi = "gaussian",
+                                 data = simple_data,
+                                 prior.prec.moi = c(10, 9),
+                                 prior.prec.classical = c(0.5, 0.5),
+                                 prior.prec.imp = c(0.5, 0.5),
+                                 initial.prec.moi = 1,
+                                 initial.prec.classical = 1/2,
+                                 initial.prec.imp = 1/1.5)
+
   # Catching errors -----------------------------------------------------------
 
 })
