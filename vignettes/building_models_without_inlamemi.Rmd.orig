@@ -1,8 +1,8 @@
 ---
-title: "How to not use inlamemi"
+title: "How to avoid using inlamemi"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How to not use inlamemi}
+  %\VignetteIndexEntry{How to avoid using inlamemi}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

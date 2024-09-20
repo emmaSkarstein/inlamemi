@@ -61,8 +61,9 @@ Examples of how to use the package can be found in the vignettes.
 | [Survival model with repeated systolic blood pressure measurements](https://emmaskarstein.github.io/inlamemi/articles/nhanes_survival_model.html) | Weibull survival            | Classical, missing          | Repeated measurements of error prone variable                                                                                                                                                                                                                                        |
 | [Simulated examples (multiple examples)](https://emmaskarstein.github.io/inlamemi/articles/simulated_examples.html)                               | Gaussian, Binomial, Poisson | Berkson, classical, missing | Random effect(s) in the model of interest, interaction effects                                                                                                                                                                                                                       |
 | [Multiple variables with measurement error and missingness](https://emmaskarstein.github.io/inlamemi/articles/multiple_error_variables.html)      | Gaussian                    | Classical                   | Multiple mismeasured covariates                                                                                                                                                                                                                                                      |
+| [Modifying the default plot](https://emmaskarstein.github.io/inlamemi/articles/modifying_default_plot.html)                                       |                             |                             | Shows how to modify the plot produced by the `plot.inlamemi` function.                                                                                                                                                                                                               |
 | [How are the models structured?](https://emmaskarstein.github.io/inlamemi/articles/visualize_model_structure.html)                                |                             |                             | A deep dive into how the data is structured in order to correctly fit the model.                                                                                                                                                                                                     |
-| [How to not use `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html)                              |                             |                             | An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured. |
+| [How to avoid using `inlamemi`](https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html)                          |                             |                             | An illustration of how the models can be fit without using `inlamemi`, in case you would like to extend the model in a way beyond what `inlamemi` will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured. |
 
 ## Quick guide: How can I use this package?
 
@@ -154,29 +155,29 @@ summary(simple_model)
 #> 
 #> Fixed effects for model of interest: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.0 1.029230 0.2199524  0.6108564 1.026969   1.447384 1.025073
-#> beta.z 1.909103 0.3900812  1.2197600 1.901527   2.586637 1.911069
+#> beta.0 1.029734 0.2192649   0.611786 1.027337   1.441360 1.023829
+#> beta.z 1.910320 0.3888428   1.225565 1.899260   2.569838 1.909285
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
 #>            mean        sd 0.025quant 0.5quant 0.975quant     mode
-#> beta.x 1.973203 0.2030897   1.571571 1.973825   2.371208 1.976411
+#> beta.x 1.973047 0.2044895   1.566493 1.974404   2.371636 1.980101
 #> 
 #> Fixed effects for imputation model: 
 #>               mean         sd 0.025quant 0.5quant 0.975quant     mode
-#> alpha.x.0 1.033091 0.05058853  0.9338437 1.033100    1.13229 1.033100
-#> alpha.x.z 2.024682 0.05225147  1.9222503 2.024663    2.12722 2.024663
+#> alpha.x.0 1.033082 0.05058036  0.9338513 1.033090   1.132266 1.033090
+#> alpha.x.z 2.024703 0.05224236  1.9222875 2.024685   2.127221 2.024685
 #> 
 #> Model hyperparameters (apart from beta.x): 
-#>                                      mean        sd 0.025quant 0.5quant
-#> Precision for model of interest 1.1240935 0.3559116  0.5677369 1.076509
-#> Precision for x berkson model   1.1247575 0.3507436  0.5874788 1.074393
-#> Precision for x classical model 0.9266052 0.1097382  0.7295794 0.920113
-#> Precision for x imp model       0.9773413 0.1260382  0.7524216 0.969432
+#>                                      mean        sd 0.025quant  0.5quant
+#> Precision for model of interest 1.1284762 0.3651824  0.5643224 1.0775830
+#> Precision for x berkson model   1.1270935 0.3502996  0.5871622 1.0778489
+#> Precision for x classical model 0.9274713 0.1107587  0.7291709 0.9207291
+#> Precision for x imp model       0.9771797 0.1269574  0.7504628 0.9692680
 #>                                 0.975quant      mode
-#> Precision for model of interest   1.953670 0.9893504
-#> Precision for x berkson model     1.954002 0.9806116
-#> Precision for x classical model   1.161028 0.9071415
-#> Precision for x imp model         1.247810 0.9540123
+#> Precision for model of interest   1.985783 0.9838628
+#> Precision for x berkson model     1.952024 0.9863724
+#> Precision for x classical model   1.164627 0.9070096
+#> Precision for x imp model         1.249446 0.9540553
 ```
 
 And we can use the default plot function to see a plot of the fixed

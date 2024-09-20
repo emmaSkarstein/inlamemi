@@ -1,8 +1,8 @@
 ---
-title: "How to not use inlamemi"
+title: "How to avoid using inlamemi"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{How to not use inlamemi}
+  %\VignetteIndexEntry{How to avoid using inlamemi}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -210,11 +210,11 @@ model_sim <- inla(formula, data = inla.stack.data(stk_full),
 
 summary(model_sim)
 #> Time used:
-#>     Pre = 2.06, Running = 2.61, Post = 0.191, Total = 4.86 
+#>     Pre = 1.87, Running = 2.23, Post = 0.197, Total = 4.29 
 #> Fixed effects:
 #>          mean    sd 0.025quant 0.5quant 0.975quant  mode kld
-#> beta.0  1.044 0.218      0.623    1.046      1.454 1.040   0
-#> beta.z  1.940 0.387      1.242    1.933      2.610 1.934   0
+#> beta.0  1.036 0.217      0.615    1.037      1.443 1.031   0
+#> beta.z  1.924 0.385      1.224    1.916      2.577 1.919   0
 #> alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0
 #> alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0
 #> 
@@ -226,13 +226,13 @@ summary(model_sim)
 #> 
 #> Model hyperparameters:
 #>                                             mean    sd 0.025quant 0.5quant 0.975quant  mode
-#> Precision for the Gaussian observations    1.134 0.393      0.559    1.070       2.08 0.951
-#> Precision for the Gaussian observations[2] 1.141 0.352      0.606    1.089       1.98 0.991
-#> Precision for the Gaussian observations[3] 0.927 0.111      0.726    0.921       1.16 0.911
-#> Precision for the Gaussian observations[4] 0.978 0.127      0.755    0.969       1.25 0.950
-#> Beta for beta.x                            1.979 0.202      1.584    1.977       2.38 1.972
+#> Precision for the Gaussian observations    1.133 0.374      0.569    1.077       2.02 0.973
+#> Precision for the Gaussian observations[2] 1.134 0.340      0.607    1.087       1.93 1.000
+#> Precision for the Gaussian observations[3] 0.925 0.108      0.732    0.919       1.16 0.906
+#> Precision for the Gaussian observations[4] 0.979 0.124      0.757    0.971       1.25 0.956
+#> Beta for beta.x                            1.975 0.198      1.584    1.976       2.36 1.979
 #> 
-#> Marginal log-Likelihood:  -20699.95 
+#> Marginal log-Likelihood:  -20700.00 
 #>  is computed 
 #> Posterior summaries for the linear predictor and the fitted values are computed
 #> (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')
@@ -383,15 +383,15 @@ model_mnar <- inla(formula, data = inla.stack.data(stk_full),
 
 summary(model_mnar)
 #> Time used:
-#>     Pre = 2.05, Running = 3.59, Post = 0.18, Total = 5.81 
+#>     Pre = 1.97, Running = 3.57, Post = 0.556, Total = 6.1 
 #> Fixed effects:
 #>            mean    sd 0.025quant 0.5quant 0.975quant   mode kld
-#> beta.0    1.038 0.050      0.940    1.038      1.137  1.038   0
-#> beta.z1   2.004 0.036      1.932    2.004      2.075  2.004   0
+#> beta.0    1.039 0.050      0.941    1.039      1.137  1.039   0
+#> beta.z1   2.004 0.036      1.933    2.004      2.076  2.004   0
 #> beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0
 #> alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0
 #> alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0
-#> gamma.0  -1.509 0.122     -1.755   -1.508     -1.273 -1.508   0
+#> gamma.0  -1.511 0.122     -1.756   -1.510     -1.275 -1.510   0
 #> gamma.z2 -0.425 0.088     -0.597   -0.425     -0.252 -0.425   0
 #> 
 #> Random effects:
@@ -402,13 +402,13 @@ summary(model_mnar)
 #> 
 #> Model hyperparameters:
 #>                                              mean    sd 0.025quant 0.5quant 0.975quant   mode
-#> Precision for the Gaussian observations     0.983 0.048      0.892    0.982      1.081  0.980
-#> Precision for the Gaussian observations[2]  1.139 0.387      0.581    1.073      2.083  0.950
-#> Precision for the Gaussian observations[3]  1.023 0.048      0.934    1.022      1.121  1.018
-#> Beta for beta.x                             1.953 0.035      1.883    1.953      2.020  1.955
-#> Beta for gamma.x                           -0.036 0.089     -0.211   -0.036      0.139 -0.036
+#> Precision for the Gaussian observations     0.984 0.048      0.893    0.983      1.082  0.981
+#> Precision for the Gaussian observations[2]  1.126 0.353      0.576    1.078      1.952  0.990
+#> Precision for the Gaussian observations[3]  1.024 0.047      0.933    1.023      1.119  1.023
+#> Beta for beta.x                             1.954 0.035      1.886    1.954      2.023  1.953
+#> Beta for gamma.x                           -0.037 0.089     -0.214   -0.036      0.137 -0.033
 #> 
-#> Marginal log-Likelihood:  -11663.15 
+#> Marginal log-Likelihood:  -11663.17 
 #>  is computed 
 #> Posterior summaries for the linear predictor and the fitted values are computed
 #> (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')
