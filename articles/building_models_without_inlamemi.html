@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>How to not use inlamemi • inlamemi</title>
+<title>How to avoid using inlamemi • inlamemi</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How to not use inlamemi">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="How to avoid using inlamemi">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -32,7 +32,7 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a></li>
+<li><a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to avoid using inlamemi</a></li>
     <li><a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></li>
     <li><a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a></li>
     <li><a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a></li>
@@ -61,7 +61,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>How to not use inlamemi</h1>
+      <h1>How to avoid using inlamemi</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/emmaSkarstein/inlamemi/blob/main/vignettes/building_models_without_inlamemi.Rmd" class="external-link"><code>vignettes/building_models_without_inlamemi.Rmd</code></a></small>
@@ -279,11 +279,11 @@ these.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_sim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 2.06, Running = 2.61, Post = 0.191, Total = 4.86 </span></span>
+<span><span class="co">#&gt;     Pre = 1.87, Running = 2.23, Post = 0.197, Total = 4.29 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;          mean    sd 0.025quant 0.5quant 0.975quant  mode kld</span></span>
-<span><span class="co">#&gt; beta.0  1.044 0.218      0.623    1.046      1.454 1.040   0</span></span>
-<span><span class="co">#&gt; beta.z  1.940 0.387      1.242    1.933      2.610 1.934   0</span></span>
+<span><span class="co">#&gt; beta.0  1.036 0.217      0.615    1.037      1.443 1.031   0</span></span>
+<span><span class="co">#&gt; beta.z  1.924 0.385      1.224    1.916      2.577 1.919   0</span></span>
 <span><span class="co">#&gt; alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0</span></span>
 <span><span class="co">#&gt; alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -295,13 +295,13 @@ these.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                             mean    sd 0.025quant 0.5quant 0.975quant  mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations    1.134 0.393      0.559    1.070       2.08 0.951</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.141 0.352      0.606    1.089       1.98 0.991</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.927 0.111      0.726    0.921       1.16 0.911</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.978 0.127      0.755    0.969       1.25 0.950</span></span>
-<span><span class="co">#&gt; Beta for beta.x                            1.979 0.202      1.584    1.977       2.38 1.972</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations    1.133 0.374      0.569    1.077       2.02 0.973</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.134 0.340      0.607    1.087       1.93 1.000</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.925 0.108      0.732    0.919       1.16 0.906</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.979 0.124      0.757    0.971       1.25 0.956</span></span>
+<span><span class="co">#&gt; Beta for beta.x                            1.975 0.198      1.584    1.976       2.36 1.979</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -20699.95 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.00 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>
@@ -440,15 +440,15 @@ precision to be very high for the classical error model in the argument
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_mnar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 2.05, Running = 3.59, Post = 0.18, Total = 5.81 </span></span>
+<span><span class="co">#&gt;     Pre = 1.97, Running = 3.57, Post = 0.556, Total = 6.1 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;            mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
-<span><span class="co">#&gt; beta.0    1.038 0.050      0.940    1.038      1.137  1.038   0</span></span>
-<span><span class="co">#&gt; beta.z1   2.004 0.036      1.932    2.004      2.075  2.004   0</span></span>
+<span><span class="co">#&gt; beta.0    1.039 0.050      0.941    1.039      1.137  1.039   0</span></span>
+<span><span class="co">#&gt; beta.z1   2.004 0.036      1.933    2.004      2.076  2.004   0</span></span>
 <span><span class="co">#&gt; beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0</span></span>
 <span><span class="co">#&gt; alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0</span></span>
 <span><span class="co">#&gt; alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0</span></span>
-<span><span class="co">#&gt; gamma.0  -1.509 0.122     -1.755   -1.508     -1.273 -1.508   0</span></span>
+<span><span class="co">#&gt; gamma.0  -1.511 0.122     -1.756   -1.510     -1.275 -1.510   0</span></span>
 <span><span class="co">#&gt; gamma.z2 -0.425 0.088     -0.597   -0.425     -0.252 -0.425   0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Random effects:</span></span>
@@ -459,13 +459,13 @@ precision to be very high for the classical error model in the argument
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                              mean    sd 0.025quant 0.5quant 0.975quant   mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations     0.983 0.048      0.892    0.982      1.081  0.980</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.139 0.387      0.581    1.073      2.083  0.950</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.023 0.048      0.934    1.022      1.121  1.018</span></span>
-<span><span class="co">#&gt; Beta for beta.x                             1.953 0.035      1.883    1.953      2.020  1.955</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                           -0.036 0.089     -0.211   -0.036      0.139 -0.036</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations     0.984 0.048      0.893    0.983      1.082  0.981</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.126 0.353      0.576    1.078      1.952  0.990</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.024 0.047      0.933    1.023      1.119  1.023</span></span>
+<span><span class="co">#&gt; Beta for beta.x                             1.954 0.035      1.886    1.954      2.023  1.953</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                           -0.037 0.089     -0.214   -0.036      0.137 -0.033</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.15 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.17 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>
@@ -491,7 +491,7 @@ random”.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>

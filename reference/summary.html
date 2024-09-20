@@ -19,7 +19,7 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to not use inlamemi</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/building_models_without_inlamemi.html">How to avoid using inlamemi</a></li>
     <li><a class="dropdown-item" href="../articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></li>
     <li><a class="dropdown-item" href="../articles/modifying_default_plot.html">Modifying the default plot</a></li>
     <li><a class="dropdown-item" href="../articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a></li>
@@ -109,29 +109,29 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for model of interest: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.037382 0.2191930  0.6189802  1.03792   1.450642 1.034558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.926619 0.3888112  1.2436533  1.92234   2.588933 1.925892</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.0 1.032977 0.2180466  0.6141645 1.032931   1.444839 1.028693</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.z 1.917677 0.3863604  1.2287658 1.910926   2.578013 1.916086</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Coefficient for variable with measurement error and/or missingness: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>            mean        sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.973794 0.2012788   1.578669 1.973406   2.371177 1.971796</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> beta.x 1.973558 0.1968359   1.583858 1.974309   2.358871 1.977439</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Fixed effects for imputation model: </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               mean         sd 0.025quant 0.5quant 0.975quant     mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033081 0.05056566  0.9338799 1.033089   1.132236 1.033089</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024706 0.05222679  1.9223199 2.024689   2.127192 2.024689</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.0 1.033077 0.05060881  0.9337919 1.033085   1.132317 1.033085</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> alpha.x.z 2.024714 0.05227157  1.9222397 2.024696   2.127287 2.024696</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Model hyperparameters (apart from beta.x): </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                      mean        sd 0.025quant  0.5quant</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1219800 0.3527586  0.5544638 1.0797271</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1201940 0.3449852  0.5953031 1.0694832</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9280328 0.1104781  0.7280804 0.9220440</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9777297 0.1260686  0.7541814 0.9693311</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest 1.1256841 0.3518536  0.5731891 1.0794111</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model   1.1250557 0.3371281  0.6029258 1.0783945</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model 0.9252344 0.1073732  0.7326767 0.9188035</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model       0.9773166 0.1236054  0.7564751 0.9696461</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                 0.975quant      mode</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.927023 1.0040965</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.939813 0.9743944</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.162403 0.9111883</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.249713 0.9520602</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for model of interest   1.943672 0.9948417</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x berkson model     1.917489 0.9911754</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x classical model   1.154860 0.9055685</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Precision for x imp model         1.242337 0.9545749</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>
     </div>
@@ -144,7 +144,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

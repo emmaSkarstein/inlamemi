@@ -34,7 +34,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/building_models_without_inlamemi.html">How to not use inlamemi</a></li>
+<li><a class="dropdown-item" href="articles/building_models_without_inlamemi.html">How to avoid using inlamemi</a></li>
     <li><a class="dropdown-item" href="articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></li>
     <li><a class="dropdown-item" href="articles/modifying_default_plot.html">Modifying the default plot</a></li>
     <li><a class="dropdown-item" href="articles/multiple_error_variables.html">Multiple variables with measurement error and missingness</a></li>
@@ -121,13 +121,19 @@
 <td align="left">Multiple mismeasured covariates</td>
 </tr>
 <tr class="odd">
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/modifying_default_plot.html">Modifying the default plot</a></td>
+<td align="left"></td>
+<td align="left"></td>
+<td align="left">Shows how to modify the plot produced by the <code>plot.inlamemi</code> function.</td>
+</tr>
+<tr class="even">
 <td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/visualize_model_structure.html">How are the models structured?</a></td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left">A deep dive into how the data is structured in order to correctly fit the model.</td>
 </tr>
-<tr class="even">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html">How to not use <code>inlamemi</code></a></td>
+<tr class="odd">
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/building_models_without_inlamemi.html">How to avoid using <code>inlamemi</code></a></td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left">An illustration of how the models can be fit without using <code>inlamemi</code>, in case you would like to extend the model in a way beyond what <code>inlamemi</code> will allow. This vignette can also be useful if you are familiar with R-INLA and want to understand how the models are structured.</td>
@@ -188,29 +194,29 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.029230 0.2199524  0.6108564 1.026969   1.447384 1.025073</span></span>
-<span><span class="co">#&gt; beta.z 1.909103 0.3900812  1.2197600 1.901527   2.586637 1.911069</span></span>
+<span><span class="co">#&gt; beta.0 1.029734 0.2192649   0.611786 1.027337   1.441360 1.023829</span></span>
+<span><span class="co">#&gt; beta.z 1.910320 0.3888428   1.225565 1.899260   2.569838 1.909285</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973203 0.2030897   1.571571 1.973825   2.371208 1.976411</span></span>
+<span><span class="co">#&gt; beta.x 1.973047 0.2044895   1.566493 1.974404   2.371636 1.980101</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033091 0.05058853  0.9338437 1.033100    1.13229 1.033100</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024682 0.05225147  1.9222503 2.024663    2.12722 2.024663</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033082 0.05058036  0.9338513 1.033090   1.132266 1.033090</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024703 0.05224236  1.9222875 2.024685   2.127221 2.024685</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
-<span><span class="co">#&gt;                                      mean        sd 0.025quant 0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1240935 0.3559116  0.5677369 1.076509</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1247575 0.3507436  0.5874788 1.074393</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9266052 0.1097382  0.7295794 0.920113</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9773413 0.1260382  0.7524216 0.969432</span></span>
+<span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1284762 0.3651824  0.5643224 1.0775830</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1270935 0.3502996  0.5871622 1.0778489</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9274713 0.1107587  0.7291709 0.9207291</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9771797 0.1269574  0.7504628 0.9692680</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.953670 0.9893504</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.954002 0.9806116</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.161028 0.9071415</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.247810 0.9540123</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.985783 0.9838628</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.952024 0.9863724</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.164627 0.9070096</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.249446 0.9540553</span></span></code></pre></div>
 <p>And we can use the default plot function to see a plot of the fixed effects and estimated coefficient for the variable with error:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></code></pre></div>
@@ -260,7 +266,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer>
