@@ -1,6 +1,4 @@
 
-* This is a new release.
-
 When checking for invalid URLs using `urlchecker::url_check()`, I get four errors similar to this:
 ```
 ✖ Error: vignettes/Framingham_heart_study.Rmd:29:241 403: Forbidden
