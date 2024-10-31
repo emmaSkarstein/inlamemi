@@ -22,7 +22,7 @@
 
     <a class="navbar-brand me-2" href="index.html">inlamemi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,7 +97,7 @@
 </tr></thead>
 <tbody>
 <tr class="odd">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/Framingham_heart_study.html">Influence of systolic blood pressure on coronary heart disease</a></td>
 <td align="left">Binomial</td>
 <td align="left">Classical</td>
 <td align="left">Repeated measurements of error prone variable, interaction effect with error variable</td>
@@ -127,7 +127,7 @@
 <td align="left">Shows how to modify the plot produced by the <code>plot.inlamemi</code> function.</td>
 </tr>
 <tr class="even">
-<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/visualize_model_structure.html">How are the models structured?</a></td>
+<td align="left"><a href="https://emmaskarstein.github.io/inlamemi/articles/Visualize_model_structure.html">How are the models structured?</a></td>
 <td align="left"></td>
 <td align="left"></td>
 <td align="left">A deep dive into how the data is structured in order to correctly fit the model.</td>
@@ -194,29 +194,29 @@
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.0 1.029734 0.2192649   0.611786 1.027337   1.441360 1.023829</span></span>
-<span><span class="co">#&gt; beta.z 1.910320 0.3888428   1.225565 1.899260   2.569838 1.909285</span></span>
+<span><span class="co">#&gt; beta.0 1.029408 0.2180168  0.6085174 1.028547   1.440033 1.022823</span></span>
+<span><span class="co">#&gt; beta.z 1.910018 0.3864093  1.2097061 1.899498   2.565503 1.907050</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;            mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.x 1.973047 0.2044895   1.566493 1.974404   2.371636 1.980101</span></span>
+<span><span class="co">#&gt; beta.x 1.973031 0.1955614   1.582293  1.97498   2.352271 1.983233</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; alpha.x.0 1.033082 0.05058036  0.9338513 1.033090   1.132266 1.033090</span></span>
-<span><span class="co">#&gt; alpha.x.z 2.024703 0.05224236  1.9222875 2.024685   2.127221 2.024685</span></span>
+<span><span class="co">#&gt; alpha.x.0 1.033073 0.05060773  0.9337902 1.033081   1.132311 1.033081</span></span>
+<span><span class="co">#&gt; alpha.x.z 2.024723 0.05227029  1.9222514 2.024706   2.127294 2.024706</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.x): </span></span>
 <span><span class="co">#&gt;                                      mean        sd 0.025quant  0.5quant</span></span>
-<span><span class="co">#&gt; Precision for model of interest 1.1284762 0.3651824  0.5643224 1.0775830</span></span>
-<span><span class="co">#&gt; Precision for x berkson model   1.1270935 0.3502996  0.5871622 1.0778489</span></span>
-<span><span class="co">#&gt; Precision for x classical model 0.9274713 0.1107587  0.7291709 0.9207291</span></span>
-<span><span class="co">#&gt; Precision for x imp model       0.9771797 0.1269574  0.7504628 0.9692680</span></span>
+<span><span class="co">#&gt; Precision for model of interest 1.1292120 0.3549186  0.5731591 1.0821470</span></span>
+<span><span class="co">#&gt; Precision for x berkson model   1.1249792 0.3327340  0.6030345 1.0810229</span></span>
+<span><span class="co">#&gt; Precision for x classical model 0.9248817 0.1063716  0.7351107 0.9181755</span></span>
+<span><span class="co">#&gt; Precision for x imp model       0.9778644 0.1225878  0.7574632 0.9707262</span></span>
 <span><span class="co">#&gt;                                 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for model of interest   1.985783 0.9838628</span></span>
-<span><span class="co">#&gt; Precision for x berkson model     1.952024 0.9863724</span></span>
-<span><span class="co">#&gt; Precision for x classical model   1.164627 0.9070096</span></span>
-<span><span class="co">#&gt; Precision for x imp model         1.249446 0.9540553</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for model of interest   1.955436 0.9960169</span></span>
+<span><span class="co">#&gt; Precision for x berkson model     1.900730 0.9994948</span></span>
+<span><span class="co">#&gt; Precision for x classical model   1.153382 0.9036513</span></span>
+<span><span class="co">#&gt; Precision for x imp model         1.239320 0.9574767</span></span></code></pre></div>
 <p>And we can use the default plot function to see a plot of the fixed effects and estimated coefficient for the variable with error:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">simple_model</span><span class="op">)</span></span></code></pre></div>

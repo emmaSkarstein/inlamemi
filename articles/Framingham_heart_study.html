@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inlamemi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -82,13 +82,13 @@ The data is also included in the package, simply type
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">framingham</span><span class="op">)</span></span>
-<span><span class="co">#&gt;   disease         sbp1        sbp2 smoking</span></span>
-<span><span class="co">#&gt; 1       0  0.043556319 -0.24144440       0</span></span>
-<span><span class="co">#&gt; 2       0 -0.088249125 -0.03871185       1</span></span>
-<span><span class="co">#&gt; 3       0  0.063634980  0.02971774       1</span></span>
-<span><span class="co">#&gt; 4       0 -0.331791943 -0.44704230       1</span></span>
-<span><span class="co">#&gt; 5       0  0.006502333 -0.09760337       1</span></span>
-<span><span class="co">#&gt; 6       0  0.124884993  0.09793482       0</span></span></code></pre></div>
+<span><span class="co">#&gt;   disease         sbp1        sbp2 smoking         sbp</span></span>
+<span><span class="co">#&gt; 1       0  0.043556319 -0.24144440       0 -0.09894404</span></span>
+<span><span class="co">#&gt; 2       0 -0.088249125 -0.03871185       1 -0.06348049</span></span>
+<span><span class="co">#&gt; 3       0  0.063634980  0.02971774       1  0.04667636</span></span>
+<span><span class="co">#&gt; 4       0 -0.331791943 -0.44704230       1 -0.38941712</span></span>
+<span><span class="co">#&gt; 5       0  0.006502333 -0.09760337       1 -0.04555052</span></span>
+<span><span class="co">#&gt; 6       0  0.124884993  0.09793482       0  0.11140991</span></span></code></pre></div>
 <p>The two publications are <a href="https://arxiv.org/abs/1302.3065" class="external-link">Bayesian analysis of measurement
 error models using INLA, Muff et al (2015)</a> and <a href="https://doi.org/10.1002/bimj.201400157" class="external-link">Reverse attenuation in
 interaction terms due to covariate measurement error, Muff &amp; Keller
@@ -146,7 +146,7 @@ have two:
 <math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><msubsup><mtext mathvariant="monospace">𝚜𝚋𝚙</mtext><mi>i</mi><mn>1</mn></msubsup><mo>=</mo><msub><mtext mathvariant="monospace">𝚜𝚋𝚙</mtext><mi>i</mi></msub><mo>+</mo><msubsup><mi>u</mi><mi>i</mi><mn>1</mn></msubsup><mo>,</mo></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"><msubsup><mtext mathvariant="monospace">𝚜𝚋𝚙</mtext><mi>i</mi><mn>2</mn></msubsup><mo>=</mo><msub><mtext mathvariant="monospace">𝚜𝚋𝚙</mtext><mi>i</mi></msub><mo>+</mo><msubsup><mi>u</mi><mi>i</mi><mn>2</mn></msubsup><mo>,</mo></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{align}
 \texttt{sbp}^1_i = \texttt{sbp}_i + u_i^{1}, \\
-\texttt{sbp}^2_i = \texttt{sbp}_i + u_i^{2}, 
+\texttt{sbp}^2_i = \texttt{sbp}_i + u_i^{2},
 \end{align}
 </annotation></semantics></math> where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>u</mi><mi>i</mi><mn>1</mn></msubsup><mo>,</mo><msubsup><mi>u</mi><mi>i</mi><mn>2</mn></msubsup><mo>∼</mo><mi>N</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo>,</mo><msub><mi>τ</mi><mi>u</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">u_i^{1}, u_i^{2} \sim N(0, \tau_u)</annotation></semantics></math>
@@ -168,9 +168,9 @@ but keep the means at 0 (therefore they are not specified in the
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span> <span class="op">+</span> <span class="va">smoking</span>,</span>
 <span>                               formula_imp <span class="op">=</span> <span class="va">sbp</span> <span class="op">~</span> <span class="va">smoking</span>,</span>
-<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                               data <span class="op">=</span> <span class="va">framingham</span>,</span>
-<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>, </span>
+<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>                               repeated_observations <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                               prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -178,9 +178,9 @@ but keep the means at 0 (therefore they are not specified in the
 <span>                               initial.prec.classical <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>                               initial.prec.imp <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                               control.fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>                                             alpha.smoking <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Once the model is fit we can look at the summary.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -196,22 +196,22 @@ but keep the means at 0 (therefore they are not specified in the
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;                    mean        sd 0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; beta.0       -2.3615605 0.2704869 -2.8934484 -2.3610451 -1.8325971 -2.3610396</span></span>
-<span><span class="co">#&gt; beta.smoking  0.3993941 0.2994675 -0.1875007  0.3992733  0.9869779  0.3992731</span></span>
+<span><span class="co">#&gt; beta.0       -2.3615593 0.2704869  -2.893447 -2.3610439 -1.8325961 -2.3610384</span></span>
+<span><span class="co">#&gt; beta.smoking  0.3993937 0.2994675  -0.187501  0.3992729  0.9869775  0.3992727</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
-<span><span class="co">#&gt;             mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; beta.sbp 1.89742 0.5598976  0.8403958 1.882701   3.043096 1.817019</span></span>
+<span><span class="co">#&gt;              mean        sd 0.025quant 0.5quant 0.975quant     mode</span></span>
+<span><span class="co">#&gt; beta.sbp 1.897425 0.5598872  0.8404353 1.882702   3.043093 1.816999</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                          mean         sd  0.025quant    0.5quant 0.975quant        mode</span></span>
-<span><span class="co">#&gt; alpha.sbp.0        0.01454298 0.01858279 -0.02190741  0.01454298 0.05099338  0.01454298</span></span>
-<span><span class="co">#&gt; alpha.sbp.smoking -0.01958476 0.02156436 -0.06188353 -0.01958476 0.02271401 -0.01958476</span></span>
+<span><span class="co">#&gt; alpha.sbp.0        0.01454298 0.01858277 -0.02190736  0.01454298 0.05099333  0.01454298</span></span>
+<span><span class="co">#&gt; alpha.sbp.smoking -0.01958476 0.02156433 -0.06188347 -0.01958476 0.02271395 -0.01958476</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.sbp): </span></span>
 <span><span class="co">#&gt;                                       mean       sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; Precision for sbp classical model 75.90183 3.690514   68.89237 75.81344   83.41967 75.63985</span></span>
-<span><span class="co">#&gt; Precision for sbp imp model       19.89455 1.234091   17.55057 19.86501   22.40742 19.82450</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for sbp classical model 75.90178 3.690529   68.89246 75.81334   83.41982 75.63953</span></span>
+<span><span class="co">#&gt; Precision for sbp imp model       19.89452 1.234087   17.55047 19.86501   22.40730 19.82463</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">framingham_model</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
@@ -224,7 +224,7 @@ variable.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham</span><span class="op">$</span><span class="va">sbp</span> <span class="op">&lt;-</span> <span class="op">(</span><span class="va">framingham</span><span class="op">$</span><span class="va">sbp1</span> <span class="op">+</span> <span class="va">framingham</span><span class="op">$</span><span class="va">sbp2</span><span class="op">)</span><span class="op">/</span><span class="fl">2</span></span>
 <span><span class="va">naive_model</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/INLA/man/inla.html" class="external-link">inla</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span> <span class="op">+</span> <span class="va">smoking</span>,</span>
-<span>                    family <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                    family <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                    data <span class="op">=</span> <span class="va">framingham</span><span class="op">)</span></span>
 <span><span class="va">naive_model</span><span class="op">$</span><span class="va">summary.fixed</span></span>
 <span><span class="co">#&gt;                   mean        sd 0.025quant   0.5quant 0.975quant       mode kld</span></span>
@@ -236,7 +236,7 @@ variable.</p>
 <code class="sourceCode R"><span><span class="va">naive_result</span> <span class="op">&lt;-</span> <span class="va">naive_model</span><span class="op">$</span><span class="va">summary.fixed</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">naive_result</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"beta.0"</span>, <span class="st">"beta.sbp"</span>, <span class="st">"beta.smoking"</span><span class="op">)</span></span>
 <span><span class="va">naive_result</span><span class="op">$</span><span class="va">variable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">naive_result</span><span class="op">)</span></span>
-<span><span class="va">me_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">framingham_model</span><span class="op">)</span><span class="op">$</span><span class="va">moi_coef</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>, </span>
+<span><span class="va">me_result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">framingham_model</span><span class="op">)</span><span class="op">$</span><span class="va">moi_coef</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span>,</span>
 <span>                   <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">framingham_model</span><span class="op">)</span><span class="op">$</span><span class="va">error_coef</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">6</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="va">me_result</span><span class="op">$</span><span class="va">variable</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">me_result</span><span class="op">)</span></span>
 <span><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">bind_rows</a></span><span class="op">(</span>naive <span class="op">=</span> <span class="va">naive_result</span>, me_adjusted <span class="op">=</span> <span class="va">me_result</span>, .id <span class="op">=</span> <span class="st">"model"</span><span class="op">)</span></span>
@@ -288,12 +288,12 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">framingham2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">1</span><span class="op">)</span></span>
-<span><span class="va">framingham2</span><span class="op">$</span><span class="va">sbp1</span> <span class="op">&lt;-</span> <span class="va">framingham</span><span class="op">$</span><span class="va">sbp1</span> <span class="op">+</span> </span>
+<span><span class="va">framingham2</span><span class="op">$</span><span class="va">sbp1</span> <span class="op">&lt;-</span> <span class="va">framingham</span><span class="op">$</span><span class="va">sbp1</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">framingham2</span><span class="op">$</span><span class="va">smoking</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">0.117</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
-<span><span class="va">framingham2</span><span class="op">$</span><span class="va">sbp2</span> <span class="op">&lt;-</span> <span class="va">framingham</span><span class="op">$</span><span class="va">sbp2</span> <span class="op">+</span> </span>
+<span><span class="va">framingham2</span><span class="op">$</span><span class="va">sbp2</span> <span class="op">&lt;-</span> <span class="va">framingham</span><span class="op">$</span><span class="va">sbp2</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="va">framingham2</span><span class="op">$</span><span class="va">smoking</span> <span class="op">==</span> <span class="fl">1</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="va">n</span>, <span class="fl">0</span>, <span class="fl">0.117</span><span class="op">)</span>, <span class="fl">0</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Or: </span></span>
+<span><span class="co"># Or:</span></span>
 <span><span class="co">#framingham2 &lt;- read.table("../data-raw/fram_data_case2.txt", header=T)</span></span>
 <span><span class="co">#names(framingham2) &lt;- c("disease", "sbp1", "sbp2", "smoking")</span></span>
 <span></span>
@@ -304,9 +304,9 @@ measurement error. The model in this example is identical to that in <a href="ht
 <code class="sourceCode R"><span><span class="co"># Homoscedastic ME modeled as homoscedastic ME (correct)</span></span>
 <span><span class="va">framingham_model2.1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span><span class="op">:</span><span class="va">smoking</span>,</span>
 <span>                               formula_imp <span class="op">=</span> <span class="va">sbp</span> <span class="op">~</span> <span class="va">smoking</span>,</span>
-<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                               data <span class="op">=</span> <span class="va">framingham</span>,</span>
-<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>, </span>
+<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>                               repeated_observations <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                               prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -314,17 +314,17 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span>                               initial.prec.classical <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>                               initial.prec.imp <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                               control.fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>                                             alpha.smoking <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Heteroscedastic ME modeled as heteroscedastic ME (correct)</span></span>
 <span><span class="va">framingham_model2.2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span><span class="op">:</span><span class="va">smoking</span>,</span>
 <span>                               formula_imp <span class="op">=</span> <span class="va">sbp</span> <span class="op">~</span> <span class="va">smoking</span>,</span>
-<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                               data <span class="op">=</span> <span class="va">framingham2</span>,</span>
-<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>, </span>
+<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>                               repeated_observations <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                               classical_error_scaling <span class="op">=</span> <span class="va">error_scaling</span>,</span>
 <span>                               prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -333,17 +333,17 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span>                               initial.prec.classical <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>                               initial.prec.imp <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                               control.fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>                                             alpha.smoking <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Heteroscedastic ME modeled as homoscedastic ME (incorrect)</span></span>
 <span><span class="va">framingham_model2.3</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span><span class="op">:</span><span class="va">smoking</span>,</span>
 <span>                               formula_imp <span class="op">=</span> <span class="va">sbp</span> <span class="op">~</span> <span class="va">smoking</span>,</span>
-<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                               data <span class="op">=</span> <span class="va">framingham2</span>,</span>
-<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>, </span>
+<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>                               repeated_observations <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                               prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>,</span>
@@ -351,27 +351,27 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span>                               initial.prec.classical <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>                               initial.prec.imp <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                               control.fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>                                             alpha.smoking <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">framingham_model2.5</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/fit_inlamemi.html">fit_inlamemi</a></span><span class="op">(</span>formula_moi <span class="op">=</span> <span class="va">disease</span> <span class="op">~</span> <span class="va">sbp</span><span class="op">:</span><span class="va">smoking</span>,</span>
 <span>                               formula_imp <span class="op">=</span> <span class="va">sbp</span> <span class="op">~</span> <span class="va">smoking</span>,</span>
-<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>, </span>
+<span>                               family_moi <span class="op">=</span> <span class="st">"binomial"</span>,</span>
 <span>                               data <span class="op">=</span> <span class="va">framingham2</span>,</span>
-<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>, </span>
+<span>                               error_type <span class="op">=</span> <span class="st">"classical"</span>,</span>
 <span>                               repeated_observations <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>                               classical_error_scaling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="op">-</span><span class="fl">12</span><span class="op">)</span>, <span class="fl">2</span><span class="op">*</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>                               classical_error_scaling <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">10</span><span class="op">^</span><span class="op">(</span><span class="fl">12</span><span class="op">)</span>, <span class="fl">2</span><span class="op">*</span><span class="va">n</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>                               prior.prec.classical <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               prior.prec.imp <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">1</span><span class="op">)</span>,</span>
 <span>                               prior.beta.error <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0.01</span><span class="op">)</span>,</span>
 <span>                               initial.prec.classical <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>                               initial.prec.imp <span class="op">=</span> <span class="fl">10</span>,</span>
 <span>                               control.fixed <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
-<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>, </span>
-<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>, </span>
+<span>                                 prec <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>beta.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             beta.smoking <span class="op">=</span> <span class="fl">0.01</span>,</span>
+<span>                                             alpha.0 <span class="op">=</span> <span class="fl">0.01</span>,</span>
 <span>                                             alpha.smoking <span class="op">=</span> <span class="fl">0.01</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">framingham_model2.1</span><span class="op">)</span></span></code></pre></div>
@@ -398,36 +398,31 @@ measurement error. The model in this example is identical to that in <a href="ht
 <span></span>
 <span><span class="va">framingham_model2.1</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
 <span><span class="co">#&gt;                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.926745 3.691419 68.9229967 75.835774  83.453911 75.651639</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.899106 1.235852 17.5768533 19.860949  22.440894 19.785229</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.550385 1.368556 -4.1568580 -1.579337   1.229324 -1.706516</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.018276 1.192594  0.6152684  3.036915   5.310360  3.117344</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 75.941763 3.694984 68.9643744 75.839341  83.509525 75.608321</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.900701 1.237511 17.5888076 19.857868  22.459486 19.763236</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.549041 1.354832 -4.1265836 -1.578576   1.205354 -1.708567</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.030323 1.193298  0.6201075  3.050937   5.317642  3.140323</span></span></code></pre></div>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.2</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
-<span><span class="co">#&gt;                                                  mean       sd 0.025quant   0.5quant 0.975quant        mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 157.132846 7.224567 143.347610 156.981638 171.786833 156.7113407</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.107856 1.647459  19.052409  22.043246  25.535423  21.9076225</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                    -1.321276 1.812718  -5.541954  -1.081464   1.323648   0.1774153</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                            3.475219 1.546659   1.236920   3.262221   7.082559   2.1712585</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                   mean       sd  0.025quant    0.5quant 0.975quant        mode</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 156.9883399 7.229709 143.1926400 156.8372549 171.652037 156.5682728</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  22.1572213 1.655540  19.0896008  22.0913348  25.604402  21.9514968</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                    -0.5231413 1.490996  -3.6739986  -0.4503943   2.171770  -0.1023884</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                            2.9651518 1.117829   0.8996622   2.9228739   5.292024   2.7260210</span></span></code></pre></div>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.3</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
 <span><span class="co">#&gt;                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.173090 2.188453 40.9850002 45.131480  49.599358 45.072754</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.188177 1.278490 16.8159894 19.138396  21.847723 19.023909</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.556081 1.567443 -4.3841723 -1.633877   1.760159 -2.006828</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                           3.224484 1.369344  0.3427539  3.287009   5.715341  3.584224</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 45.151167 2.190922 40.9948014 45.097007  49.619168 44.986819</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 19.176661 1.275318 16.7672718 19.141740  21.786114 19.087701</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.556773 1.452213 -4.1875780 -1.626083   1.507422 -1.956430</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.240676 1.294155  0.5215732  3.298372   5.600184  3.571394</span></span></code></pre></div>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">framingham_model2.5</span><span class="op">$</span><span class="va">summary.hyperpar</span></span>
-<span><span class="co">#&gt;                                                    mean         sd  0.025quant     0.5quant  0.975quant</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 7.411258e+02 27.2247363 688.7973955 7.406868e+02 795.9749930</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 1.012133e+01  3.2153919   5.0781874 9.696652e+00  17.5970850</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   4.122008e-04  0.2990914  -0.5888122 5.530046e-04   0.5888194</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                          5.987715e-04  0.2823957  -0.5553716 6.067459e-04   0.5565229</span></span>
-<span><span class="co">#&gt;                                                    mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 7.399408e+02</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 8.921509e+00</span></span>
-<span><span class="co">#&gt; Beta for beta.smokingsbp                   1.134864e-03</span></span>
-<span><span class="co">#&gt; Beta for beta.sbp                          6.396683e-04</span></span></code></pre></div>
+<span><span class="co">#&gt;                                                     mean           sd    0.025quant      0.5quant   0.975quant          mode</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]  5.053238e-11 2.451925e-12  4.585460e-11  5.048081e-11 5.550617e-11  5.039490e-11</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.880235e+01 1.224319e+00  1.650633e+01  1.876300e+01 2.132478e+01  1.868547e+01</span></span>
+<span><span class="co">#&gt; Beta for beta.smokingsbp                   -1.570571e+00 1.390761e+00 -4.317334e+00 -1.567547e+00 1.158593e+00 -1.555004e+00</span></span>
+<span><span class="co">#&gt; Beta for beta.sbp                           3.234344e+00 1.245149e+00  7.929082e-01  3.230958e+00 5.695506e+00  3.216894e+00</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

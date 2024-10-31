@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inlamemi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -279,11 +279,11 @@ these.</p>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_sim</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 1.87, Running = 2.23, Post = 0.197, Total = 4.29 </span></span>
+<span><span class="co">#&gt;     Pre = 1.87, Running = 2.34, Post = 0.176, Total = 4.38 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;          mean    sd 0.025quant 0.5quant 0.975quant  mode kld</span></span>
-<span><span class="co">#&gt; beta.0  1.036 0.217      0.615    1.037      1.443 1.031   0</span></span>
-<span><span class="co">#&gt; beta.z  1.924 0.385      1.224    1.916      2.577 1.919   0</span></span>
+<span><span class="co">#&gt; beta.0  1.030 0.219      0.612    1.029      1.435 1.025   0</span></span>
+<span><span class="co">#&gt; beta.z  1.911 0.388      1.225    1.901      2.560 1.910   0</span></span>
 <span><span class="co">#&gt; alpha.0 1.033 0.051      0.934    1.033      1.132 1.033   0</span></span>
 <span><span class="co">#&gt; alpha.z 2.025 0.052      1.922    2.025      2.127 2.025   0</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -295,13 +295,13 @@ these.</p>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                             mean    sd 0.025quant 0.5quant 0.975quant  mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations    1.133 0.374      0.569    1.077       2.02 0.973</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.134 0.340      0.607    1.087       1.93 1.000</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.925 0.108      0.732    0.919       1.16 0.906</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.979 0.124      0.757    0.971       1.25 0.956</span></span>
-<span><span class="co">#&gt; Beta for beta.x                            1.975 0.198      1.584    1.976       2.36 1.979</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations    1.128 0.365      0.556    1.080       1.98 0.992</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2] 1.127 0.355      0.581    1.076       1.96 0.983</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3] 0.927 0.111      0.729    0.920       1.17 0.905</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[4] 0.977 0.128      0.749    0.969       1.25 0.954</span></span>
+<span><span class="co">#&gt; Beta for beta.x                            1.972 0.207      1.559    1.974       2.38 1.981</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -20700.00 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -20699.96 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>
@@ -440,15 +440,15 @@ precision to be very high for the classical error model in the argument
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">model_mnar</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Time used:</span></span>
-<span><span class="co">#&gt;     Pre = 1.97, Running = 3.57, Post = 0.556, Total = 6.1 </span></span>
+<span><span class="co">#&gt;     Pre = 1.9, Running = 3.8, Post = 0.175, Total = 5.88 </span></span>
 <span><span class="co">#&gt; Fixed effects:</span></span>
 <span><span class="co">#&gt;            mean    sd 0.025quant 0.5quant 0.975quant   mode kld</span></span>
-<span><span class="co">#&gt; beta.0    1.039 0.050      0.941    1.039      1.137  1.039   0</span></span>
-<span><span class="co">#&gt; beta.z1   2.004 0.036      1.933    2.004      2.076  2.004   0</span></span>
+<span><span class="co">#&gt; beta.0    1.038 0.050      0.940    1.038      1.136  1.038   0</span></span>
+<span><span class="co">#&gt; beta.z1   2.004 0.036      1.933    2.004      2.075  2.004   0</span></span>
 <span><span class="co">#&gt; beta.z2   1.985 0.036      1.914    1.985      2.057  1.985   0</span></span>
 <span><span class="co">#&gt; alpha.0   1.011 0.032      0.947    1.011      1.074  1.011   0</span></span>
 <span><span class="co">#&gt; alpha.z1  0.292 0.033      0.228    0.292      0.355  0.292   0</span></span>
-<span><span class="co">#&gt; gamma.0  -1.511 0.122     -1.756   -1.510     -1.275 -1.510   0</span></span>
+<span><span class="co">#&gt; gamma.0  -1.510 0.122     -1.754   -1.509     -1.275 -1.509   0</span></span>
 <span><span class="co">#&gt; gamma.z2 -0.425 0.088     -0.597   -0.425     -0.252 -0.425   0</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Random effects:</span></span>
@@ -459,13 +459,13 @@ precision to be very high for the classical error model in the argument
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters:</span></span>
 <span><span class="co">#&gt;                                              mean    sd 0.025quant 0.5quant 0.975quant   mode</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations     0.984 0.048      0.893    0.983      1.082  0.981</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.126 0.353      0.576    1.078      1.952  0.990</span></span>
-<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.024 0.047      0.933    1.023      1.119  1.023</span></span>
-<span><span class="co">#&gt; Beta for beta.x                             1.954 0.035      1.886    1.954      2.023  1.953</span></span>
-<span><span class="co">#&gt; Beta for gamma.x                           -0.037 0.089     -0.214   -0.036      0.137 -0.033</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations     0.983 0.048      0.890    0.983      1.079  0.984</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[2]  1.130 0.357      0.590    1.077      1.981  0.977</span></span>
+<span><span class="co">#&gt; Precision for the Gaussian observations[3]  1.023 0.047      0.932    1.022      1.119  1.020</span></span>
+<span><span class="co">#&gt; Beta for beta.x                             1.953 0.035      1.884    1.953      2.021  1.955</span></span>
+<span><span class="co">#&gt; Beta for gamma.x                           -0.036 0.089     -0.213   -0.036      0.138 -0.034</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.17 </span></span>
+<span><span class="co">#&gt; Marginal log-Likelihood:  -11663.19 </span></span>
 <span><span class="co">#&gt;  is computed </span></span>
 <span><span class="co">#&gt; Posterior summaries for the linear predictor and the fitted values are computed</span></span>
 <span><span class="co">#&gt; (Posterior marginals needs also 'control.compute=list(return.marginals.predictor=TRUE)')</span></span></code></pre></div>

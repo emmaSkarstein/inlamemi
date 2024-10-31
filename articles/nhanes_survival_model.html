@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">inlamemi</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.1.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -202,29 +202,29 @@ repeated measurements for SBP, we need to set this argument to
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for model of interest: </span></span>
 <span><span class="co">#&gt;                     mean         sd 0.025quant   0.5quant 0.975quant       mode</span></span>
-<span><span class="co">#&gt; beta.0        -5.4554553 0.13799654 -5.7189459 -5.4563254 -5.1900265 -5.4574649</span></span>
-<span><span class="co">#&gt; beta.age       0.9055047 0.04992106  0.8075560  0.9055446  1.0032286  0.9055456</span></span>
-<span><span class="co">#&gt; beta.smoke     0.2700951 0.08455462  0.1042871  0.2700965  0.4358956  0.2700965</span></span>
-<span><span class="co">#&gt; beta.sex       0.4455055 0.07882434  0.2909460  0.4455026  0.6000813  0.4455026</span></span>
-<span><span class="co">#&gt; beta.diabetes  0.5920215 0.09296473  0.4096846  0.5920361  0.7742760  0.5920362</span></span>
+<span><span class="co">#&gt; beta.0        -5.4554579 0.13799666 -5.7189478 -5.4563288 -5.1900272 -5.4574694</span></span>
+<span><span class="co">#&gt; beta.age       0.9055067 0.04992108  0.8075577  0.9055466  1.0032303  0.9055477</span></span>
+<span><span class="co">#&gt; beta.smoke     0.2700950 0.08455459  0.1042871  0.2700964  0.4358954  0.2700964</span></span>
+<span><span class="co">#&gt; beta.sex       0.4455052 0.07882431  0.2909458  0.4455023  0.6000810  0.4455023</span></span>
+<span><span class="co">#&gt; beta.diabetes  0.5920221 0.09296470  0.4096852  0.5920366  0.7742765  0.5920368</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Coefficient for variable with measurement error and/or missingness: </span></span>
 <span><span class="co">#&gt;               mean         sd 0.025quant  0.5quant 0.975quant      mode</span></span>
-<span><span class="co">#&gt; beta.sbp 0.1129945 0.04868078 0.01634666 0.1132717  0.2080196 0.1144315</span></span>
+<span><span class="co">#&gt; beta.sbp 0.1129965 0.04868109 0.01635449 0.1132714  0.2080286 0.1144219</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Fixed effects for imputation model: </span></span>
 <span><span class="co">#&gt;                            mean         sd  0.025quant     0.5quant 0.975quant         mode</span></span>
-<span><span class="co">#&gt; alpha.sbp.0         0.006419495 0.04311756 -0.07813618  0.006419376 0.09097585  0.006419375</span></span>
-<span><span class="co">#&gt; alpha.sbp.age       0.322564776 0.02956329  0.26459204  0.322563887 0.38054258  0.322563883</span></span>
-<span><span class="co">#&gt; alpha.sbp.smoke     0.004838559 0.05062312 -0.09443682  0.004838752 0.10411283  0.004838753</span></span>
-<span><span class="co">#&gt; alpha.sbp.sex      -0.061816355 0.04701653 -0.15401757 -0.061816668 0.03038665 -0.061816669</span></span>
-<span><span class="co">#&gt; alpha.sbp.diabetes  0.137949829 0.06223966  0.01589783  0.137948576 0.26000896  0.137948572</span></span>
+<span><span class="co">#&gt; alpha.sbp.0         0.006419430 0.04311744 -0.07813603  0.006419311 0.09097556  0.006419310</span></span>
+<span><span class="co">#&gt; alpha.sbp.age       0.322564656 0.02956321  0.26459207  0.322563767 0.38054231  0.322563763</span></span>
+<span><span class="co">#&gt; alpha.sbp.smoke     0.004838549 0.05062298 -0.09443656  0.004838743 0.10411256  0.004838743</span></span>
+<span><span class="co">#&gt; alpha.sbp.sex      -0.061816327 0.04701640 -0.15401730 -0.061816640 0.03038643 -0.061816640</span></span>
+<span><span class="co">#&gt; alpha.sbp.diabetes  0.137949653 0.06223949  0.01589798  0.137948401 0.26000846  0.137948396</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Model hyperparameters (apart from beta.sbp): </span></span>
 <span><span class="co">#&gt;                                       mean         sd 0.025quant 0.5quant 0.975quant     mode</span></span>
-<span><span class="co">#&gt; Precision for sbp classical model 1.376777 0.04092474  1.2967410 1.376586   1.457852 1.377129</span></span>
-<span><span class="co">#&gt; Precision for sbp imp model       2.838966 0.26035179  2.3501498 2.830785   3.374108 2.822291</span></span>
-<span><span class="co">#&gt; alpha parameter for weibullsurv   1.027528 0.04988407  0.9338802 1.025959   1.130250 1.022054</span></span></code></pre></div>
+<span><span class="co">#&gt; Precision for sbp classical model 1.376777 0.04092497  1.2967392 1.376586   1.457851 1.377131</span></span>
+<span><span class="co">#&gt; Precision for sbp imp model       2.838978 0.26035528  2.3501761 2.830790   3.374149 2.822266</span></span>
+<span><span class="co">#&gt; alpha parameter for weibullsurv   1.027533 0.04988456  0.9338767 1.025966   1.130248 1.022071</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">survival_model</span>, plot_intercepts <span class="op">=</span> <span class="cn">FALSE</span>, plot_imp <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="float">
