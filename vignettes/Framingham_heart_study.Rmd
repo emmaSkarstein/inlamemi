@@ -21,13 +21,13 @@ library(ggplot2)
 
 ``` r
 head(framingham)
-#>   disease         sbp1        sbp2 smoking
-#> 1       0  0.043556319 -0.24144440       0
-#> 2       0 -0.088249125 -0.03871185       1
-#> 3       0  0.063634980  0.02971774       1
-#> 4       0 -0.331791943 -0.44704230       1
-#> 5       0  0.006502333 -0.09760337       1
-#> 6       0  0.124884993  0.09793482       0
+#>   disease         sbp1        sbp2 smoking         sbp
+#> 1       0  0.043556319 -0.24144440       0 -0.09894404
+#> 2       0 -0.088249125 -0.03871185       1 -0.06348049
+#> 3       0  0.063634980  0.02971774       1  0.04667636
+#> 4       0 -0.331791943 -0.44704230       1 -0.38941712
+#> 5       0  0.006502333 -0.09760337       1 -0.04555052
+#> 6       0  0.124884993  0.09793482       0  0.11140991
 ```
 
 The two publications are [Bayesian analysis of measurement error models using INLA, Muff et al (2015)](https://arxiv.org/abs/1302.3065) and [Reverse attenuation in interaction terms due to covariate measurement error, Muff & Keller (2015)](https://doi.org/10.1002/bimj.201400157).
@@ -100,22 +100,22 @@ summary(framingham_model)
 #> 
 #> Fixed effects for model of interest: 
 #>                    mean        sd 0.025quant   0.5quant 0.975quant       mode
-#> beta.0       -2.3615606 0.2704865 -2.8934474 -2.3610452 -1.8325979 -2.3610398
-#> beta.smoking  0.3993942 0.2994675 -0.1875006  0.3992734  0.9869779  0.3992733
+#> beta.0       -2.3615593 0.2704869  -2.893447 -2.3610439 -1.8325961 -2.3610384
+#> beta.smoking  0.3993937 0.2994675  -0.187501  0.3992729  0.9869775  0.3992727
 #> 
 #> Coefficient for variable with measurement error and/or missingness: 
-#>              mean        sd 0.025quant 0.5quant 0.975quant    mode
-#> beta.sbp 1.897417 0.5598368  0.8405057 1.882702   3.042967 1.81703
+#>              mean        sd 0.025quant 0.5quant 0.975quant     mode
+#> beta.sbp 1.897425 0.5598872  0.8404353 1.882702   3.043093 1.816999
 #> 
 #> Fixed effects for imputation model: 
 #>                          mean         sd  0.025quant    0.5quant 0.975quant        mode
-#> alpha.sbp.0        0.01454298 0.01858278 -0.02190739  0.01454298 0.05099336  0.01454298
-#> alpha.sbp.smoking -0.01958476 0.02156435 -0.06188351 -0.01958476 0.02271399 -0.01958476
+#> alpha.sbp.0        0.01454298 0.01858277 -0.02190736  0.01454298 0.05099333  0.01454298
+#> alpha.sbp.smoking -0.01958476 0.02156433 -0.06188347 -0.01958476 0.02271395 -0.01958476
 #> 
 #> Model hyperparameters (apart from beta.sbp): 
 #>                                       mean       sd 0.025quant 0.5quant 0.975quant     mode
-#> Precision for sbp classical model 75.90181 3.690521   68.89246 75.81339   83.41978 75.63964
-#> Precision for sbp imp model       19.89454 1.234089   17.55053 19.86501   22.40737 19.82455
+#> Precision for sbp classical model 75.90178 3.690529   68.89246 75.81334   83.41982 75.63953
+#> Precision for sbp imp model       19.89452 1.234087   17.55047 19.86501   22.40730 19.82463
 ```
 
 
@@ -295,37 +295,37 @@ plot(framingham_model2.5)
 
 framingham_model2.1$summary.hyperpar
 #>                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for the Gaussian observations[2] 75.943430 3.695047 68.9660877 75.840951  83.511486 75.609693
-#> Precision for the Gaussian observations[3] 19.900877 1.237662 17.5901904 19.857533  22.461471 19.760810
-#> Beta for beta.smokingsbp                   -1.550094 1.358028 -4.1316426 -1.580344   1.212698 -1.713679
-#> Beta for beta.sbp                           3.028604 1.195670  0.6124406  3.049647   5.319255  3.140995
+#> Precision for the Gaussian observations[2] 75.941763 3.694984 68.9643744 75.839341  83.509525 75.608321
+#> Precision for the Gaussian observations[3] 19.900701 1.237511 17.5888076 19.857868  22.459486 19.763236
+#> Beta for beta.smokingsbp                   -1.549041 1.354832 -4.1265836 -1.578576   1.205354 -1.708567
+#> Beta for beta.sbp                           3.030323 1.193298  0.6201075  3.050937   5.317642  3.140323
 ```
 
 ``` r
 framingham_model2.2$summary.hyperpar
-#>                                                   mean       sd  0.025quant    0.5quant 0.975quant         mode
-#> Precision for the Gaussian observations[2] 156.9320776 7.227960 143.1220112 156.7870996 171.574384 156.54330411
-#> Precision for the Gaussian observations[3]  22.1536234 1.653122  19.0561426  22.0996196  25.561057  22.00760383
-#> Beta for beta.smokingsbp                    -0.5721307 1.550580  -3.9055610  -0.4775886   2.154731  -0.01130546
-#> Beta for beta.sbp                            2.9721134 1.125626   0.9358988   2.9181231   5.350490   2.65711896
+#>                                                   mean       sd  0.025quant    0.5quant 0.975quant        mode
+#> Precision for the Gaussian observations[2] 156.9883399 7.229709 143.1926400 156.8372549 171.652037 156.5682728
+#> Precision for the Gaussian observations[3]  22.1572213 1.655540  19.0896008  22.0913348  25.604402  21.9514968
+#> Beta for beta.smokingsbp                    -0.5231413 1.490996  -3.6739986  -0.4503943   2.171770  -0.1023884
+#> Beta for beta.sbp                            2.9651518 1.117829   0.8996622   2.9228739   5.292024   2.7260210
 ```
 
 ``` r
 framingham_model2.3$summary.hyperpar
 #>                                                 mean       sd 0.025quant  0.5quant 0.975quant      mode
-#> Precision for the Gaussian observations[2] 45.160875 2.192925 41.0163364 45.101302  49.648684 44.968991
-#> Precision for the Gaussian observations[3] 19.177387 1.275983 16.7795069 19.138092  21.801110 19.066163
-#> Beta for beta.smokingsbp                   -1.551779 1.488270 -4.2248553 -1.628746   1.606344 -2.000164
-#> Beta for beta.sbp                           3.229497 1.327123  0.4261338  3.293595   5.630136  3.600843
+#> Precision for the Gaussian observations[2] 45.151167 2.190922 40.9948014 45.097007  49.619168 44.986819
+#> Precision for the Gaussian observations[3] 19.176661 1.275318 16.7672718 19.141740  21.786114 19.087701
+#> Beta for beta.smokingsbp                   -1.556773 1.452213 -4.1875780 -1.626083   1.507422 -1.956430
+#> Beta for beta.sbp                           3.240676 1.294155  0.5215732  3.298372   5.600184  3.571394
 ```
 
 ``` r
 framingham_model2.5$summary.hyperpar
 #>                                                     mean           sd    0.025quant      0.5quant   0.975quant          mode
-#> Precision for the Gaussian observations[2]  5.053274e-11 2.449370e-12  4.582122e-11  5.049433e-11 5.546235e-11  5.045927e-11
-#> Precision for the Gaussian observations[3]  1.880351e+01 1.224240e+00  1.650928e+01  1.876359e+01 2.132744e+01  1.868376e+01
-#> Beta for beta.smokingsbp                   -1.585811e+00 1.391727e+00 -4.319784e+00 -1.587838e+00 1.159951e+00 -1.596237e+00
-#> Beta for beta.sbp                           3.211498e+00 1.244202e+00  7.661803e-01  3.210079e+00 5.665059e+00  3.204207e+00
+#> Precision for the Gaussian observations[2]  5.053238e-11 2.451925e-12  4.585460e-11  5.048081e-11 5.550617e-11  5.039490e-11
+#> Precision for the Gaussian observations[3]  1.880235e+01 1.224319e+00  1.650633e+01  1.876300e+01 2.132478e+01  1.868547e+01
+#> Beta for beta.smokingsbp                   -1.570571e+00 1.390761e+00 -4.317334e+00 -1.567547e+00 1.158593e+00 -1.555004e+00
+#> Beta for beta.sbp                           3.234344e+00 1.245149e+00  7.929082e-01  3.230958e+00 5.695506e+00  3.216894e+00
 ```
 
 
